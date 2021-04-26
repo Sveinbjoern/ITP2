@@ -1,0 +1,11 @@
+First update 16.04.2021: Version 0.000 000 001
+implementations:
+Made SprayCanTool.js and SprayCanTool constructor
+Made sprayCanTool circular
+
+Updates:
+Added comments on LineToTool
+
+Fixes:
+Fixed save button with saceCanvas function
+Fixed clear butting witha a call to background
