@@ -8,8 +8,9 @@ function sprayCanTool()
     this.name =  "sprayCanTool";
     this.icon = "assets/sprayCan.jpg";
     
-    let points = 1000;
-    let spread = 100;
+    let density = 0.4;
+    let spread = 50;
+    let points = ceil(spread*density);
     
     //spread describes how far to spread the paint from the mouse pointer
     //points holds how many pixels of paint for each mouse press.
@@ -24,6 +25,7 @@ function sprayCanTool()
         
         if(mouseIsPressed){
             // For loop makes the right amount of points
+            if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height)
             for(var i = 0; i < points; i++)
             {
                //a random angle and a random distance from the center
