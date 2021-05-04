@@ -15,6 +15,36 @@ function PayGapByJob2017() {
   this.dotSizeMin = 15;
   this.dotSizeMax = 40;
 
+
+  this.title = this.name
+
+  this.layout = {
+    pad: this.pad,
+
+    // Margin positions around the plot. Left and bottom have double
+    // margin size to make space for axis and tick labels on the canvas.
+    leftMargin: this.pad * 2,
+    rightMargin: width - this.pad,
+    topMargin: this.pad,
+    bottomMargin: height - this.pad,
+    
+
+    plotWidth: function() {
+      return this.rightMargin - this.leftMargin;
+    },
+
+    plotHeight: function() {
+      return this.bottomMargin - this.topMargin;
+    },
+
+    // Boolean to enable/disable background grid.
+    grid: false,
+
+    // Number of axis tick labels to draw so that they are not drawn on
+    // top of one another.
+    numXTickLabels: 10,
+    numYTickLabels: 8,
+  };
   // Preload the data. This function is called automatically by the
   // gallery when a visualisation is added.
   this.preload = function() {
@@ -43,7 +73,7 @@ function PayGapByJob2017() {
 
     // Draw the axes.
     this.addAxes();
-
+    this.drawTitle();
     // Get data from the table object.
     var jobs = this.data.getColumn('job_subtype');
     var propFemale = this.data.getColumn('proportion_female');
@@ -76,25 +106,26 @@ function PayGapByJob2017() {
     fill(255);
     stroke(0);
     strokeWeight(1);
-
+    // print(propFemale[this.data.getRowCount()-1]);
     for (i = 0; i < this.data.getRowCount(); i++) {
       // Draw an ellipse for each point.
-      x = this.data.getNum(i,"proportion_female")
-      y = map (this.data.getNum(i,"pay_gap"), payGapMin, payGapMax, -20,20)
-      size = numJobsMax-numJobsMin
+      x = map (propFemale[i], propFemaleMin, propFemaleMax, this.layout.topMargin, this.layout.bottomMargin)
+      y = map ( this.data.getNum(i,"pay_gap"), payGapMin, payGapMax, 
+                this.layout.topMargin,this.layout.bottomMargin)
+      size = map(this.data.getNum(i,"num_jobs"),numJobsMin, numJobsMax, 1,20); 
       ellipse(
         x,y,size
       );
-
+      // text(jobs[i], x, y);
       
     }
   };
 
   this.addAxes = function () {
     stroke(100);
-    strokeWeight(100);
+    // strokeWeight(100);
     // Add vertical line.
-    console.log("running")
+    // console.log("running")
     line(width / 2,
          0 + this.pad,
          width / 2,
@@ -105,5 +136,16 @@ function PayGapByJob2017() {
          height / 2,
          width - this.pad,
          height / 2);
+  };
+
+  this.drawTitle = function() {
+    fill(0);
+    noStroke();
+    textAlign('center', 'center');
+    textSize (20);
+    text(this.title,
+         (this.layout.plotWidth() / 2) + this.layout.leftMargin,
+         this.layout.topMargin - (this.layout.pad / 2));
+    textSize(10);
   };
 }
