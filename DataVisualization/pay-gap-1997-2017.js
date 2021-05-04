@@ -86,7 +86,7 @@ function PayGapTimeSeries() {
     }
 
     // Draw the title above the plot.
-    this.drawTitle();
+    this.drawTitle(); 
 
     // Draw all y-axis labels.
     drawYAxisTickLabels(this.minPayGap,
@@ -115,15 +115,18 @@ function PayGapTimeSeries() {
       // Create an object to store data for the current year.
       var current = {
         // Convert strings to numbers.
-        // 'year': ???,
-        // 'payGap': ???
+        'year': this.data.getNum(i,0),
+        'payGap': this.data.getNum(i,3)
       };
 
       if (previous != null) {
         // Draw line segment connecting previous year to current
         // year pay gap.
         stroke(0);
-        // line( ??? );
+        line( this.mapYearToWidth(previous.year),
+              this.mapPayGapToHeight(previous.payGap),
+              this.mapYearToWidth(current.year),
+              this.mapPayGapToHeight(current.payGap)  );
 
         // The number of x-axis labels to skip so that only
         // numXTickLabels are drawn.
@@ -162,6 +165,10 @@ function PayGapTimeSeries() {
   };
 
   this.mapPayGapToHeight = function(value) {
-    // ???
+    return map(value,
+      this.minPayGap,         // Pay equality (zero pay gap).
+      this.maxPayGap,
+      this.layout.bottomMargin,   // Draw left-to-right from margin.
+      this.layout.topMargin);
   };
 }

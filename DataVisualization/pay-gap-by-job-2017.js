@@ -79,19 +79,22 @@ function PayGapByJob2017() {
 
     for (i = 0; i < this.data.getRowCount(); i++) {
       // Draw an ellipse for each point.
-      // x = propFemale
-      // y = payGap
-      // size = numJobs
+      x = this.data.getNum(i,"proportion_female")
+      y = map (this.data.getNum(i,"pay_gap"), payGapMin, payGapMax, -20,20)
+      size = numJobsMax-numJobsMin
       ellipse(
-        /// ???
+        x,y,size
       );
+
+      
     }
   };
 
   this.addAxes = function () {
-    stroke(200);
-
+    stroke(100);
+    strokeWeight(100);
     // Add vertical line.
+    console.log("running")
     line(width / 2,
          0 + this.pad,
          width / 2,

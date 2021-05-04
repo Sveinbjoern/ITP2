@@ -9,7 +9,22 @@ function TechDiversityRace() {
 
   // Property to represent whether data has been loaded.
   this.loaded = false;
+ 
 
+  // Layout object to store all common plot layout parameters and
+  // methods.
+  this.layout = {
+
+    // Margin positions around the plot. Left and bottom have double
+    // margin size to make space for axis and tick labels on the canvas.
+    leftSelPosition: width / 2 + width * 0.5,
+    topSelPostion: height / 2 - height * 0.4,
+    
+    // Boolean to enable/disable background grid.
+    grid: false,
+
+  
+  };
   // Preload the data. This function is called automatically by the
   // gallery when a visualisation is added.
   this.preload = function() {
@@ -30,13 +45,19 @@ function TechDiversityRace() {
     }
 
     // Create a select DOM element.
-    // this.select = // ???
-
+    this.select = createSelect();
+    
     // Set select position.
-    // ???
+    this.select.position( this.layout.leftSelPosition,
+                          this.layout.topSelPostion);
 
     // Fill the options with all company names.
-    // ???
+    // console.log(this.data)
+    // print(this.data.columns[0]); // 0
+    for (let i = 0; i < this.data.getColumnCount();i++)
+    {
+      this.select.option(this.data.columns[i]);
+    }
   };
 
     this.destroy = function() {
@@ -55,7 +76,7 @@ function TechDiversityRace() {
     // Get the value of the company we're interested in from the
     // select item.
     // Use a temporary hard-code example for now.
-    var companyName = 'Facebook';
+    var companyName = this.select.value();
 
     // Get the column of raw data for companyName.
     var col = this.data.getColumn(companyName);

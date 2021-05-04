@@ -3,6 +3,8 @@
 // a container for all the visualisations.
 var gallery;
 
+
+
 function setup() {
   // Create a canvas to fill the content div from index.html.
   var c = createCanvas(1024, 576);
