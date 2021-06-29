@@ -1,3 +1,17 @@
+update 29.06.2021
+Rekindled project after learning HTML and CSS.
+
+implementations
+
+updates:
+updated with latest p5.js library
+
+Fixes:
+Removed redundant p5.dom.js
+
+
+
+
 First update 16.04.2021: Version 0.000 000 001
 implementations:
 Made SprayCanTool.js and SprayCanTool constructor
