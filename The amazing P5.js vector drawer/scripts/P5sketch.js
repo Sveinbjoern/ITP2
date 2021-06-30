@@ -23,8 +23,8 @@ function setup() {
 	//add the tools to the toolbox.
 	toolbox.addTool(new FreehandTool());
 	toolbox.addTool(new LineToTool());
-	toolbox.addTool(new sprayCanTool());
-	toolbox.addTool(new mirrorDrawTool());
+	toolbox.addTool(new SprayCanTool());
+	toolbox.addTool(new MirrorDrawTool());
 	background(255);
 
 }

@@ -3,7 +3,7 @@
 //while this tool is selveted you make a spray fo points
 // centered on mouseX mouseY
 
-function sprayCanTool()
+function SprayCanTool()
 {
     this.name =  "sprayCanTool";
     this.icon = "assets/sprayCan.jpg";
