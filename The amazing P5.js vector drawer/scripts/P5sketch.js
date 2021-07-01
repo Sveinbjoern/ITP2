@@ -40,3 +40,13 @@ function draw() {
 		alert("it doesn't look like your tool has a draw method!");
 	}
 }
+
+
+function fitToScreen(){
+ console.log("fitToScreen");
+ 
+ 
+ canvasContainer = select('#content');
+	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
+	c.parent("content");
+}

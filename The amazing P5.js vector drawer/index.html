@@ -21,15 +21,38 @@
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
   </head>
-  <body>
-  	<div class="wrapper">
+  <body onresize="fitToScreen()">
+  	
+    <div id = "hiddenElements">
+        <input type="radio" id="drawMode" name="mode" value="drawMode" checked>
+        <input type="radio" id="animationMode" name="mode" value="animationMode">
+        <input type="radio" id="canvasMode" name="mode" value="canvasMode">
+     
+    </div>
+
+    <header>
+      <div #DrawModeButton>D</div>
+      <div #AnimationModeButton>A</div>
+      <div #CanvasModeButton>C</div>
+      <div #headerText>The AmazingP5.js vector drawer</div>
+      <div #headerMenu>
+        
+  
+        <button type="button">Click Me!</button>
+        <button type="button">Click Me!</button>
+      </div>  
+      <div #headerAboutslider>ABOUT!</div>
+    </header>
+
+
+    <div class="wrapper">
       <div class="box header">My Drawing App
 
         <button id="clearButton">Clear</button>
         <button id="saveImageButton">Save Image</button>
       </div>
       <div class="box" id="sidebar"></div>
-      <div id="content"></div>
+      <div id="drawField"></div>
       <div class="box colourPalette"></div>
       <div class="box options"></div>
 	</div>

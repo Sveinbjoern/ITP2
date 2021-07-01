@@ -8,8 +8,8 @@ html, body {
 	overflow-y: scroll;
 }
 
-#content {
-	grid-area: content;
+#drawField {
+	grid-area: drawField;
 }
 
 .header {
@@ -53,6 +53,15 @@ html, body {
 	margin: 5px;
 }
 
+header{
+	display: inline-flex;
+}
+
+#hiddenElements{
+	display: none;
+	margin: ;
+}
+
 
 	.wrapper {
 		display: grid;
@@ -61,7 +70,7 @@ html, body {
 		grid-template-rows: 35px minmax(500px, 1fr) 160px;
 		grid-template-areas:
                "header header header"
-				"sidebar content content"
+				"sidebar drawField drawField"
                 "colourP colourP options";
 		background-color: #fff;
 		color: #444;
