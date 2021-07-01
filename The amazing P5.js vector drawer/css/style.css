@@ -1,8 +1,11 @@
+/* Page wide css */
+
 html, body {
   margin: 0px;
   height: 100%;
+  box-sizing: border-box;
 }
-
+/* Header */
 #sidebar {
 	grid-area: sidebar;
 	overflow-y: scroll;
@@ -45,7 +48,7 @@ html, body {
 }
 
 .colourSwatches{
-	box-sizing: border-box;
+	
 	width: 40px;
 	height: 40px;
 	max-height: 40px;
@@ -59,7 +62,7 @@ header{
 
 #hiddenElements{
 	display: none;
-	margin: ;
+	/* margin: ; */
 }
 
 
@@ -67,7 +70,7 @@ header{
 		display: grid;
 		height: 100%;
 		grid-template-columns: 70px 230px  minmax(500px, 1fr);
-		grid-template-rows: 35px minmax(500px, 1fr) 160px;
+		grid-template-rows: 0px minmax(500px, 1fr) 160px;
 		grid-template-areas:
                "header header header"
 				"sidebar drawField drawField"
