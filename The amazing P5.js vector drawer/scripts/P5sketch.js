@@ -9,9 +9,9 @@ var helpers = null;
 function setup() {
 
 	//create a canvas to fill the content div from index.html
-	canvasContainer = select('#content');
+	canvasContainer = select('#drawField');
 	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
-	c.parent("content");
+	c.parent('drawField');
 
 	//create helper functions and the colour palette
 	helpers = new HelperFunctions();
@@ -46,7 +46,7 @@ function fitToScreen(){
  console.log("fitToScreen");
  
  
- canvasContainer = select('#content');
-	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
-	c.parent("content");
+ canvasContainer = select('#drawField');
+ var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
+ c.parent('drawField');
 }

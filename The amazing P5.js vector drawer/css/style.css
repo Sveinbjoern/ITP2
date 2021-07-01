@@ -1,89 +1,90 @@
 /* Page wide css */
 
-html, body {
+html,
+body {
   margin: 0px;
   height: 100%;
   box-sizing: border-box;
 }
+
+/* Hidden elements css */
+#hiddenElements {
+  display: none;
+  /* margin: ; */
+}
+
 /* Header */
-#sidebar {
-	grid-area: sidebar;
-	overflow-y: scroll;
+header {
+  display: inline-flex;
 }
-
-#drawField {
-	grid-area: drawField;
-}
-
-.header {
+/* .header {
 	grid-area: header;
 	font-family: Helvetica, sans-serif
 }
+.header {
+  background-color: #999;
+} */
 
-.footer{
-  grid-area: footer;
+/* sidebar */
+#sidebar {
+  grid-area: sidebar;
+  overflow-y: scroll;
+}
+.sideBarItem {
+  max-height: 50px;
+  max-width: 50px;
+  padding: 5px;
 }
 
-.sideBarItem{
-	max-height: 50px;
-	max-width: 50px;
-	padding:5px;
+.sideBarItem img {
+  max-height: 50px;
+  max-width: 50px;
 }
-
-.sideBarItem img{
-	max-height: 50px;
-	max-Width:50px;
-}
-
-.colourPalette{
-	grid-area: colourP;
-	display:flex;
-	flex-direction:grid;
-	flex-flow: wrap;
-}
-
-.options{
-	grid-area: options;
-	padding: 15px;
-}
-
-.colourSwatches{
-	
-	width: 40px;
-	height: 40px;
-	max-height: 40px;
-	max-width: 40px;
-	margin: 5px;
-}
-
-header{
-	display: inline-flex;
-}
-
-#hiddenElements{
-	display: none;
-	/* margin: ; */
-}
-
-
-	.wrapper {
-		display: grid;
-		height: 100%;
-		grid-template-columns: 70px 230px  minmax(500px, 1fr);
-		grid-template-rows: 0px minmax(500px, 1fr) 160px;
-		grid-template-areas:
-               "header header header"
-				"sidebar drawField drawField"
-                "colourP colourP options";
-		background-color: #fff;
-		color: #444;
-	}
 .box {
   background-color: #444;
   color: #fff;
   font-size: 150%;
 }
+/* drawfield css */
+#drawField {
+  grid-area: drawField;
+}
 
-.header {
-  background-color: #999;
+/* footer */
+
+.footer {
+  grid-area: footer;
+}
+
+.colourPalette {
+  grid-area: colourP;
+  display: flex;
+  flex-direction: grid;
+  flex-flow: wrap;
+}
+
+.options {
+  grid-area: options;
+  padding: 15px;
+}
+
+.colourSwatches {
+  width: 40px;
+  height: 40px;
+  max-height: 40px;
+  max-width: 40px;
+  margin: 5px;
+}
+
+.wrapper {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 74px 230px minmax(200px, 1fr);
+  grid-template-rows: 0px minmax(200px, 1fr) 160px;
+  grid-template-areas:
+    "header header header"
+    "sidebar drawField drawField"
+    "colourP colourP options";
+  background-color: #fff;
+  color: #444;
 }
