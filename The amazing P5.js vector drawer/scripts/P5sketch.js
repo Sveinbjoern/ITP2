@@ -3,7 +3,14 @@
 var toolbox = null;
 var colourP = null;
 var helpers = null;
+const soundeffects = {};
 
+
+function preload() {
+	// preload() runs once
+	soundeffects.ding = loadSound("assets/sound/515643__mashedtatoes2__ding2.wav");
+
+  }
 
 
 function setup() {
@@ -49,4 +56,8 @@ function fitToScreen(){
  canvasContainer = select('#drawField');
  var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
  c.parent('drawField');
+}
+
+function mousePressed(){
+	soundeffects.ding.play();
 }
