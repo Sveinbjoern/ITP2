@@ -1,8 +1,13 @@
 //global variables that will store the toolbox colour palette
 //amnd the helper functions
-var toolbox = null;
-var colourP = null;
-var helpers = null;
+let toolbox = null;
+let colourP = null;
+let helpers = null;
+let drawManager = null;
+let currentFigure = 0;
+let currentDrawing = 0;
+let currentPart = 0;
+
 const soundeffects = {};
 
 
@@ -20,6 +25,10 @@ function setup() {
 	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
 	c.parent('drawField');
 
+	//create the drawManager
+	drawManager = new DrawManager;
+	drawManager.setup();
+
 	//create helper functions and the colour palette
 	helpers = new HelperFunctions();
 	colourP = new ColourPalette();
@@ -32,11 +41,17 @@ function setup() {
 	toolbox.addTool(new LineToTool());
 	toolbox.addTool(new SprayCanTool());
 	toolbox.addTool(new MirrorDrawTool());
-	background(255);
 
+
+
+	// background(200);
+	// drawManager.draw(drawManager.figures[0]);
+	
 }
 
 function draw() {
+	
+	
 	//call the draw function from the selected tool.
 	//hasOwnProperty is a javascript function that tests
 	//if an object contains a particular method or property
@@ -53,11 +68,12 @@ function fitToScreen(){
  console.log("fitToScreen");
  
  
- canvasContainer = select('#drawField');
- var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
- c.parent('drawField');
+//  canvasContainer = select('#drawField');
+//  var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
+//  c.parent('drawField');
 }
 
 function mousePressed(){
-	soundeffects.ding.play();
+	// soundeffects.ding.play();
+	// drawManager.reset();
 }
