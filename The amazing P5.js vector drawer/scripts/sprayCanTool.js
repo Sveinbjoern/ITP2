@@ -22,7 +22,8 @@ function SprayCanTool()
         let y;
         let randomR;
         
-        if(mouseIsPressed){
+        if(mouseIsPressed && mouseX >= 0 && mouseX <= width 
+            && mouseY >= 0 && mouseY <= height ){
             // For loop makes the right amount of points
             for(var i = 0; i < points; i++)
             {
