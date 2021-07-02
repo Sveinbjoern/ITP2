@@ -69,9 +69,9 @@ function fitToScreen(){
  console.log("fitToScreen");
  
  
-//  canvasContainer = select('#drawField');
-//  var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
-//  c.parent('drawField');
+ canvasContainer = select('#drawField');
+ var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
+ c.parent('drawField');
 }
 
 // function mousePressed(){

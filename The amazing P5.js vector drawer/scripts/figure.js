@@ -19,7 +19,7 @@ function Drawing(name,zeroPoint){
 }
 
 function Part(name){
-    this.vertexArray = [[20,21],[215,15],[465,456],[445,231]];
+    this.vertexArray = []//[20,21],[215,15],[465,456],[445,231]];
     this.name = name ||"partDefault";
     this.localZeroPoint = [0,0];
 
