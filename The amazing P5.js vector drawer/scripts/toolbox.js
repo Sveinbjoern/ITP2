@@ -17,7 +17,7 @@ function Toolbox() {
 		self.selectTool(toolName);
 
 		//call loadPixels to make sure most recent changes are saved to pixel array
-		loadPixels();
+		drawManager.reset();
 
 	}
 
@@ -56,11 +56,15 @@ function Toolbox() {
 				if (this.selectedTool != null && this.selectedTool.hasOwnProperty(
 						"unselectTool")) {
 					this.selectedTool.unselectTool();
+
 				}
 				//select the tool and highlight it on the toolbar
 				this.selectedTool = this.tools[i];
 				select("#" + toolName + "sideBarItem").style("border", "2px solid blue");
-
+				if (this.selectedTool.hasOwnProperty("setup"))
+				{
+					this.selectedTool.setup();
+				}
 				//if the tool has an options area. Populate it now.
 				if (this.selectedTool.hasOwnProperty("populateOptions")) {
 					this.selectedTool.populateOptions();
