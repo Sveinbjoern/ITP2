@@ -3,8 +3,9 @@
 html,
 body {
   margin: 0px;
-  height: 100%;
+  height: 100% ;
   box-sizing: border-box;
+  text-align: center;
 }
 
 /* Hidden elements css */
@@ -14,21 +15,42 @@ body {
 }
 
 /* Header */
-header {
-  display: inline-flex;
+/* header {
+  
+} */
+#header{
+	grid-area: header;
+	display: inline-flex;
+	
+	align-self: stretch;
+	text-align: center;
 }
+
 /* .header {
 	grid-area: header;
 	font-family: Helvetica, sans-serif
 }
 .header {
   background-color: #999;
-} */
+} */ 
 
 /* sidebar */
 #sidebar {
   grid-area: sidebar;
-  overflow-y: scroll;
+  overflow-y: hidden;
+
+}
+#sidebarLeft{
+	grid-area: sidebarLeft;
+	overflow: auto;
+	height: 100%;
+	align-items: none;
+}
+#sidebarRight{
+	grid-area: sidebarRight;
+	height: 100%;
+	overflow: auto;
+	align-items: stretch;
 }
 .sideBarItem {
   max-height: 50px;
@@ -48,6 +70,7 @@ header {
 /* drawfield css */
 #drawField {
   grid-area: drawField;
+  /* z-index: 20; */
 }
 
 /* footer */
@@ -56,6 +79,8 @@ header {
   grid-area: footer;
 }
 
+
+/* Color and optons CSS */
 .colourPalette {
   grid-area: colourP;
   display: flex;
@@ -66,6 +91,7 @@ header {
 .options {
   grid-area: options;
   padding: 15px;
+  text-align: left;
 }
 
 .colourSwatches {
@@ -76,15 +102,37 @@ header {
   margin: 5px;
 }
 
-.wrapper {
-  display: grid;
-  height: 100%;
-  grid-template-columns: 74px 230px minmax(200px, 1fr);
-  grid-template-rows: 0px minmax(200px, 1fr) 160px;
-  grid-template-areas:
-    "header header header"
-    "sidebar drawField drawField"
-    "colourP colourP options";
-  background-color: #fff;
-  color: #444;
+/* slides */
+.slide{
+	width: 300;
+	height: 1000;
+	
+	background-color: aquamarine;
+	align-self: start;
+	overflow: hidden;
+
+
 }
+
+
+/* Grid */
+
+	.wrapper {
+	display: grid;
+	height: 100%;
+	grid-template-columns:300px 65px minmax(200px, 1fr)  300px;
+	grid-template-rows: auto minmax(200px, 1fr) 160px ;
+	grid-template-areas:
+		"header header header header"
+		"sidebarLeft sidebar drawField sidebarRight"
+		"colourP colourP  options options";
+	background-color: #fff;
+	color: #444;
+	align-items: stretch;
+	}
+
+	/* .wrapper > div {
+		
+		text-align: center;
+		
+	  } */
