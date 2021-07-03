@@ -4,6 +4,7 @@
 
 function DrawManager() {
   this.figures = [];
+  this.curretPart;
 
   this.setup = function () {
     this.figures.push(new Figure("start"));
@@ -23,9 +24,34 @@ function DrawManager() {
       for (let j = 0; j < parts; j++) {
         let part = drawing.parts[j];
         // console.log("part", part);
-        let vertexArray = part.vertexArray.length;
+        
         // console.log("vertexArray",vertexArray)
-        for (let k = 0; k < vertexArray; k++) {
+        
+          drawPart(part)
+         
+        
+      }
+    }
+  };
+
+  this.reset = function () {
+    // clear screen
+    // console.log("reset Run")
+    clear();
+    // redraw
+    let figures = this.figures.length;
+    for (let i = 0; i < figures; i++) {
+      this.draw(this.figures[i]);
+    }
+  };
+
+
+  function drawPart(part){
+    
+    
+      //MARK The code in this function was made before the start of this semester
+      //by myself. It takes an array and the approprite setttings
+      //and draws with p5 to screen
           strokeWeight(part.strokeWeight);
           if (!part.noFill) {
             fill(...part.fill);
@@ -33,7 +59,7 @@ function DrawManager() {
             noFill();
           }
 
-          if (vertexArray === 1) {
+          if (part.vertexArray.length === 1) {
             beginShape(POINTS);
             createVertex(...part.vertexArray[0]);
             endShape();
@@ -76,24 +102,12 @@ function DrawManager() {
               endShape();
             }
           }
-        }
-        function createVertex(item) {
-          vertex(item[0], item[1]);
-        }
-      }
+    
+    function createVertex(item) {
+      vertex(item[0], item[1]);
     }
-  };
+  }
 
-  this.reset = function () {
-    // clear screen
-    // console.log("reset Run")
-    clear();
-    // redraw
-    let figures = this.figures.length;
-    for (let i = 0; i < figures; i++) {
-      this.draw(this.figures[i]);
-    }
-  };
-
+  
   return this;
 }

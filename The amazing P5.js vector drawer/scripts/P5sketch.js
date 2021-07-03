@@ -4,9 +4,13 @@ let toolbox = null;
 let colourP = null;
 let helpers = null;
 let drawManager = null;
-let currentFigure = 0;
-let currentDrawing = 0;
-let currentPart = 0;
+let currentFigureIndex = 0;
+let currentDrawingIndex = 0;
+let currentPartIndex = 0;
+let currentFigure;
+let currentDrawing;
+let currentPart;
+
 
 const soundeffects = {};
 
@@ -28,6 +32,11 @@ function setup() {
 	//create the drawManager
 	drawManager = new DrawManager;
 	drawManager.setup();
+
+	//setup current values
+	currentFigure = drawManager.figures[currentFigureIndex];
+	currentDrawing = currentFigure.drawings[currentDrawingIndex];
+	currentPart = currentDrawing.parts[currentPartIndex];	
 
 	//create helper functions and the colour palette
 	helpers = new HelperFunctions();

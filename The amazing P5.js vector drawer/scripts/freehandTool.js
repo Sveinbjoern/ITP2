@@ -3,7 +3,10 @@ function FreehandTool(){
 	this.icon = "assets/freehand.jpg";
 	this.name = "freehand";
 	this.arrayLength = 0;
-	this.currentVertex = [];
+
+
+	this.drawn = false;
+  	this.lightMode = false;
 	//to smoothly draw we'll draw a line from the previous mouse location
 	//to the current mouse location. The following values store
 	//the locations from the last frame. They are undefined to start with because
@@ -16,17 +19,37 @@ function FreehandTool(){
 	this.closeVertex;
 	this.draw = function(){
 		
-// console.log("this in frehandtool", this)
-		this.arrayLength =
-      drawManager.figures[currentFigure].drawings[currentDrawing].parts[currentPart].vertexArray.length;
-    this.currentVertex =
-      drawManager.figures[currentFigure].drawings[currentDrawing].parts[
-        currentPart
-      ].vertexArray;
+	// console.log("this in frehandtool", this)
+		this.arrayLength = currentPart.vertexArray.length;
+    
 	//   console.log("currentVertex in draw", this.currentVertex )
-	
+	if (!this.drawn) {
+		
+		loadPixels(); // loadPixels is in this case used to save the screeen at this point
+		   
+      this.drawn = true;
+    }
+    if (this.arrayLength > 0 && mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height && !this.itemInDistance && !this.itemHeld) {
+		if (this.lightMode)
+		{
+				updatePixels();
+				line(	currentPart.vertexArray[arrayLength-1][0],
+						currentPart.vertexArray[arrayLength-1][1],
+						mouseX,mouseY);
+		} else
+		{
+			currentPart.vertexArray.push ([mouseX,mouseY])
+			
+			drawManager.reset();
+			currentPart.vertexArray.pop();
+		}
+	}
+    	 else {updatePixels()}
 
-	};
+    
+  	};
+
+	
 
 
 	this.setup = function(){
@@ -39,16 +62,21 @@ function FreehandTool(){
 				  
 					if (self.itemInDistance) {
 					// currentVertex.push([mouseX, mouseY]);
-					self.currentVertex[self.closeVertex] = [mouseX,mouseY]
+					currentPart.vertexArray[self.closeVertex] = [mouseX,mouseY]
+
 					self.itemHeld = true;
+					self.drawn = false;
+
 					// drawManager.reset();
 					// drawn = false;
 					} else
 					{
 						
-						self.currentVertex.push([mouseX,mouseY]);
+						currentPart.vertexArray.push([mouseX,mouseY]);
+						self.drawn = false;
 					}
 					drawManager.reset();
+					
 			}	
 			  // prevent default
 			  return false;
@@ -59,7 +87,8 @@ function FreehandTool(){
 				if (self.itemHeld)
 			  {
 				
-				self.currentVertex[self.closeVertex] = [mouseX,mouseY]
+				currentPart.vertexArray[self.closeVertex] = [mouseX,mouseY]
+				self.drawn = false;
 			  }
 			  drawManager.reset();
 			  // prevent default
@@ -84,7 +113,7 @@ function FreehandTool(){
 					// console.log("mousX, dragDistance", mouseX ,self.dragDistance)
 					for (let i = 0; i< self.arrayLength; i++)
 					{
-						if (lowX < self.currentVertex[i][0]  && lowY < self.currentVertex[i][1])
+						if (lowX < currentPart.vertexArray[i][0]  && lowY < currentPart.vertexArray[i][1])
 						{
 							possible.push(i)
 							// console.log("possible forloop1 i",i)
@@ -99,7 +128,7 @@ function FreehandTool(){
 					let withinDragDistance = []; 
 					for (let i = 0; i < possibleLength; i++)
 					{	
-						if (highX > self.currentVertex[possible[i]][0]  && highY > self.currentVertex[possible[i]][1])
+						if (highX > currentPart.vertexArray[possible[i]][0]  && highY > currentPart.vertexArray[possible[i]][1])
 						{
 							withinDragDistance.push(possible[i])
 						}
@@ -114,7 +143,7 @@ function FreehandTool(){
 						
 						for (let i = 0 ; i < withinLength; i++ )
 						{
-							temp = dist(mouseX,mouseY, self.currentVertex[ withinDragDistance[i]][0], self.currentVertex[ withinDragDistance[i]][1]);
+							temp = dist(mouseX,mouseY, currentPart.vertexArray[ withinDragDistance[i]][0], currentPart.vertexArray[ withinDragDistance[i]][1]);
 							if (temp <= closest[0])
 							{
 								closest[0] = temp;
@@ -150,6 +179,7 @@ function FreehandTool(){
 			mouseReleased = function () {
 			  //empty in this drawingMode
 			  self.itemHeld = false; 
+			  self.drawn = false;
 			  // prevent default
 			  return false;
 			};
