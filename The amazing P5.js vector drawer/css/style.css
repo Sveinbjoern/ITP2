@@ -42,21 +42,35 @@ body {
 }
 #sidebarLeft{
 	grid-area: sidebarLeft;
-	overflow: auto;
 	height: 100%;
-	align-items: none;
+	overflow: auto;
+	/* align-self: stretch; */
 }
+
 #sidebarRight{
 	grid-area: sidebarRight;
 	height: 100%;
 	overflow: auto;
 	align-items: stretch;
 }
+#sidebarRight > .slide {
+    width: 300px;
+    height: 200px;
+    background: green;
+	overflow: auto;
+}
 .sideBarItem {
   max-height: 50px;
   max-width: 50px;
   padding: 5px;
 }
+#sidebarLeft > .slide {
+    width: 300px;
+    height: 200px;
+    background: green;
+	overflow: auto;
+}
+
 
 .sideBarItem img {
   max-height: 50px;
@@ -72,6 +86,24 @@ body {
   grid-area: drawField;
   /* z-index: 20; */
 }
+
+
+/* slides */
+.slide{
+	/* width: 300; */
+	/* height: 200; */
+	/* display: block; */
+	/* overflow: none; */
+	
+	/* background-color: aquamarine; */
+	/* align-self: start; */
+	/* overflow-x: hidden; */
+
+
+}
+
+
+
 
 /* footer */
 
@@ -102,17 +134,7 @@ body {
   margin: 5px;
 }
 
-/* slides */
-.slide{
-	width: 300;
-	height: 1000;
-	
-	background-color: aquamarine;
-	align-self: start;
-	overflow: hidden;
 
-
-}
 
 
 /* Grid */

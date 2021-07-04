@@ -108,6 +108,17 @@ function DrawManager() {
     }
   }
 
+  this.addPart = function(figureName, drawingName, partName){
+
+  }
+  this.addDrawing = function (figureName, drawingName){
+
+  }
+  this.addFigure = function (figureName)
+  {
+
+  }
+
   
   return this;
 }
