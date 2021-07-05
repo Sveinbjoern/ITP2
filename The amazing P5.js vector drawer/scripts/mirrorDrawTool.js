@@ -119,7 +119,7 @@ function MirrorDrawTool() {
 	//adds a button and click handler to the options area. When clicked
 	//toggle the line of symmetry between horizonatl to vertical
 	this.populateOptions = function() {
-		select(".options").html(
+		select("#mirrorOptions").html(
 			"<button id='directionButton'>Make Horizontal</button>");
 		// 	//click handler
 		select("#directionButton").mouseClicked(function() {

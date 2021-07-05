@@ -16,7 +16,7 @@ function Toolbox() {
 		var toolName = this.id().split("sideBarItem")[0];
 		self.selectTool(toolName);
 
-		//call loadPixels to make sure most recent changes are saved to pixel array
+		//reset the drawing
 		drawManager.reset();
 
 	}

@@ -23,11 +23,11 @@ function Part(name){
     this.name = name ||"partDefault";
     this.localZeroPoint = [0,0];
 
-    this.stroke = [20,20,20,255];
+    this.stroke = "black";
     this.noStroke = false;
     this.strokeWeight = 3;
     
-    this.fill = [120,120,120,255]
+    this.fill = "gray";
     this.noFill = false;
     this.vertexMode = "";
     this.endShape =false;

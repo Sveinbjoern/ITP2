@@ -54,7 +54,12 @@ function DrawManager() {
       //and draws with p5 to screen
           strokeWeight(part.strokeWeight);
           if (!part.noFill) {
-            fill(...part.fill);
+            fill(part.fill);
+          } else {
+            noFill();
+          }
+          if (!part.noStroke) {
+            stroke(part.stroke);
           } else {
             noFill();
           }
