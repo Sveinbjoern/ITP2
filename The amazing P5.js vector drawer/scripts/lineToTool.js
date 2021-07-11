@@ -60,7 +60,7 @@ function LineToTool() {
 			self.drawn = false;
 		  }
 		  // prevent default
-		  return false;
+		//   return false;
 		};
   
 		mouseDragged = function () {
@@ -78,7 +78,7 @@ function LineToTool() {
 		mouseReleased = function () {
 		  //empty in this drawingMode
 		  // prevent default
-		  return false;
+		//   return false;
 		};
 	  
   } 

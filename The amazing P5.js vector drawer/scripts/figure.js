@@ -1,5 +1,6 @@
 function Figure (name ){
     this.name = name;
+    this.currentDrawing = 0;
     this.drawings = [];
     this.drawings.push(new Drawing("first Drawing",[0,0]))
 
@@ -11,10 +12,11 @@ function Figure (name ){
 
 
 function Drawing(name,zeroPoint){
-    this.name = name||"drawingDefault"
+    this.name = name||"drawingDefault";
     this.zeroPoint = zeroPoint;
+    this.currentPart = 0;
     this.parts = [];
-    this.parts.push(new Part("firstPart") )
+    this.parts.push(new Part("firstPart") );
     return this;
 }
 
@@ -30,7 +32,7 @@ function Part(name){
     this.fill = "gray";
     this.noFill = false;
     this.vertexMode = "";
-    this.endShape =false;
+    this.endShape = true;
 
     return this;
 }

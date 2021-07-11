@@ -4,6 +4,8 @@ let toolbox = null;
 let colourP = null;
 let helpers = null;
 let drawManager = null;
+let sliderManager = null;
+
 let currentFigureIndex = 0;
 let currentDrawingIndex = 0;
 let currentPartIndex = 0;
@@ -29,15 +31,17 @@ function setup() {
 	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
 	c.parent('drawField');
 
-	//create the drawManager
-	drawManager = new DrawManager;
+	//create the drawManager 
+	drawManager = new DrawManager();
 	drawManager.setup();
-
 	//setup current values
 	currentFigure = drawManager.figures[currentFigureIndex];
 	currentDrawing = currentFigure.drawings[currentDrawingIndex];
 	currentPart = currentDrawing.parts[currentPartIndex];	
-
+	//create the sliderManager
+	// console.log("currentPart setup" ,currentPart)
+	sliderManager = new SliderManager();
+	sliderManager.fillOrderBar();
 	//create helper functions and the colour palette
 	helpers = new HelperFunctions();
 	colourP = new ColourPalette();
@@ -48,8 +52,8 @@ function setup() {
 	//add the tools to the toolbox.
 	toolbox.addTool(new FreehandTool());
 	toolbox.addTool(new LineToTool());
-	toolbox.addTool(new SprayCanTool());
-	toolbox.addTool(new MirrorDrawTool());
+	// toolbox.addTool(new SprayCanTool());
+	// toolbox.addTool(new MirrorDrawTool());
 
 
 

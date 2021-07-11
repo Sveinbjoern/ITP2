@@ -1,3 +1,18 @@
+update 05.07.2021
+implementations
+Two drawing modes functional
+good prediction and user feedback on drawing.
+multiple parts sidebar
+Scrolling on sidebars functional.
+Settings for current part functinal
+
+updates:
+updated with latest p5.sound library
+
+Fixes:
+(NEEDED)make clear button remove parts html elements!!!
+
+
 update 29.06.2021
 Rekindled project after learning HTML and CSS.
 

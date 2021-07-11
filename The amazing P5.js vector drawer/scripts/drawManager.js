@@ -17,6 +17,7 @@ function DrawManager() {
   this.draw = function (figure) {
     //check if it has a point!! before sending it to draw
     drawings = figure.drawings.length;
+    
     for (let i = 0; i < drawings; i++) {
       // console.log("i", i);
       let drawing = figure.drawings[i];
@@ -61,7 +62,7 @@ function DrawManager() {
           if (!part.noStroke) {
             stroke(part.stroke);
           } else {
-            noFill();
+            noStroke();
           }
 
           if (part.vertexArray.length === 1) {
@@ -120,6 +121,41 @@ function DrawManager() {
 
   }
   this.addFigure = function (figureName)
+  {
+
+  }
+
+  this.removePart = function (figureName)
+  {
+
+  }
+
+  this.removeDrawing = function (figureName)
+  {
+
+  }
+
+  this.removefigure = function (figureName)
+  {
+
+  }
+
+  this.moveDrawing = function (figureName)
+  {
+
+  }
+
+  this.movePart = function (figureName)
+  {
+
+  }
+
+  this.copyPart = function (figureName)
+  {
+
+  }
+
+  this.copyDrawing = function (figureName)
   {
 
   }

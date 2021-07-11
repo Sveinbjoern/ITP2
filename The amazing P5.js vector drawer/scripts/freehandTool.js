@@ -79,7 +79,7 @@ function FreehandTool(){
 					
 			}	
 			  // prevent default
-			  return false;
+			 
 			};
 	  
 			mouseDragged = function () {
@@ -92,7 +92,7 @@ function FreehandTool(){
 			  }
 			  drawManager.reset();
 			  // prevent default
-			  return false;
+			//   return false;
 			};
 			mouseMoved = function () {
 			  //draws the line
@@ -174,14 +174,14 @@ function FreehandTool(){
 
 			 
 			  // prevent default
-			  return false;
+			//   return false;
 			};
 			mouseReleased = function () {
 			  //empty in this drawingMode
 			  self.itemHeld = false; 
 			  self.drawn = false;
 			  // prevent default
-			  return false;
+			//   return false;
 			};
 		  
 	}
