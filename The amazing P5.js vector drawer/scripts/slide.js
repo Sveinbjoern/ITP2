@@ -12,5 +12,9 @@ function Slide (location, position, type){
 
     // slide should be of the type type
 
+    let colorSlide = function (){
+        
+    }
+
 }
 

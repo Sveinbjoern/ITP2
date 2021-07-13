@@ -11,6 +11,26 @@ function HelperFunctions() {
         drawManager.reset();
         
     }
+    this.selectBox = function(value)
+    {
+        console.log("selectBox: value",value);
+        if (value)
+        {
+            //display all the checkboxes
+            console.log("selectbutton ON")
+           
+        } else{
+            //remove checkboxes
+            console.log("selectbutton OFF")
+        }
+        
+        
+    }
+    this.isSelected = function (value){
+        console.log("isSelected function: value", value)
+        currentDrawing.parts[value.identity] = value.checked;
+        
+    }
     this.noFillButton = function(checked)
     {
         // console.log(checked);

@@ -17,6 +17,7 @@ function Drawing(name,zeroPoint){
     this.currentPart = 0;
     this.parts = [];
     this.parts.push(new Part("firstPart") );
+    this.selected = false;
     return this;
 }
 
@@ -24,6 +25,7 @@ function Part(name){
     this.vertexArray = [];//[20,21],[215,15],[465,456],[445,231]];
     this.name = name ||"partDefault";
     this.localZeroPoint = [0,0];
+    this.selected = false;
 
     this.stroke = "black";
     this.noStroke = false;

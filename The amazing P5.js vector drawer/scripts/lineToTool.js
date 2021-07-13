@@ -65,15 +65,15 @@ function LineToTool() {
   
 		mouseDragged = function () {
 		  //empty in this drawingMode
-  
+			
 		  // prevent default
-		  return false;
+		//   return false;
 		};
 		mouseMoved = function () {
 		  //draws the line
   
 		  // prevent default
-		  return false;
+		//   return false;
 		};
 		mouseReleased = function () {
 		  //empty in this drawingMode

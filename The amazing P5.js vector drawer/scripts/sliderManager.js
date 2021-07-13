@@ -6,16 +6,19 @@ function SliderManager(){
 
         //     let figure = createDiv()
 
-        let orderBar = select("#orderBar")
+       
 
+        
         let newPart = createDiv();
-        newPart.parent(orderBar);
+        newPart.parent("#orderBar");
         newPart.id("newPartButton")
+      
 
         let button = createButton("create new part");
         button.parent(newPart)
-        button.mousePressed(makeNewPart);
+        button.mousePressed(makeNewHTMLPart);
 
+        
 
         
         // inp.position(0, 0);
@@ -29,20 +32,42 @@ function SliderManager(){
         {
             
             let part = createDiv();
-            part.parent(orderBar);
+            part.parent("#orderBar");
+            
+            //checkbox for isSelected: this is done with the standard javaScipt and jQuery
+            // because the p5 code creates an unecessary div container
+            let checkBox = document.createElement("INPUT");
+            checkBox.setAttribute("type", "checkbox");
+            
+            part.elt.appendChild(checkBox);
+            $(checkBox).addClass( 'selectedBox');
+            checkBox.identity = i
+            // console.log("checkBox", checkBox)
+            // $(checkBox).change(helpers.isSelected(this));
+            checkBox.addEventListener('change', helpers.isSelected(checkBox));
+            
+            // console.log("part", part.elt)
+            
+            // checkBox.parent(part);
+            // checkBox.addClass("selectedBox");
+            // checkBox.changed(helpers.isSelected);
 
+            //button for choosing currenfigure
             button = createButton("part"+(i+1)+": ");
             button.parent(part)
             button.identity = i
+            // console.log("button", button)
             button.mousePressed(choosePart);
 
+            // textField for naming the part
             input_text = currentDrawing.parts[i].name
+            console.log(i, input_text,currentDrawing.parts[i])
+
             let inp = createInput(input_text);
             inp.parent(part)
             inp.identity = i
             // inp.position(0, 0);
             // inp.size(100); 
-            // console.log(inp.elt.value)
             inp.input(partInputEvent);
            
             
@@ -62,22 +87,32 @@ function SliderManager(){
             
             currentDrawing.parts[this.identity].name = this.elt.value;
         }
-        function makeNewPart(){
+        function makeNewHTMLPart(){
             // let part = createDiv("part"+(i+1)+": ");
             // part.parent(orderBar);
             
             let partsLength = currentDrawing.parts.length
-
+            currentDrawing.parts.push(new Part("part"+ (partsLength+1) ));
             
             let part = createDiv();
-            part.parent(orderBar);
+            part.parent("#orderBar");
+
+            let checkBox = document.createElement("INPUT");
+            checkBox.setAttribute("type", "checkbox");
+            
+            part.elt.appendChild(checkBox);
+            $(checkBox).addClass( 'selectedBox');
+            checkBox.identity = partsLength
+            // $(checkBox).change(helpers.isSelected(this));
+            checkBox.addEventListener('change', helpers.isSelected(checkBox));
+            console.log("checkBox", checkBox)
 
             button = createButton("part"+(partsLength+1)+": ");
             button.parent(part)
             button.identity = partsLength
             button.mousePressed(choosePart);
 
-           currentDrawing.parts.push(new Part("part"+ (partsLength+1) ));
+           
            
             input_text = currentDrawing.parts[partsLength].name
             let inp = createInput(input_text);

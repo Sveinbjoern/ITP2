@@ -30,7 +30,9 @@ function setup() {
 	canvasContainer = select('#drawField');
 	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
 	c.parent('drawField');
-
+	//create helper functions and the colour palette
+	helpers = new HelperFunctions();
+	colourP = new ColourPalette();
 	//create the drawManager 
 	drawManager = new DrawManager();
 	drawManager.setup();
@@ -42,9 +44,7 @@ function setup() {
 	// console.log("currentPart setup" ,currentPart)
 	sliderManager = new SliderManager();
 	sliderManager.fillOrderBar();
-	//create helper functions and the colour palette
-	helpers = new HelperFunctions();
-	colourP = new ColourPalette();
+	
 
 	//create a toolbox for storing the tools
 	toolbox = new Toolbox();
