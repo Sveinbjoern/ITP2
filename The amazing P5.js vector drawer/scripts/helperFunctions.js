@@ -28,7 +28,7 @@ function HelperFunctions() {
     }
     this.isSelected = function (value){
         console.log("isSelected function: value", value)
-        currentDrawing.parts[value.identity] = value.checked;
+        currentDrawing.parts[value.identity].selected = value.checked;
         
     }
     this.noFillButton = function(checked)
@@ -114,8 +114,7 @@ function HelperFunctions() {
         drawManager.reset();
 
 
-		//call loadPixels to update the drawing state
-		//this is needed for the mirror tool
+		
 		
 	});
 

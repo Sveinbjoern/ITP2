@@ -8,6 +8,7 @@ function DrawManager() {
 
   this.setup = function () {
     this.figures.push(new Figure("start"));
+    // console.log("Part", drawManager.figures)
     // if (this.figures[0].drawings[0].parts[0].vertexArray.length >= 1)
     // {
     //     // this.draw(this.figures[0])
@@ -32,17 +33,6 @@ function DrawManager() {
          
         
       }
-    }
-  };
-
-  this.reset = function () {
-    // clear screen
-    // console.log("reset Run")
-    clear();
-    // redraw
-    let figures = this.figures.length;
-    for (let i = 0; i < figures; i++) {
-      this.draw(this.figures[i]);
     }
   };
 
@@ -160,6 +150,20 @@ function DrawManager() {
 
   }
 
+
+
+
+
+  this.reset = function () {
+    // clear screen
+    // console.log("reset Run")
+    clear();
+    // redraw
+    let figures = this.figures.length;
+    for (let i = 0; i < figures; i++) {
+      this.draw(this.figures[i]);
+    }
+  };
   
   return this;
 }

@@ -30,6 +30,7 @@ function setup() {
 	canvasContainer = select('#drawField');
 	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
 	c.parent('drawField');
+	
 	//create helper functions and the colour palette
 	helpers = new HelperFunctions();
 	colourP = new ColourPalette();
@@ -40,6 +41,7 @@ function setup() {
 	currentFigure = drawManager.figures[currentFigureIndex];
 	currentDrawing = currentFigure.drawings[currentDrawingIndex];
 	currentPart = currentDrawing.parts[currentPartIndex];	
+	
 	//create the sliderManager
 	// console.log("currentPart setup" ,currentPart)
 	sliderManager = new SliderManager();

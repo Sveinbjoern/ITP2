@@ -44,7 +44,7 @@ function SliderManager(){
             checkBox.identity = i
             // console.log("checkBox", checkBox)
             // $(checkBox).change(helpers.isSelected(this));
-            checkBox.addEventListener('change', helpers.isSelected(checkBox));
+            part.elt.addEventListener('change', helpers.isSelected(checkBox));
             
             // console.log("part", part.elt)
             
@@ -61,7 +61,7 @@ function SliderManager(){
 
             // textField for naming the part
             input_text = currentDrawing.parts[i].name
-            console.log(i, input_text,currentDrawing.parts[i])
+            // console.log(i, input_text,currentDrawing)
 
             let inp = createInput(input_text);
             inp.parent(part)
@@ -104,7 +104,7 @@ function SliderManager(){
             $(checkBox).addClass( 'selectedBox');
             checkBox.identity = partsLength
             // $(checkBox).change(helpers.isSelected(this));
-            checkBox.addEventListener('change', helpers.isSelected(checkBox));
+            part.elt.addEventListener('change', helpers.isSelected(checkBox));
             console.log("checkBox", checkBox)
 
             button = createButton("part"+(partsLength+1)+": ");
