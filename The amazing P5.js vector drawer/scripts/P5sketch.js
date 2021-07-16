@@ -21,7 +21,7 @@ function preload() {
 	// preload() runs once
 	soundeffects.ding = loadSound("assets/sound/515643__mashedtatoes2__ding2.wav");
 
-  }
+}
 
 
 function setup() {
@@ -45,7 +45,7 @@ function setup() {
 	//create the sliderManager
 	// console.log("currentPart setup" ,currentPart)
 	sliderManager = new SliderManager();
-	sliderManager.fillOrderBar();
+	sliderManager.setup();
 	
 
 	//create a toolbox for storing the tools
@@ -61,6 +61,8 @@ function setup() {
 
 	// background(200);
 	// drawManager.draw(drawManager.figures[0]);
+
+	// console.log($("#sidebarRight").children()[1]);
 	
 }
 

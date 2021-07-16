@@ -52,14 +52,17 @@ body {
 #sidebarRight{
 	grid-area: sidebarRight;
 	height: 100%;
-	overflow: auto;
-	align-items: stretch;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 0px;
+	/* align-items: stretch; */
 }
 #sidebarRight > .slide {
     width: 300px;
     height: 200px;
     background: green;
 	overflow: auto;
+	
 }
 .sideBarItem {
   height: 51px;

@@ -26,9 +26,12 @@ function HelperFunctions() {
         
         
     }
-    this.isSelected = function (value){
-        console.log("isSelected function: value", value)
-        currentDrawing.parts[value.identity].selected = value.checked;
+    this.isSelected = function (){
+        // console.log("isSelected function: identity, checked", this.identity, this.checked)
+        // console.log("currentDrawing", currentDrawing)
+
+        currentDrawing.parts[this.identity].isSelected = this.checked;
+        
         
     }
     this.noFillButton = function(checked)
@@ -80,6 +83,8 @@ function HelperFunctions() {
         {
             element.value = "EndShape(CLOSE)"
         }
+
+        
     }
     
     

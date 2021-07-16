@@ -1,3 +1,17 @@
+update 16.07.2021
+implementations
+Started work on creating elements
+
+updates:
+Now working only on html adding and removing elements
+Backspace removes last placed point
+
+Fixes:
+(NEEDED)make clear button remove parts html elements!!!
+Order list impoved
+rightSidebar element color(not functional)
+
+
 update 05.07.2021
 implementations
 Two drawing modes functional

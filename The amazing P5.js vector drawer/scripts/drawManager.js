@@ -6,6 +6,8 @@ function DrawManager() {
   this.figures = [];
   this.curretPart;
 
+ 
+
   this.setup = function () {
     this.figures.push(new Figure("start"));
     // console.log("Part", drawManager.figures)
