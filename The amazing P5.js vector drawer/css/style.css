@@ -22,10 +22,10 @@ body {
 } */
 #header{
 	grid-area: header;
-	display: inline-flex;
-	margin: auto;
-	 align-self: stretch;
-	text-align: center;
+	display: flex;
+	/* margin: 0px 5px; */
+	justify-content: space-evenly;
+	
 }
 
 /* .header {

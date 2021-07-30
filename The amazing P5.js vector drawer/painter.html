@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="lib/p5.js"></script>
+    <script src="lib/p5.sound.js"></script>
+    <script src="lib/jquery-3.6.0.min.js"></script>
+
+    <!-- add extra scripts below -->
+    <script src="scripts/toolbox.js"></script>
+    <script src="scripts/colourPalette.js"></script>
+    <script src="scripts/helperFunctions.js"></script>
+
+    <script src="scripts/freehandTool.js"></script>
+    <script src="scripts/lineToTool.js"></script>
+    <script src="scripts/mirrorDrawTool.js"></script>
+    <script src="scripts/sprayCanTool.js"></script>
+    <script src="scripts/slideTemplates.js"></script>
+    <script src="scripts/sliderManager.js"></script>
+
+    <script src="scripts/figure.js"></script>
+    <script src="scripts/drawManager.js"></script>
+
+    <script src="scripts/P5sketch.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  <body onresize="fitToScreen()">
+    <div id="hiddenElements">
+      <input type="radio" id="drawMode" name="mode" value="drawMode" checked />
+       
+      <input
+        type="radio"
+        id="animationMode"
+        name="mode"
+        value="animationMode"
+      />
+        <input type="radio" id="canvasMode" name="mode" value="canvasMode" />
+    </div>
+
+    
+
+    <div class="wrapper"> 
+          <div id = "header">
+          <div #DrawModeButton>D</div>
+         
+          <div #CanvasModeButton>C</div>
+          <a href="index.html">Index</a>
+          <a href="painter.html">Painter</a>
+          <div #headerText>The AmazingP5.js vector drawing App</div>
+          <div #headerMenu>
+             
+            <!-- <button type="button">Click Me!</button> -->
+            <!-- <button type="button">Click Me!</button> -->
+            <button id="clearButton">Clear</button>
+            <button id="saveImageButton">Save Image</button>
+          </div>
+          <div #headerAboutslider>ABOUT!</div>
+        </div>
+
+      <div class="box" id="sidebar"></div>
+      <div id="drawField">
+        <!-- <button id="canvasButton">Boop</button> -->
+      </div>
+      
+      <div class="box colourPalette">Stroke</div>
+      <div class="box colorFill">Fill
+        
+        <form class ="inputs"> 
+          <label for="noStroke"> noStroke:</label>
+          <input  type="checkbox" id="noStrokeInput" name="noStroke" onclick="helpers.noStrokeButton(this.checked)">
+          <label for="noFill"> noFill:</label>
+          <input type="checkbox" id="noFillInput" name="noFill" onclick="helpers.noFillButton(this.checked)">
+          <!-- <label for="noFill"> noFill</label> -->
+          <input type="button" id="endShapeInput" name="EndshapeInput", value="EndShape()"onclick="helpers.endShapeButton(this)">
+          
+          <label for="strokeWeightInput">strokeWeight:</label>
+          <input type= "range" id="strokeWeightInput" name="strokeWeightInput" min="1" max="50" value="3" oninput="helpers.strokeWeightSlider(this.value)"> 
+          <!--"{currentPart.strokeWeight = value; drawManager.reset();}"> -->
+        </form>
+        
+      </div>
+      <!-- <div class="box options">options</div> -->
+      <div class="box" id = "sidebarLeft">
+       
+          <div id="orderBar">
+            <input  type="checkbox" id="selectBox" name="selectBox" onclick="helpers.selectBox(this.checked)">order
+           
+          </div>
+
+      </div>
+      <div class="box" id = "sidebarRight">sidebarRight
+        <!-- <div class="slide" id = "mirrorOptions">Yalla</div> -->
+        
+        
+        
+      </div>
+    </div>
+
+    
+  </body>
+</html>

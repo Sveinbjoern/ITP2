@@ -5,6 +5,46 @@
 function DrawManager() {
   this.figures = [];
   this.curretPart;
+  this.defaultPart = 
+  {
+    name: "partDefault",
+    localZeroPoint: [0,0],
+    isSelected: false,
+
+    stroke: "black",
+    noStroke: false,
+    strokeWeight: 3,
+    fill: "gray",
+    noFill: false,
+    vertexMode: "",
+    endShape: true,
+  };
+  this.defaultDrawing = 
+  {
+    name: "drawingDefault",
+    zeroPoint: [0,0],
+    currentPart: 0,
+    isSelected: false,
+  };
+  this.defaultFigure = 
+  {
+    name: "newFigure",
+    currentDrawing: 0,
+  };
+  this.drawModes = 
+  {
+    NONE: "",
+    LINES: "LINES",
+    POINTS: "POINTS",
+    TRIANGELS: "TRIANGLES",
+    TRIANGLE_STRIP: "TRIANGLE_STRIP",
+    TRIANGLE_FAN: "TRIANGLE_FAN",
+    QUADS: "QUADS",
+    QUAD_STRIP: "QUAD_STRIP",
+    TESS: "TESS",
+  }
+
+
 
  
 
