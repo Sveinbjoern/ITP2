@@ -9,12 +9,12 @@ function DrawManager() {
   {
     name: "partDefault",
     localZeroPoint: [0,0],
-    isSelected: false,
+    
 
-    stroke: "black",
+    stroke: color(0,0,0),
     noStroke: false,
     strokeWeight: 3,
-    fill: "gray",
+    fill: color(120,120,120),
     noFill: false,
     vertexMode: "",
     endShape: true,
@@ -24,8 +24,15 @@ function DrawManager() {
     name: "drawingDefault",
     zeroPoint: [0,0],
     currentPart: 0,
-    isSelected: false,
+    
   };
+  this.defaultPoints =
+  {
+    name: "point",
+    type: "rotation",
+    position: [width/2,height/2], 
+    
+  }
   this.defaultFigure = 
   {
     name: "newFigure",
@@ -44,6 +51,13 @@ function DrawManager() {
     TESS: "TESS",
   }
 
+  this.settings =
+  {
+    minStrokeWeight: 1,
+    maxStrokeWeight: 50,
+
+
+  }
 
 
  

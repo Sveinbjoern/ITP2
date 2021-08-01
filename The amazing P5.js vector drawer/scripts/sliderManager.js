@@ -16,6 +16,8 @@ function SliderManager(){
     let slideTemplates = new SlideTemplates();
     // console.log(slideTemplates)
     let temporary;
+   
+
     let slides = {
         leftSidebar: [],
         rightSidebar: [],
@@ -40,7 +42,7 @@ function SliderManager(){
     }
     
 
-
+    
 
 
  

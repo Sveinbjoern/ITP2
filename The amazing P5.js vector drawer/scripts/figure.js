@@ -1,6 +1,6 @@
-function Figure (name ){
-    this.name = name;
-    this.currentDrawing = 0;
+function Figure (name, currentDrawing ){
+    this.name = name || drawManager.defaultFigure.name;
+    this.currentDrawing = currentDrawing || 0;
     this.drawings = [];
     // console.log(this.drawings)
     this.drawings.push(new Drawing("first Drawing",[0,0]))
@@ -12,10 +12,10 @@ function Figure (name ){
 }
 
 
-function Drawing(name,zeroPoint){
-    this.name = name||"drawingDefault";
-    this.zeroPoint = zeroPoint;
-    this.currentPart = 0;
+function Drawing(name,zeroPoint, currentPart){
+    this.name = name || drawManager.defaultDrawing.name;
+    this.zeroPoint = zeroPoint || drawManager.defaultDrawing.zeroPoint;
+    this.currentPart = currentPart || 0;
     this.isSelected = false;
     this.parts = [];
     this.parts.push(new Part("firstPart"));
@@ -26,20 +26,29 @@ function Drawing(name,zeroPoint){
     return this;
 }
 
-function Part(name){
-    this.vertexArray = [];//[20,21],[215,15],[465,456],[445,231]];
-    this.name = name ||"partDefault";
-    this.localZeroPoint = [0,0];
+function Point(name, type, position){
+    this.name = name || drawManager.defaultPoint.name;
+    this.type = type || drawManager.defaultPoint.type;
+    this.position = position || drawManager.defaultPoint.position;
     this.isSelected = false;
 
-    this.stroke = "black";
-    this.noStroke = false;
-    this.strokeWeight = 3;
+    return this;
+}
+
+function Part(name){
+    this.vertexArray = [];//[20,21],[215,15],[465,456],[445,231]];
+    this.name = name || drawManager.defaultPart.name;
+    this.localZeroPoint = drawManager.defaultPart.zeroPoint;
+    this.isSelected = false;
+
+    this.stroke = drawManager.defaultPart.stroke;
+    this.noStroke = drawManager.defaultPart.noStroke;
+    this.strokeWeight = drawManager.defaultPart.strokeWeight;
     
-    this.fill = "gray";
-    this.noFill = false;
-    this.vertexMode = "";
-    this.endShape = true;
+    this.fill = drawManager.defaultPart.fill;
+    this.noFill = drawManager.defaultPart.noFill;
+    this.vertexMode = drawManager.defaultPart.vertexMode;
+    this.endShape = drawManager.defaultPart.endShape;
     // console.log("Part", drawManager.figures)
 
     return this;

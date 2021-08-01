@@ -26,6 +26,9 @@ function preload() {
 
 function setup() {
 
+	//basic p5 settings:
+	frameRate(30);
+
 	//create a canvas to fill the content div from index.html
 	canvasContainer = select('#drawField');
 	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
