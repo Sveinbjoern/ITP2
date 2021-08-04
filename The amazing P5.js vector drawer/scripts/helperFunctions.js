@@ -2,7 +2,9 @@ function HelperFunctions() {
 	
 
     self = this;
-    
+    let figure = drawManager.getFigure();
+    let currentDrawing = figure.drawings[figure.currentDrawing]
+    let currentPart = currentDrawing.parts[currentDrawing.currentPart]
     // Buttons and checkboxes and field functions
     this.noStrokeButton = function(checked)
     {
@@ -104,14 +106,14 @@ function HelperFunctions() {
         currentPartIndex = 0; 
         // delete drawManager.figures[0];
         
-        currentFigure = null;
+        figure = null;
         currentDrawing = null;
         currentPart = null;
-        drawManager.figures[currentFigureIndex] = null;
+       
 
         
         
-        drawManager.figures[currentFigureIndex] = new Figure("start");
+        figure = new Figure("start");
         
         currentFigure = drawManager.figures[currentFigureIndex];
         currentDrawing = currentFigure.drawings[currentDrawingIndex];
@@ -175,7 +177,10 @@ function keyPressed()
                 if (keyCode === keyCodes.backSpace)
                 {
                     
-                    currentPart.vertexArray.pop();
+                    let figure = drawManager.getFigure()
+                    // let currentDrawing = figure.drawings[figure.currentDrawing];
+                    figure.drawings[figure.currentDrawing].parts[figure.drawings[figure.currentDrawing].currentPart].vertexArray.pop();
+                    
                     toolbox.selectedTool.drawn = false;
                     drawManager.reset();
 

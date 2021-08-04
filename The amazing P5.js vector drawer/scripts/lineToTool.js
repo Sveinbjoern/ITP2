@@ -13,11 +13,11 @@ function LineToTool() {
   this.lightMode = false;
   this.arrayLength = 0 ;
   
-
+	this.figure = drawManager.getFigure();
   //draws a line when mouse is pressed, keeps the one that is there when you release
   this.draw = function () {
 	//   console.log("draw linetotool this",this)
-    this.arrayLength = currentPart.vertexArray.length
+    this.arrayLength = this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray.length
     
 
     if (!this.drawn) {
@@ -30,15 +30,15 @@ function LineToTool() {
 		if (this.lightMode)
 		{
 				updatePixels();
-				line(	currentPart.vertexArray[arrayLength-1][0],
-						currentPart.vertexArray[arrayLength-1][1],
+				line(	this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray[arrayLength-1][0],
+						this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray[arrayLength-1][1],
 						mouseX,mouseY);
 		} else
 		{
-			currentPart.vertexArray.push ([mouseX,mouseY])
+			this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray.push ([mouseX,mouseY])
 			
 			drawManager.reset();
-			currentPart.vertexArray.pop();
+			this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray.pop();
 		}
 		
     } else {updatePixels()}
@@ -54,7 +54,7 @@ function LineToTool() {
 			// console.log("self in lineToTool", self.arrayLength)
 		  //make mouse only work inside canvas
 		  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-			currentPart.vertexArray.push([mouseX, mouseY]);
+			self.figure.drawings[self.figure.currentDrawing].parts[self.figure.drawings[self.figure.currentDrawing].currentPart].vertexArray.push([mouseX, mouseY]);
 			drawManager.reset();
 			// console.log("self in mousePressed", self)
 			self.drawn = false;

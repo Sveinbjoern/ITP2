@@ -11,37 +11,50 @@ function FreehandTool(){
 	//to the current mouse location. The following values store
 	//the locations from the last frame. They are undefined to start with because
 	//we haven't started drawing yet.
-	this.dragDistance = 15;
+	this.dragDistanceBase = 4;
+	this.dragDistance = this.dragDistanceBase + drawManager.getPart().strokeWeight/2;
+	this.updateSettings = false;
 	this.itemHeld = false;
 	let self = this;
 
 	this.itemInDistance = false;
 	this.closeVertex;
+
+
 	this.draw = function(){
 		
-	// console.log("this in frehandtool", this)
-		this.arrayLength = currentPart.vertexArray.length;
+	// console.log("this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart]", this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart])
+		if (this.updateSettings)
+		{
+			this.dragDistance = this.dragDistanceBase + drawManager.getPart().strokeWeight/2;
+			this.updateSettings = false;
+			console.log("dragDistance",  this.dragDistance);
+		}
+
+		this.arrayLength = drawManager.getVertexArray().length;
     
 	//   console.log("currentVertex in draw", this.currentVertex )
 	if (!this.drawn) {
 		
 		loadPixels(); // loadPixels is in this case used to save the screeen at this point
-		   
+		
       this.drawn = true;
     }
     if (this.arrayLength > 0 && mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height && !this.itemInDistance && !this.itemHeld) {
+		let vertexArray = drawManager.getVertexArray();
 		if (this.lightMode)
 		{
+			
 				updatePixels();
-				line(	currentPart.vertexArray[arrayLength-1][0],
-						currentPart.vertexArray[arrayLength-1][1],
+				line(	vertexArray[arrayLength-1][0],
+						vertexArray[arrayLength-1][1],
 						mouseX,mouseY);
 		} else
 		{
-			currentPart.vertexArray.push ([mouseX,mouseY])
+			vertexArray.push ([mouseX,mouseY])
 			
 			drawManager.reset();
-			currentPart.vertexArray.pop();
+			vertexArray.pop();
 		}
 	}
     	 else {updatePixels()}
@@ -59,10 +72,10 @@ function FreehandTool(){
 				//make mouse only work inside canvas
 			  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height)
 			  {
-				  
+				  let vertexArray = drawManager.getVertexArray();
 					if (self.itemInDistance) {
 					// currentVertex.push([mouseX, mouseY]);
-					currentPart.vertexArray[self.closeVertex] = [mouseX,mouseY]
+					vertexArray[self.closeVertex] = [mouseX,mouseY]
 
 					self.itemHeld = true;
 					self.drawn = false;
@@ -71,8 +84,8 @@ function FreehandTool(){
 					// drawn = false;
 					} else
 					{
-						
-						currentPart.vertexArray.push([mouseX,mouseY]);
+						// console.log("why not?",this.figure)   //[this.figure.currentDrawing].parts) //[this.figure.drawings[this.figure.currentDrawing].currentPart] );
+						vertexArray.push([mouseX,mouseY]);
 						self.drawn = false;
 					}
 					drawManager.reset();
@@ -86,8 +99,9 @@ function FreehandTool(){
 			  //empty in this drawingMode
 				if (self.itemHeld)
 			  {
+				  let vertexArray = drawManager.getVertexArray();
 				
-				currentPart.vertexArray[self.closeVertex] = [mouseX,mouseY]
+				vertexArray[self.closeVertex] = [mouseX,mouseY]
 				self.drawn = false;
 			  }
 			  drawManager.reset();
@@ -105,6 +119,7 @@ function FreehandTool(){
 				// console.log("closeVertex" , self.closeVertex)
 				
 					self.closeVertex = [];
+					let vertexArray = drawManager.getVertexArray();
 					let possible = [];
 					let lowX = mouseX - self.dragDistance;
 					let highX = mouseX + self.dragDistance;
@@ -113,7 +128,7 @@ function FreehandTool(){
 					// console.log("mousX, dragDistance", mouseX ,self.dragDistance)
 					for (let i = 0; i< self.arrayLength; i++)
 					{
-						if (lowX < currentPart.vertexArray[i][0]  && lowY < currentPart.vertexArray[i][1])
+						if (lowX < vertexArray[i][0]  && lowY < vertexArray[i][1])
 						{
 							possible.push(i)
 							// console.log("possible forloop1 i",i)
@@ -126,9 +141,10 @@ function FreehandTool(){
 					// console.log("mouseMoved:after first removed", possible)
 					let possibleLength = possible.length
 					let withinDragDistance = []; 
+					
 					for (let i = 0; i < possibleLength; i++)
 					{	
-						if (highX > currentPart.vertexArray[possible[i]][0]  && highY > currentPart.vertexArray[possible[i]][1])
+						if (highX > vertexArray[possible[i]][0]  && highY > vertexArray[possible[i]][1])
 						{
 							withinDragDistance.push(possible[i])
 						}
@@ -143,7 +159,8 @@ function FreehandTool(){
 						
 						for (let i = 0 ; i < withinLength; i++ )
 						{
-							temp = dist(mouseX,mouseY, currentPart.vertexArray[ withinDragDistance[i]][0], currentPart.vertexArray[ withinDragDistance[i]][1]);
+							
+							temp = dist(mouseX,mouseY, vertexArray[ withinDragDistance[i]][0], vertexArray[ withinDragDistance[i]][1]);
 							if (temp <= closest[0])
 							{
 								closest[0] = temp;

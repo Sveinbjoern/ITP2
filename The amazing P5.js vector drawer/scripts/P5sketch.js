@@ -34,16 +34,19 @@ function setup() {
 	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
 	c.parent('drawField');
 	
-	//create helper functions and the colour palette
-	helpers = new HelperFunctions();
-	colourP = new ColourPalette();
+	
 	//create the drawManager 
 	drawManager = new DrawManager();
 	drawManager.setup();
 	//setup current values
-	currentFigure = drawManager.figures[currentFigureIndex];
-	currentDrawing = currentFigure.drawings[currentDrawingIndex];
-	currentPart = currentDrawing.parts[currentPartIndex];	
+
+	//create helper functions and the colour palette
+	helpers = new HelperFunctions();
+	colourP = new ColourPalette();
+
+	// currentFigure = drawManager.figures[currentFigureIndex];
+	// currentDrawing = currentFigure.drawings[currentDrawingIndex];
+	// currentPart = currentDrawing.parts[currentPartIndex];	
 	
 	//create the sliderManager
 	// console.log("currentPart setup" ,currentPart)
@@ -81,12 +84,16 @@ function draw() {
 	//hasOwnProperty is a javascript function that tests
 	//if an object contains a particular method or property
 	//if there isn't a draw method the app will alert the user
+
+
+	// drawManager.draw();
 	if (toolbox.selectedTool.hasOwnProperty("draw")) {
 		// console.log("draw in draw")
 		toolbox.selectedTool.draw();
 	} else {
 		alert("it doesn't look like your tool has a draw method!");
 	}
+
 }
 
 
@@ -97,6 +104,7 @@ function fitToScreen(){
  canvasContainer = select('#drawField');
  var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
  c.parent('drawField');
+ drawManager.reset();
 }
 
 // function mousePressed(){

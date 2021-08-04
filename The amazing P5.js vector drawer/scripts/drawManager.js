@@ -3,8 +3,34 @@
 // drawManager will convert points into a vertex drawing
 
 function DrawManager() {
-  this.figures = [];
-  this.curretPart;
+  let storage = 
+  {
+    figures: [],
+    currentFigure: -1,
+  }
+  this.getFigure = () => {
+    return storage.figures[storage.currentFigure];
+  };
+
+  this.getDrawing = () => {
+    let get = storage.figures[storage.currentFigure];
+    return get.drawings[get.currentDrawing];
+  };
+
+  this.getPart = () => {
+    let get = storage.figures[storage.currentFigure].drawings[storage.figures[storage.currentFigure].currentDrawing];
+    return get.parts[get.currentPart];
+  };
+
+  this.getVertexArray = () => {
+    let get = this.getPart();
+    // console.log("get from getVertexArray", get.vertexArray.length)
+    return get.vertexArray;
+  };
+  
+
+
+  // this.curretPart;
   this.defaultPart = 
   {
     name: "partDefault",
@@ -63,8 +89,10 @@ function DrawManager() {
  
 
   this.setup = function () {
-    this.figures.push(new Figure("start"));
-    // console.log("Part", drawManager.figures)
+    storage.figures.push(new Figure("start"));
+    storage.currentFigure ++;
+
+    console.log("storage", storage)
     // if (this.figures[0].drawings[0].parts[0].vertexArray.length >= 1)
     // {
     //     // this.draw(this.figures[0])
@@ -73,6 +101,7 @@ function DrawManager() {
 
   this.draw = function (figure) {
     //check if it has a point!! before sending it to draw
+    // console.log("drawManager.draw")
     drawings = figure.drawings.length;
     
     for (let i = 0; i < drawings; i++) {
@@ -215,9 +244,9 @@ function DrawManager() {
     // console.log("reset Run")
     clear();
     // redraw
-    let figures = this.figures.length;
+    let figures = storage.figures.length;
     for (let i = 0; i < figures; i++) {
-      this.draw(this.figures[i]);
+      this.draw(storage.figures[i]);
     }
   };
   

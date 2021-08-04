@@ -16,6 +16,8 @@ function SliderManager(){
     let slideTemplates = new SlideTemplates();
     // console.log(slideTemplates)
     let temporary;
+    let self = this;
+
    
 
     let slides = {
@@ -28,7 +30,9 @@ function SliderManager(){
     this.setup = function(){
        
         this.fillOrderBar();
-        slideTemplates.createColorSlide("sidebarRight");
+        slideTemplates.createCurrentSlide("sidebarRight");
+        slideTemplates.createDefaultSlide("sidebarRight");
+        slideTemplates.createDefaultSlide("sidebarRight");
         slideTemplates.createDefaultSlide("sidebarRight");
         // slideTemplates.createColorSlide("sidebarRight");
         // slideTemplates.createColorSlide("sidebarRight");
@@ -76,7 +80,12 @@ function SliderManager(){
         // inp.size(100); 
         // console.log(inp.elt.value)
         // inp.input(partInputEvent);
-
+        let figure = drawManager.getFigure();
+        let currentDrawing = figure.drawings[figure.currentDrawing];
+        
+        
+        // console.log(figure);
+        // console.log("figure.drawings", figure.drawings)
         let partsLength = currentDrawing.parts.length;
         // console.log("partsLength", partsLength)
         for (let i = 0; i < partsLength; i++)
@@ -173,15 +182,18 @@ function SliderManager(){
             // inp.size(100); 
             // console.log(inp.elt.value)
             inp.input(partInputEvent);
-            currentPartIndex = partsLength;
-            currentPart = currentDrawing.parts[currentPartIndex];
+            currentDrawing.currentPart = partsLength;
+
+            
             
         }
 
         function choosePart(){
-            console.log(this.identity);
-            currentPartIndex = this.identity;
-            currentPart = currentDrawing.parts[currentPartIndex]
+            // console.log(this.identity);
+            // console.log(self);
+            
+            // console.log(self.currentDrawing);
+            currentDrawing.currentPart = this.identity;
             drawManager.reset();
             helpers.updateSettings();
         }
@@ -189,6 +201,20 @@ function SliderManager(){
 
         
 
+    }
+
+
+
+    this.updateDefaultSlides = () => {
+        let elem = document.getElementsByClassName("defaultSlide");
+        console.log(elem);
+
+        
+
+    
+    }
+    this.updateSlides = () => {
+        this.updateDefaultSlides();
     }
 
 
