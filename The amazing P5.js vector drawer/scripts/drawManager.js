@@ -248,6 +248,7 @@ function DrawManager() {
     for (let i = 0; i < figures; i++) {
       this.draw(storage.figures[i]);
     }
+    
   };
   
   return this;

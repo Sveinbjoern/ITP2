@@ -68,25 +68,42 @@ function HelperFunctions() {
         toolbox.selectedTool.drawn = false;
     }
 
-    this.updateSettings = function(){
-        let element = document.getElementById("strokeWeightInput");
-        element.value = currentPart.strokeWeight;
-        element = document.getElementById("noFillInput");
-        element.checked = currentPart.noFill;
-        element = document.getElementById("noStrokeInput");
-        element.checked = currentPart.noStroke;
-         
-        element = document.getElementById("endShapeInput");
-        console.log(element)
-        if (currentPart.endShape === true)
-        {
-            element.value ="EndShape()"
-        } else 
-        {
-            element.value = "EndShape(CLOSE)"
-        }
-
+    this.updateSettingsCurrentS = function(part){
         
+
+        let elem = $( ".currentSlide" )
+        let length = elem.length;
+        
+        console.log("#" + hex(part.fill.levels[0],2) + hex(part.fill.levels[1],2) + hex(part.fill.levels[2],2));
+        for (i = 0; i < length; i ++)
+        {
+        elem[i].children[0].innerHTML = "CURRENT PART: " + part.name;
+        let hexPart;
+        hexPart = "#" + hex(part.fill.levels[0],2) + hex(part.fill.levels[1],2) + hex(part.fill.levels[2],2)
+        elem[i].children[2].value = hexPart;
+
+        elem[i].children[3].children[0].checked = part.noFill;   
+        
+        hexPart = "#" + hex(part.stroke.levels[0],2) + hex(part.stroke.levels[1],2) + hex(part.stroke.levels[2],2)
+        elem[i].children[5].value = hexPart;
+
+        elem[i].children[6].children[0].checked =  part.noStroke;
+        
+        elem[i].children[9].value = part.strokeWeight;
+        elem[i].children[10].value = part.strokeWeight;    
+
+        if (part.endShape)
+        {
+            elem[i].children[11].innerText = "endShape(CLOSE)";    
+        } else {elem[i].children[11].innerText = "endShape()";}
+
+        elem[i].children[12].value = part.vertexMode;
+
+        }
+    
+//   console.log(elem[0].children[2].value, inpColorFill.elt.value);
+//   drawManager.getPart().fill = color(inpColorFill.elt.value);
+
     }
     
     

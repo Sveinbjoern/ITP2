@@ -7,7 +7,7 @@ html,
 body {
   margin: 0px;
   height: 100% ;
-  
+  padding: 0px;
 }
 
 /* Hidden elements css */
@@ -186,7 +186,7 @@ body {
 	grid-template-areas:
 		"header header header header"
 		"sidebarLeft sidebar drawField sidebarRight"
-		"colourP colourP  colorfill colorfill";
+		"sidebarLeft colorfill colorfill sidebarRight";
 	background-color: #fff;
 	color: #444;
 	/* align-items: stretch; */

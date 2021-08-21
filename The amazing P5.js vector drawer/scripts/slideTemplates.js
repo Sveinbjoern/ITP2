@@ -306,13 +306,27 @@ function SlideTemplates() {
         }
       }
       drawManager.defaultPart.vertexMode = sel.value()
-
+      
     });
 
     // console.log(drawManager.defaultPart.vertexMode);
     sel.parent(newSlide);
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
   this.createCurrentSlide = function (pos) {
     // console.log("are you created")
     
@@ -335,7 +349,7 @@ function SlideTemplates() {
     // newSlide.style("padding", "0px")
     // newSlide.style("flex-direction", "row")
       let part =  drawManager.getPart();
-    let mainTextElem = createP("Part: " + part.name);
+    let mainTextElem = createP("CURRENT PART: " + part.name);
     mainTextElem.parent(newSlide);
     mainTextElem.style("position", "absolute");
     mainTextElem.style("left", "0px");
@@ -371,6 +385,9 @@ function SlideTemplates() {
       console.log(elem[0].children[2].value, inpColorFill.elt.value);
       drawManager.getPart().fill = color(inpColorFill.elt.value);
       drawManager.reset();
+      toolbox.selectedTool.drawn = false
+      
+      
 
     });
     inpColorFill.parent(newSlide);
@@ -408,6 +425,7 @@ function SlideTemplates() {
 
       drawManager.getPart().noFill =  noFillBox.checked();
       drawManager.reset();
+     
     } );
     noFillBox.parent(newSlide);
 
@@ -442,6 +460,8 @@ function SlideTemplates() {
 
       drawManager.getPart().stroke = color(inpColorStroke.elt.value);
       drawManager.reset();
+      toolbox.selectedTool.drawn = false
+      
     });
     inpColorStroke.parent(newSlide);
 
@@ -473,6 +493,8 @@ function SlideTemplates() {
 
       drawManager.getPart().noStroke =  noStrokeBox.checked();
       drawManager.reset();
+      
+       
     } );
     noStrokeBox.parent(newSlide);
 
@@ -522,6 +544,8 @@ function SlideTemplates() {
       }
       drawManager.getPart().strokeWeight = parseInt(sWslider.elt.value);
       drawManager.reset();
+      drawManager.reset();
+       toolbox.selectedTool.drawn = false
       // sWInput.elt.value = drawManager.defaultPart.strokeWeight;
       // console.log(drawManager.defaultPart.strokeWeight);
     };
@@ -557,12 +581,22 @@ function SlideTemplates() {
       drawManager.getPart().strokeWeight = sWInput.elt.value;
       // console.log(sWInput.elt.value);
       drawManager.reset();
+      
+       toolbox.selectedTool.drawn = false
     };
     sWInput.parent(newSlide);
     
     // let numberInput =
+    // console.log("drawManager.settings",drawManager.settings);
+    let buttonText;
 
-    let button = createButton("endShape(CLOSE)");
+    if (drawManager.defaultPart.endShape)
+    {
+      buttonText = "endShape(CLOSE)";
+    } else {
+      buttonText = "endShape()";
+    }
+    let button = createButton(buttonText);
     button.style("position", "absolute");
     button.style("right", "20px");
     button.style("width", "175px");
@@ -581,7 +615,7 @@ function SlideTemplates() {
           for (let i = 0; i < length; i++)
           {
           elem[i].children[11].innerText = "endShape(CLOSE)";
-        }
+        } 
       } else {
         console.log("endShape false");
         for (let i = 0; i < length; i++)
@@ -591,6 +625,7 @@ function SlideTemplates() {
        }
 
        drawManager.reset();
+       toolbox.selectedTool.drawn = false
     }});
     button.parent(newSlide);
 

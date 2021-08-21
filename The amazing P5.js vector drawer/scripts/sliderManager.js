@@ -32,8 +32,8 @@ function SliderManager(){
         this.fillOrderBar();
         slideTemplates.createCurrentSlide("sidebarRight");
         slideTemplates.createDefaultSlide("sidebarRight");
-        slideTemplates.createDefaultSlide("sidebarRight");
-        slideTemplates.createDefaultSlide("sidebarRight");
+        // slideTemplates.createDefaultSlide("sidebarRight");
+        // slideTemplates.createDefaultSlide("sidebarRight");
         // slideTemplates.createColorSlide("sidebarRight");
         // slideTemplates.createColorSlide("sidebarRight");
         // this.fillColorSlide("sidebarRight");
@@ -187,6 +187,10 @@ function SliderManager(){
             
             
         }
+        function removeHTMLPart(part, index){
+            // TODO
+            
+        }
 
         function choosePart(){
             // console.log(this.identity);
@@ -195,7 +199,8 @@ function SliderManager(){
             // console.log(self.currentDrawing);
             currentDrawing.currentPart = this.identity;
             drawManager.reset();
-            helpers.updateSettings();
+            console.log(currentDrawing)
+            helpers.updateSettingsCurrentS(currentDrawing.parts[currentDrawing.currentPart]);
         }
 
 

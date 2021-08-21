@@ -42,7 +42,9 @@ function setup() {
 
 	//create helper functions and the colour palette
 	helpers = new HelperFunctions();
-	colourP = new ColourPalette();
+
+	//NO LONGER NEEDED
+	// colourP = new ColourPalette();
 
 	// currentFigure = drawManager.figures[currentFigureIndex];
 	// currentDrawing = currentFigure.drawings[currentDrawingIndex];
@@ -68,13 +70,13 @@ function setup() {
 	// background(200);
 	// drawManager.draw(drawManager.figures[0]);
 
-	console.log($("#sidebarRight").children());
+	// console.log($("#sidebarRight").children());
 	let temporary = $("#sidebarRight").children()[1];
 	$("#sidebarRight").children()[1] = $("#sidebarRight").children()[0];
-	console.log($("#sidebarRight").children());
+	// console.log($("#sidebarRight").children());
 	$("#sidebarRight").children()[0] = temporary;
-	console.log($("#sidebarRight").children());
-
+	// console.log($("#sidebarRight").children());
+	fitToScreen();
 }
 
 function draw() {

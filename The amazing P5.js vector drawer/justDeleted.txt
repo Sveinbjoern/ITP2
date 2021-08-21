@@ -1,3 +1,41 @@
+21.08.2021
+
+ let element = document.getElementById("strokeWeightInput");
+        element.value = currentPart.strokeWeight;
+        element = document.getElementById("noFillInput");
+        element.checked = currentPart.noFill;
+        element = document.getElementById("noStrokeInput");
+        element.checked = currentPart.noStroke;
+         
+        element = document.getElementById("endShapeInput");
+        console.log(element)
+        if (currentPart.endShape === true)
+        {
+            element.value ="EndShape()"
+        } else 
+        {
+            element.value = "EndShape(CLOSE)"
+        }
+
+<div class="box colourPalette">Stroke</div>
+      <div class="box colorFill">Fill
+        
+        <form class ="inputs"> 
+          <label for="noStroke"> noStroke:</label>
+          <input  type="checkbox" id="noStrokeInput" name="noStroke" onclick="helpers.noStrokeButton(this.checked)">
+          <label for="noFill"> noFill:</label>
+          <input type="checkbox" id="noFillInput" name="noFill" onclick="helpers.noFillButton(this.checked)">
+          <!-- <label for="noFill"> noFill</label> -->
+          <input type="button" id="endShapeInput" name="EndshapeInput", value="EndShape()"onclick="helpers.endShapeButton(this)">
+          
+          <label for="strokeWeightInput">strokeWeight:</label>
+          <input type= "range" id="strokeWeightInput" name="strokeWeightInput" min="1" max="50" value="3" oninput="helpers.strokeWeightSlider(this.value)"> 
+          <!--"{currentPart.strokeWeight = value; drawManager.reset();}"> -->
+        </form>
+        
+      </div>
+
+
 21.07.2021
    // this.fillColorSlide = function(pos){
     //     let newSlide = createDiv();

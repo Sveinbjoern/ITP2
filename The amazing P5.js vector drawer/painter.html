@@ -7,7 +7,7 @@
 
     <!-- add extra scripts below -->
     <script src="scripts/toolbox.js"></script>
-    <script src="scripts/colourPalette.js"></script>
+    <!-- <script src="scripts/colourPalette.js"></script> -->
     <script src="scripts/helperFunctions.js"></script>
 
     <script src="scripts/freehandTool.js"></script>
@@ -62,21 +62,8 @@
         <!-- <button id="canvasButton">Boop</button> -->
       </div>
       
-      <div class="box colourPalette">Stroke</div>
-      <div class="box colorFill">Fill
-        
-        <form class ="inputs"> 
-          <label for="noStroke"> noStroke:</label>
-          <input  type="checkbox" id="noStrokeInput" name="noStroke" onclick="helpers.noStrokeButton(this.checked)">
-          <label for="noFill"> noFill:</label>
-          <input type="checkbox" id="noFillInput" name="noFill" onclick="helpers.noFillButton(this.checked)">
-          <!-- <label for="noFill"> noFill</label> -->
-          <input type="button" id="endShapeInput" name="EndshapeInput", value="EndShape()"onclick="helpers.endShapeButton(this)">
-          
-          <label for="strokeWeightInput">strokeWeight:</label>
-          <input type= "range" id="strokeWeightInput" name="strokeWeightInput" min="1" max="50" value="3" oninput="helpers.strokeWeightSlider(this.value)"> 
-          <!--"{currentPart.strokeWeight = value; drawManager.reset();}"> -->
-        </form>
+      
+      <div class="box colorFill"> DrawSettings
         
       </div>
       <!-- <div class="box options">options</div> -->

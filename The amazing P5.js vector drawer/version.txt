@@ -1,3 +1,11 @@
+update 21.08.2021
+Ending implementations:
+fix updateSlide When choosing part!!(currentPart should be changed)
+fixedPart Slide (make and implement)
+Send out the project to people!
+
+
+
 update 16.07.2021
 implementations
 Started work on creating elements
