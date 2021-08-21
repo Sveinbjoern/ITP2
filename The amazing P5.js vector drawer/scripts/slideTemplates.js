@@ -308,9 +308,12 @@ function SlideTemplates() {
       drawManager.defaultPart.vertexMode = sel.value()
       
     });
-
     // console.log(drawManager.defaultPart.vertexMode);
     sel.parent(newSlide);
+
+
+   
+    // xText.style("float", "top")
   }
 
 
@@ -326,7 +329,7 @@ function SlideTemplates() {
 
 
 
-  
+
   this.createCurrentSlide = function (pos) {
     // console.log("are you created")
     
@@ -544,7 +547,6 @@ function SlideTemplates() {
       }
       drawManager.getPart().strokeWeight = parseInt(sWslider.elt.value);
       drawManager.reset();
-      drawManager.reset();
        toolbox.selectedTool.drawn = false
       // sWInput.elt.value = drawManager.defaultPart.strokeWeight;
       // console.log(drawManager.defaultPart.strokeWeight);
@@ -660,6 +662,19 @@ function SlideTemplates() {
 
     });
     sel.parent(newSlide);
+
+    let vText = createP("Vertecies:");
+    vText.style("position", "absolute")
+    vText.style("left", "0px")
+    vText.style("top", "93px")
+    vText.parent(newSlide);
+
+    console.log("part", part)
+    let vNumText = createP(part.currentVertex + "/" + part.vertexArray.length);
+    vNumText.style("position", "absolute")
+    vNumText.style("left", "100px")
+    vNumText.style("top", "93px")
+    vNumText.parent(newSlide);
 
   };
 

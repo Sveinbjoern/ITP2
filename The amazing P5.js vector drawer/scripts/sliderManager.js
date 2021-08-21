@@ -201,6 +201,7 @@ function SliderManager(){
             drawManager.reset();
             console.log(currentDrawing)
             helpers.updateSettingsCurrentS(currentDrawing.parts[currentDrawing.currentPart]);
+            
         }
 
 

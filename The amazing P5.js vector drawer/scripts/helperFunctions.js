@@ -100,9 +100,7 @@ function HelperFunctions() {
         elem[i].children[12].value = part.vertexMode;
 
         }
-    
-//   console.log(elem[0].children[2].value, inpColorFill.elt.value);
-//   drawManager.getPart().fill = color(inpColorFill.elt.value);
+        // if (elem[i].children[13].innerHTML)
 
     }
     

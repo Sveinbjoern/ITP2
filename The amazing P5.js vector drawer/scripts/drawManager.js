@@ -35,7 +35,7 @@ function DrawManager() {
   {
     name: "partDefault",
     localZeroPoint: [0,0],
-    
+    currentVertex: 0,
 
     stroke: color(0,0,0),
     noStroke: false,
@@ -81,8 +81,9 @@ function DrawManager() {
   {
     minStrokeWeight: 1,
     maxStrokeWeight: 50,
-
-
+    // MORE SETTINGS
+    //Show number - number size -relative to stroke
+    //
   }
 
 

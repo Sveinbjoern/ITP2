@@ -41,6 +41,7 @@ function Part(name){
     this.localZeroPoint = drawManager.defaultPart.zeroPoint;
     this.isSelected = false;
 
+    this.currentVertex = drawManager.defaultPart.currentVertex;
     this.stroke = drawManager.defaultPart.stroke;
     this.noStroke = drawManager.defaultPart.noStroke;
     this.strokeWeight = drawManager.defaultPart.strokeWeight;
