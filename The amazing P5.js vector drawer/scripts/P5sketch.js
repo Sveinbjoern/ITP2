@@ -14,13 +14,17 @@ let currentDrawing;
 let currentPart;
 
 
-const soundeffects = {};
+let soundeffects = {};
 
 
 function preload() {
 	// preload() runs once
 	soundeffects.ding = loadSound("assets/sound/515643__mashedtatoes2__ding2.wav");
 
+
+
+
+	
 }
 
 
@@ -39,7 +43,7 @@ function setup() {
 	drawManager = new DrawManager();
 	drawManager.setup();
 	//setup current values
-
+	console.log("running")
 	//create helper functions and the colour palette
 	helpers = new HelperFunctions();
 

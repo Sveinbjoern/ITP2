@@ -74,7 +74,7 @@ function HelperFunctions() {
         let elem = $( ".currentSlide" )
         let length = elem.length;
         
-        console.log("#" + hex(part.fill.levels[0],2) + hex(part.fill.levels[1],2) + hex(part.fill.levels[2],2));
+        // console.log("#" + hex(part.fill.levels[0],2) + hex(part.fill.levels[1],2) + hex(part.fill.levels[2],2));
         for (i = 0; i < length; i ++)
         {
         elem[i].children[0].innerHTML = "CURRENT PART: " + part.name;
@@ -99,7 +99,24 @@ function HelperFunctions() {
 
         elem[i].children[12].value = part.vertexMode;
 
+        elem[i].children[14].innerHTML = part.currentVertex + "/"+ part.vertexArray.length;
+
         }
+        // if (elem[i].children[13].innerHTML)
+
+    }
+
+    this.updateCurrentVertex = function(part){
+        
+
+        let elem = $( ".currentSlide" )
+        let length = elem.length;
+        
+        for (i = 0; i < length; i ++)
+        {
+            elem[i].children[14].innerHTML = part.currentVertex + "/"+ part.vertexArray.length;
+        }
+        
         // if (elem[i].children[13].innerHTML)
 
     }
@@ -180,21 +197,41 @@ function HelperFunctions() {
 const keyCodes = {
 
     backSpace: 8,
+
+    leftArrow: 37,
+    upArrow: 38,
+    rightArrow: 39,
+    downArrow: 40,
+    
+    
     R: 82,
 }
 
 
 function keyPressed()
     {
+        // console.log("keyPressed")
+        let figure = drawManager.getFigure()
+        let drawing = figure.drawings[figure.currentDrawing]
+        let part = drawing.parts[drawing.currentPart]
+        let vertexArray =  part.vertexArray;
+
         if (mouseX >= 0 && mouseX <= width &&
             mouseY >= 0 && mouseY <= height)
             {
                 if (keyCode === keyCodes.backSpace)
                 {
                     
-                    let figure = drawManager.getFigure()
+                    
                     // let currentDrawing = figure.drawings[figure.currentDrawing];
-                    figure.drawings[figure.currentDrawing].parts[figure.drawings[figure.currentDrawing].currentPart].vertexArray.pop();
+                    vertexArray.splice(part.currentVertex,1);
+                    // console.log(vertexArray.splice(part.currentVertex -1,1));
+                    part.currentVertex--;
+                    if (part.currentVertex < 0)
+                    {
+                        part.currentVertex = 0;
+                    }
+                    helpers.updateCurrentVertex(part);
                     
                     toolbox.selectedTool.drawn = false;
                     drawManager.reset();
@@ -209,7 +246,40 @@ function keyPressed()
 
             // currentPartIndex = keepIndexConsistent(currentPartIndex,  ,"remove");
             console.log("keypressed R");
+        } else
+
+        if (keyCode === keyCodes.leftArrow)
+        {
+            // console.log("rightArrow")
+            part.currentVertex --;
+            if (part.currentVertex < 0)
+            {
+                part.currentVertex = vertexArray.length;
+
+            }
+            helpers.updateCurrentVertex(part);
+        } else if (keyCode === keyCodes.rightArrow)
+        {
+            // console.log("rightArrow")
+            part.currentVertex ++;
+            if (part.currentVertex > vertexArray.length)
+            {
+                part.currentVertex = 0;
+            }
+            helpers.updateCurrentVertex(part);
+        } else if (keyCode === keyCodes.upArrow)
+        {
+            part.currentVertex = 0;
+            helpers.updateCurrentVertex(part);
+        } else if (keyCode === keyCodes.downArrow)
+        {
+            part.currentVertex = vertexArray.length;
+            helpers.updateCurrentVertex(part);
         }
+
+        return false;
+
+
     }
 
     //Takes an array, 

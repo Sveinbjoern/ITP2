@@ -2,7 +2,7 @@ function FreehandTool(){
 	//set an icon and a name for the object
 	this.icon = "assets/freehand.jpg";
 	this.name = "freehand";
-	this.arrayLength = 0;
+	
 
 
 	this.drawn = false;
@@ -30,8 +30,8 @@ function FreehandTool(){
 			this.updateSettings = false;
 			console.log("dragDistance",  this.dragDistance);
 		}
-
-		this.arrayLength = drawManager.getVertexArray().length;
+		let part = drawManager.getPart();
+		let arrayLength = part.vertexArray.length;
     
 	//   console.log("currentVertex in draw", this.currentVertex )
 	if (!this.drawn) {
@@ -40,21 +40,25 @@ function FreehandTool(){
 		
       this.drawn = true;
     }
-    if (this.arrayLength > 0 && mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height && !this.itemInDistance && !this.itemHeld) {
+    if (arrayLength > 0 && mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height && !this.itemInDistance && !this.itemHeld) {
 		let vertexArray = drawManager.getVertexArray();
 		if (this.lightMode)
 		{
 			
-				updatePixels();
-				line(	vertexArray[arrayLength-1][0],
-						vertexArray[arrayLength-1][1],
-						mouseX,mouseY);
+				// updatePixels();
+				// if (part.currentVertex > 0)
+				// line(	vertexArray[part.currentVertex][0],
+				// 		vertexArray[part.currentVertex][1],
+				// 		mouseX,mouseY);
 		} else
 		{
-			vertexArray.push ([mouseX,mouseY])
+			// console.log("part.currentVertex", part.currentVertex)
+			vertexArray.splice(part.currentVertex, 0,[mouseX,mouseY])
 			
 			drawManager.reset();
-			vertexArray.pop();
+			vertexArray.splice(part.currentVertex,1);
+			// console.log(vertexArray.slice(part.currentVertex,part.currentVertex +1));
+		
 		}
 	}
     	 else {updatePixels()}
@@ -72,7 +76,8 @@ function FreehandTool(){
 				//make mouse only work inside canvas
 			  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height)
 			  {
-				  let vertexArray = drawManager.getVertexArray();
+				  let part = drawManager.getPart();
+				  let vertexArray = part.vertexArray;
 					if (self.itemInDistance) {
 					// currentVertex.push([mouseX, mouseY]);
 					vertexArray[self.closeVertex] = [mouseX,mouseY]
@@ -85,7 +90,12 @@ function FreehandTool(){
 					} else
 					{
 						// console.log("why not?",this.figure)   //[this.figure.currentDrawing].parts) //[this.figure.drawings[this.figure.currentDrawing].currentPart] );
-						vertexArray.push([mouseX,mouseY]);
+						
+						vertexArray.splice(part.currentVertex, 0, [mouseX,mouseY]);
+						// This increases the part.currentVertex unless you are have choosen the first vertex
+						if (part.currentVertex !== 0 || vertexArray.length === 1 )
+						{part.currentVertex ++}
+						helpers.updateCurrentVertex(part);
 						self.drawn = false;
 					}
 					drawManager.reset();
@@ -120,13 +130,14 @@ function FreehandTool(){
 				
 					self.closeVertex = [];
 					let vertexArray = drawManager.getVertexArray();
+					let arrayLength = vertexArray.length
 					let possible = [];
 					let lowX = mouseX - self.dragDistance;
 					let highX = mouseX + self.dragDistance;
 					let lowY = mouseY - self.dragDistance;
 					let highY = mouseY + self.dragDistance;
 					// console.log("mousX, dragDistance", mouseX ,self.dragDistance)
-					for (let i = 0; i< self.arrayLength; i++)
+					for (let i = 0; i< arrayLength; i++)
 					{
 						if (lowX < vertexArray[i][0]  && lowY < vertexArray[i][1])
 						{

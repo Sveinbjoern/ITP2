@@ -42,10 +42,13 @@ function Part(name){
     this.isSelected = false;
 
     this.currentVertex = drawManager.defaultPart.currentVertex;
+
+    this.strokeAlpha = 1;
     this.stroke = drawManager.defaultPart.stroke;
     this.noStroke = drawManager.defaultPart.noStroke;
     this.strokeWeight = drawManager.defaultPart.strokeWeight;
     
+    this.fillAlpha = 1;
     this.fill = drawManager.defaultPart.fill;
     this.noFill = drawManager.defaultPart.noFill;
     this.vertexMode = drawManager.defaultPart.vertexMode;
