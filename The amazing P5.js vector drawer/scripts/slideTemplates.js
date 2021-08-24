@@ -852,3 +852,18 @@ function SlideTemplates() {
  
   
 }
+
+
+let createOrderFlexContiner = (side) => {
+
+  
+
+}
+
+let createSliderFlexContainer = () => {
+
+
+  
+}
+
+

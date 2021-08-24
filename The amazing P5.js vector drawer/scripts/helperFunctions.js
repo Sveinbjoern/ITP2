@@ -246,6 +246,16 @@ function keyPressed()
 
             // currentPartIndex = keepIndexConsistent(currentPartIndex,  ,"remove");
             console.log("keypressed R");
+
+
+
+            let elem = document.getElementById("sidebarRight");
+            elem.append(elem.children[0]);
+            // elem.prepend(elem.children[0]);
+            // elem.prepend(elem.children[0]);
+
+            console.log(elem.children);
+
         } else
 
         if (keyCode === keyCodes.leftArrow)
@@ -277,7 +287,7 @@ function keyPressed()
             helpers.updateCurrentVertex(part);
         }
 
-        return false;
+        // return false;
 
 
     }

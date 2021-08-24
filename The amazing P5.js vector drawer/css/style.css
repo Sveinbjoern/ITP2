@@ -46,6 +46,7 @@ body {
 	grid-area: sidebarLeft;
 	height: 100%;
 	overflow: auto;
+	text-align: left;
 	/* align-self: stretch; */
 }
 
@@ -81,6 +82,17 @@ body {
 
 }
 
+#sidebarLeft > .box {
+    width: 300px;
+    height: auto;
+    background: rgb(71, 10, 10);
+	overflow: auto;
+	
+  /* margin: 15px; */
+  /* text-align: left; */
+
+}
+
 
 .sideBarItem img {
   height: 50px;
@@ -92,8 +104,10 @@ body {
 .box {
   background-color: #444;
   color: #fff;
-  font-size: 150%;
+  font-size: 100%;
 }
+
+
 /* drawfield css */
 #drawField {
   grid-area: drawField;
@@ -187,8 +201,8 @@ body {
 		"header header header header"
 		"sidebarLeft sidebar drawField sidebarRight"
 		"sidebarLeft colorfill colorfill sidebarRight";
-	background-color: #fff;
-	color: #444;
+	/* background-color: #fff;
+	color: #444; */
 	/* align-items: stretch; */
 	}
 

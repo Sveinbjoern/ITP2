@@ -1,8 +1,17 @@
+update 23.08.2021
+TO DO: Send out the project to people!
+make orderSlide: With hierarchy
+make draggable? make selectable!! make movable!!
+
+fixed:
+
+
+
 update 21.08.2021
-Ending implementations:
-fix updateSlide When choosing part!!(currentPart should be changed)
-fixedPart Slide (make and implement)
-Send out the project to people!
+
+fixed updateSlide When choosing part!!(currentPart should be changed)
+fixed Part Slide (make and implement)
+
 
 
 
