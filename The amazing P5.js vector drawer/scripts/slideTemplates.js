@@ -14,15 +14,15 @@ function SlideTemplates() {
     // leftSidebarLenght ++;
 
     
-    let newPart = createDiv();
-    newPart.parent(pos);
+    let newSlide = createDiv();
+    newSlide.parent(pos);
     
     
     // slides.leftSidebar.push($('#orderBar')[0])
     
     let button = createButton("create new part");
     button.id("newPartButton");
-    button.parent(newPart)
+    button.parent(newSlide)
     button.mousePressed(makeNewHTMLPart);
 
     
@@ -184,7 +184,7 @@ function SlideTemplates() {
     newSlide.elt.setAttribute("style",
       `
                 position: relative;
-                width: 300px;
+                min-width: 300px;
                 height: 160px;
                 
                 margin:  0px;
@@ -338,7 +338,10 @@ function SlideTemplates() {
     xText.style("position", "absolute")
     xText.style("right", "17px")
     xText.style("top", "-12px")
+    xText.style("cursor", "pointer");
+    xText.mousePressed(function () {newSlide.remove()});
     xText.parent(newSlide);
+
     // xText.style("float", "top")
 
 
@@ -511,7 +514,7 @@ function SlideTemplates() {
       "style",
       `
             position: relative;
-            width: 300px;
+            min-width: 300px;
             height: 160px;
             
             margin:  0px;
@@ -676,7 +679,17 @@ function SlideTemplates() {
     xText.style("position", "absolute");
     xText.style("right", "17px");
     xText.style("top", "-12px");
+    xText.style("cursor", "pointer");
+    xText.mousePressed(function () {newSlide.remove()});
     xText.parent(newSlide);
+
+    // xText.click(
+    //   function() {
+    //     $( this ).append( $( "<span> ***</span>" ) );
+    //   }, function() {
+    //     $( this ).find( "span" ).last().remove();
+    //   }
+    // );
     // xText.style("float", "top")
 
     let sWText = createP("strokeWeight");

@@ -3,3 +3,19 @@ All soundeffects are from https://freesound.org
 
 drop down menus:
 https://www.w3schools.com/howto/howto_js_dropdown.asp
+
+fixing if dropDown or dropUp menus
+https://stackoverflow.com/questions/64619941/check-if-a-mouse-is-pressed-at-the-upper-half-or-lower-half-of-the-screen-in-jav
+document.addEventListener("mouseover", (event) => {
+    if (isdown) {
+        let middlehalf = window.innerHeight / 2;
+        if (e.clientY > middlehalf) {
+            playerPos += 20;
+        } else {
+            playerPos -= 20;
+        }
+    }
+});
+
+Local storage for settings and values:
+https://blog.logrocket.com/localstorage-javascript-complete-guide/#browsersupport

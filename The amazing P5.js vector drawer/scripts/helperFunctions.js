@@ -179,7 +179,49 @@ function HelperFunctions() {
         // drawManager.reDrawWithPoint();
         toolbox.selectedTool.drawn = false;
     }
+
+    this.loadFiguesFromStorage(storage)
+    {
+        let stored = window.localStorage.getItem("stored")
+      
+      if (stored)
+        {
+          storage = JSON.parse(stored);
+  
+        } 
+    }
+
+    this.saveFiguresFromStorage(storage)
+    {
+        console.log("storage to be saved in helpers.saveFiguresFromStorage()", storage)
+        window.localStorage.getItem("stored", JSON.stringify(storage))
+    }
+
+
+    this.loadSettingsFromStorage(settings)
+    {
+        let set = window.localStorage.getItem("settings")
+      
+      if (set)
+        {
+          set = JSON.parse(set);
+          updateAllSetings(set);
+  
+        } 
+    }
+
+
+
+    this.saveSettingsFromStorage(storage)
+    {
+        console.log("storage to be saved in helpers.saveSettingsFromStorage()", storage)
+        window.localStorage.getItem("stored", JSON.stringify(storage))
+    }
     
+    let updateAllSetings = (settings) => {
+        console.log("settings in updateAllSetings", settings)
+    }
+
     let screenshotIteration = 0;
     
 	//p5.dom click click events. Notice that there is no this. at the

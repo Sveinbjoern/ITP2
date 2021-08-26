@@ -13,6 +13,9 @@ function FreehandTool(){
 	//we haven't started drawing yet.
 	this.dragDistanceBase = 4;
 	this.dragDistance = this.dragDistanceBase + drawManager.getPart().strokeWeight/2;
+	this.dragging = false;
+	this.dragStart = null;
+
 	this.updateSettings = false;
 	this.itemHeld = false;
 	let self = this;
@@ -100,8 +103,11 @@ function FreehandTool(){
 						// This increases the part.currentVertex unless you are have choosen the first vertex
 						if (part.currentVertex !== 0 || vertexArray.length === 1 )
 						{part.currentVertex ++}
+
 						helpers.updateCurrentVertex(part);
 						self.drawn = false;
+						self.dragging = true;
+						self.dragStart = [mouseX,mouseY];
 					}
 					drawManager.reDraw();
 					
@@ -118,7 +124,21 @@ function FreehandTool(){
 				
 				vertexArray[self.closeVertex] = [mouseX,mouseY]
 				self.drawn = false;
+			  } else if (this.dragging)
+			  {
+				  if (dist(mouseX,mouseY,self.dragStart[0],self.dragStart[1]) > self.dragDistance)
+				  {
+					vertexArray.splice(part.currentVertex, 0, [mouseX,mouseY]);
+					// This increases the part.currentVertex unless you are have choosen the first vertex
+					if (part.currentVertex !== 0 || vertexArray.length === 1 )
+					{part.currentVertex ++}
+
+					helpers.updateCurrentVertex(part);
+					self.drawn = false;
+					self.dragStart = [mouseX,mouseY];
+				  }
 			  }
+
 			  drawManager.reDrawWithPoint();
 			  // prevent default
 			//   return false;
@@ -132,7 +152,8 @@ function FreehandTool(){
 				// console.log("this", this);
 				
 				// console.log("closeVertex" , self.closeVertex)
-				
+				if (!self.dragging)
+				{
 					self.closeVertex = [];
 					let vertexArray = drawManager.getVertexArray();
 					let arrayLength = vertexArray.length
@@ -202,7 +223,7 @@ function FreehandTool(){
 						document.getElementById("drawField").style.cursor = "default";
 						
 					}
-				
+				}
 			}
 
 			 
@@ -213,6 +234,7 @@ function FreehandTool(){
 			  //empty in this drawingMode
 			  self.itemHeld = false; 
 			  self.drawn = false;
+			  self.dragging = false;
 			  // prevent default
 			//   return false;
 			};

@@ -20,11 +20,14 @@ function SliderManager(){
 
    
 
-    let slides = {
-        leftSidebar: [],
-        rightSidebar: [],
-        bottomSidebar: [],
-        topSideBar: [],
+    this.defaultSlides = {
+        leftSidebar: ["order"],
+        rightSidebar: ["current","default"],
+        bottomBar: ["draw","current"],
+
+        leftSidebarOpen: true,
+        rightSidebarOpen: true,
+        bottomBarOpen: true,
     }
 
     // this.getSlides = (type) =>  {
@@ -33,11 +36,85 @@ function SliderManager(){
 
     this.setup = function(){
        
-        // this.fillOrderBar();
-        slideTemplates.createCurrentSlide("sidebarRight");
-        slideTemplates.createDefaultSlide("sidebarRight");
+
         
-        slideTemplates.createOrderSlide("sidebarLeft");
+            this.defaultSlides.leftSidebar.forEach( elem => {
+                switch (elem)
+                {
+                    case "order":
+                        slideTemplates.createOrderSlide("sidebarLeft");
+                        break;
+                    case "current":
+                        slideTemplates.createCurrentSlide("sidebarLeft");
+                        break;
+                    case "default":
+                        slideTemplates.createDefaultSlide("sidebarLeft");
+                        break;
+
+                    default:
+                        console.log("In sliderManager.setup: " + elem + " is not valid element in switch");
+                }
+            })
+            
+            
+        
+
+        
+            this.defaultSlides.rightSidebar.forEach( elem => {
+                switch (elem)
+                {
+                    case "order":
+                        slideTemplates.createOrderSlide("sidebarRight");
+                        break;
+                    case "current":
+                        slideTemplates.createCurrentSlide("sidebarRight");
+                        break;
+                    case "default":
+                        slideTemplates.createDefaultSlide("sidebarRight");
+                        break;
+
+                    default:
+                        console.log("In sliderManager.setup: " + elem + " is not valid element in switch");
+                }
+            })
+            
+            
+        
+        
+            this.defaultSlides.bottomBar.forEach( elem => {
+                switch (elem)
+                {
+                    case "order":
+                        slideTemplates.createOrderSlide("bottomBar");
+                        break;
+                    case "current":
+                        slideTemplates.createCurrentSlide("bottomBar");
+                        break;
+                    case "default":
+                        slideTemplates.createDefaultSlide("bottomBar");
+                        break;
+
+                    default:
+                        console.log("In sliderManager.setup: " + elem + " is not valid element in switch");
+                }
+            })
+            
+        
+
+
+
+
+        // this.fillOrderBar();
+        // slideTemplates.createCurrentSlide("sidebarRight");
+        // slideTemplates.createCurrentSlide("bottomBar");
+        // slideTemplates.createCurrentSlide("bottomBar");
+        // slideTemplates.createCurrentSlide("bottomBar");
+        // slideTemplates.createCurrentSlide("bottomBar");
+        // slideTemplates.createCurrentSlide("bottomBar");
+        // slideTemplates.createDefaultSlide("sidebarRight");
+        
+        // slideTemplates.createOrderSlide("sidebarLeft");
+        
         // slideTemplates.createDefaultSlide("sidebarRight");
         // slideTemplates.createDefaultSlide("sidebarRight");
         // slideTemplates.createColorSlide("sidebarRight");
@@ -215,6 +292,9 @@ function SliderManager(){
 
     // }
 
+    this.createOrderSlide = (a)  => {
+        console.log(a)
+    } 
 
 
     this.updateDefaultSlides = () => {

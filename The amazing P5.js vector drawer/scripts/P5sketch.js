@@ -46,10 +46,10 @@ function setup() {
 	console.log("running")
 	//create helper functions and the colour palette
 	helpers = new HelperFunctions();
-
+	
 	//NO LONGER NEEDED
 	// colourP = new ColourPalette();
-
+	
 	// currentFigure = drawManager.figures[currentFigureIndex];
 	// currentDrawing = currentFigure.drawings[currentDrawingIndex];
 	// currentPart = currentDrawing.parts[currentPartIndex];	
@@ -57,19 +57,20 @@ function setup() {
 	//create the sliderManager
 	// console.log("currentPart setup" ,currentPart)
 	sliderManager = new SliderManager();
-	sliderManager.setup();
 	
-
+	
+	
 	//create a toolbox for storing the tools
 	toolbox = new Toolbox();
-
+	
 	//add the tools to the toolbox.
 	toolbox.addTool(new FreehandTool());
 	toolbox.addTool(new LineToTool());
 	// toolbox.addTool(new SprayCanTool());
 	// toolbox.addTool(new MirrorDrawTool());
-
-
+	
+	//Run setups
+	sliderManager.setup();
 
 	// background(200);
 	// drawManager.draw(drawManager.figures[0]);
@@ -81,7 +82,11 @@ function setup() {
 	$("#sidebarRight").children()[0] = temporary;
 	// console.log($("#sidebarRight").children());
 	fitToScreen();
+
+
+	
 }
+	
 
 function draw() {
 	// console.log("draw ")

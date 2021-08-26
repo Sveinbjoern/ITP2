@@ -34,9 +34,7 @@ function DrawManager() {
   this.defaultPart = 
   {
     name: "partDefault",
-    localZeroPoint: [0,0],
     currentVertex: 0,
-
     stroke: color(0,0,0),
     noStroke: false,
     strokeWeight: 3,
@@ -80,11 +78,15 @@ function DrawManager() {
     TESS: "TESS",
   }
 
+
   this.settings =
   {
     minStrokeWeight: 1,
     maxStrokeWeight: 50,
     
+    minDragDistance: 5,
+    maxDragDistance: 50,
+
     vertexPointsFactor: 5,
     vertexPoints: true,
     numberPoints: true,
@@ -103,11 +105,29 @@ function DrawManager() {
     storage.figures.push(new Figure("start"));
     storage.currentFigure ++;
 
-    console.log("storage", storage)
+    // console.log("storage", storage)
     // if (this.figures[0].drawings[0].parts[0].vertexArray.length >= 1)
     // {
     //     // this.draw(this.figures[0])
     // }
+
+
+    if (typeof(Storage) !== "undefined") {
+      console.log("local Storage OK")// Code for localStorage
+      console.log("helpers", helpers)// Code for localStorage
+      console.log("all the globals", helpers,drawManager, sliderManager )// Code for localStorage
+      
+      
+      helpers.loadFiguesFromStorage(storage);
+      
+      helpers.loadSettingsFromStorage(this.settings);
+      
+  
+    } else {
+      alert("No web Storage support, your settings and work cannot be saved!")// No web storage Support.
+    }
+
+
   };
 
   this.draw = function (figure) {
@@ -280,14 +300,15 @@ function DrawManager() {
     if (part.vertexArray.length > 0)
     {
       push();
-      
-            stroke(invertColorMinusBlue(part.stroke))
-            strokeWeight(max(part.strokeWeight + drawManager.settings.vertexPointsFactor, 6))
-            part.vertexArray.forEach(elem => {
-              point(elem[0],
-                    elem[1]); 
-            });
-
+            if (drawManager.settings.vertexPoints)
+            {
+              stroke(invertColorMinusBlue(part.stroke))
+              strokeWeight(max(part.strokeWeight + drawManager.settings.vertexPointsFactor, 6))
+              part.vertexArray.forEach(elem => {
+                point(elem[0],
+                      elem[1]); 
+              });
+            }
 
             if (drawManager.settings.numberPoints)
             {

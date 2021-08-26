@@ -120,7 +120,19 @@ body {
 	left: 400;	
 }
 
+.dropDownMenus
+{
+	position: relative;
+}
 
+#addSliderMenu{
+	display: none;
+	position: absolute;
+	width: auto;
+	height: auto;
+	z-index: 1;
+
+}
 /* slides */
 .slide{
 	/* width: 300; */
@@ -152,11 +164,16 @@ body {
   flex-direction: grid;
   flex-flow: wrap;
 }
-.colorFill {
-	grid-area: colorfill;
+#bottomBar {
+	grid-area: bottomBar;
+
 	display: flex;
-	flex-direction: grid;
-	flex-flow: wrap;
+	overflow-y: hidden;
+	
+
+
+	/* flex-direction: grid;
+	flex-flow: wrap; */
 	
 	/* text-align: left; */
   }
@@ -170,6 +187,12 @@ body {
 #endShapeInput{
 	width: 130px;
 }
+
+
+
+
+
+
 
 .colourSwatches {
   width: 40px;
@@ -200,7 +223,7 @@ body {
 	grid-template-areas:
 		"header header header header"
 		"sidebarLeft sidebar drawField sidebarRight"
-		"sidebarLeft colorfill colorfill sidebarRight";
+		"sidebarLeft bottomBar bottomBar sidebarRight";
 	/* background-color: #fff;
 	color: #444; */
 	/* align-items: stretch; */
