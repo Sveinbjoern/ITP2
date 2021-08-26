@@ -112,6 +112,12 @@ function DrawManager() {
     // }
 
 
+    
+
+
+  };
+
+  this.loadLocalStorage = () => {
     if (typeof(Storage) !== "undefined") {
       console.log("local Storage OK")// Code for localStorage
       console.log("helpers", helpers)// Code for localStorage
@@ -122,13 +128,11 @@ function DrawManager() {
       
       helpers.loadSettingsFromStorage(this.settings);
       
-  
+    
     } else {
       alert("No web Storage support, your settings and work cannot be saved!")// No web storage Support.
     }
-
-
-  };
+  }
 
   this.draw = function (figure) {
     //check if it has a point!! before sending it to draw
@@ -302,7 +306,7 @@ function DrawManager() {
       push();
             if (drawManager.settings.vertexPoints)
             {
-              stroke(invertColorMinusBlue(part.stroke))
+              stroke(invertColor(part.stroke))
               strokeWeight(max(part.strokeWeight + drawManager.settings.vertexPointsFactor, 6))
               part.vertexArray.forEach(elem => {
                 point(elem[0],

@@ -19,3 +19,4 @@ document.addEventListener("mouseover", (event) => {
 
 Local storage for settings and values:
 https://blog.logrocket.com/localstorage-javascript-complete-guide/#browsersupport
+

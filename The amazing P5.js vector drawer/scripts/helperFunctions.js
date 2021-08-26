@@ -180,28 +180,28 @@ function HelperFunctions() {
         toolbox.selectedTool.drawn = false;
     }
 
-    this.loadFiguesFromStorage(storage)
+    this.loadFiguesFromStorage = (stor) =>
     {
         let stored = window.localStorage.getItem("stored")
       
       if (stored)
         {
-          storage = JSON.parse(stored);
+          stor = JSON.parse(stored);
   
         } 
     }
 
-    this.saveFiguresFromStorage(storage)
+    this.saveFiguresFromStorage = (storage) =>
     {
         console.log("storage to be saved in helpers.saveFiguresFromStorage()", storage)
         window.localStorage.getItem("stored", JSON.stringify(storage))
     }
 
 
-    this.loadSettingsFromStorage(settings)
+    this.loadSettingsFromStorage = (settings) =>
     {
         let set = window.localStorage.getItem("settings")
-      
+        console.log("settings from loadSettingsFromStorage", settings)
       if (set)
         {
           set = JSON.parse(set);
@@ -212,7 +212,7 @@ function HelperFunctions() {
 
 
 
-    this.saveSettingsFromStorage(storage)
+    this.saveSettingsFromStorage = (storage) =>
     {
         console.log("storage to be saved in helpers.saveSettingsFromStorage()", storage)
         window.localStorage.getItem("stored", JSON.stringify(storage))
@@ -322,9 +322,14 @@ function keyPressed()
                 if (keyCode === keyCodes.backSpace)
                 {
                     
-                    
+                    // console.log(vertexArray.length, part.currentVertex);
                     // let currentDrawing = figure.drawings[figure.currentDrawing];
-                    vertexArray.splice(part.currentVertex,1);
+                    if (vertexArray.length <= part.currentVertex)
+                    {
+                        vertexArray.splice(part.currentVertex-1,1);
+                    } else {
+                        vertexArray.splice(part.currentVertex,1);
+                    }
                     // console.log(vertexArray.splice(part.currentVertex -1,1));
                     part.currentVertex--;
                     if (part.currentVertex < 0)
@@ -378,18 +383,37 @@ function keyPressed()
 
 
     }
-    //invert the color but not fully invert blue, This is done to create high contrast, 
-    // and make the contrast visible also with grey colors
-    function invertColorMinusBlue(c)
+    //invert the color. This is done to create high contrast, 
+    // also changed to make the contrast visible also with all grey colors
+    function invertColor(c)
     {
-        return color( 255 - c.levels[0],
-                    255 - c.levels[1],
-                    135 - c.levels[2],
-                    255);
         
-      
+        
+        let grey = (c.levels[0] + c.levels[1] + c.levels[2])/3 
+        console.log(grey)
+        if (grey > 180 || grey < 90)
+        {
+            return color( 255 - c.levels[0],
+                    255 - c.levels[1],
+                    255 - c.levels[2],
+                    255);
+
+        } else {
+            return color( grey + c.levels[0],
+                grey + c.levels[1],
+                grey + c.levels[2],
+                255);
+
+        }
+        
+        
+        
+        
         
     }
+
+    
+    
     
     //Takes an array, 
     function removePart(index, partOf, action)

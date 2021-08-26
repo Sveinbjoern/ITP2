@@ -71,6 +71,7 @@ function setup() {
 	
 	//Run setups
 	sliderManager.setup();
+	drawManager.loadLocalStorage();
 
 	// background(200);
 	// drawManager.draw(drawManager.figures[0]);
