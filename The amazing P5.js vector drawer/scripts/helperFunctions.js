@@ -10,7 +10,7 @@ function HelperFunctions() {
     {
         // console.log(checked);
         currentPart.noStroke = checked;
-        drawManager.reset();
+        drawManager.reDrawWithPoint();
         
     }
     this.selectBox = function(value)
@@ -40,7 +40,7 @@ function HelperFunctions() {
     {
         // console.log(checked);
         currentPart.noFill = checked;
-        drawManager.reset();
+        drawManager.reDrawWithPoint();
         
     }
     this.endShapeButton = function(item)
@@ -55,14 +55,14 @@ function HelperFunctions() {
             item.value = "EndShape(CLOSE)"
             currentPart.endShape = false;
         }
-        drawManager.reset();
+        drawManager.reDrawWithPoint();
         
     }
 
     this.strokeWeightSlider = function(value)
     {
         currentPart.strokeWeight = value; 
-        drawManager.reset();
+        drawManager.reDrawWithPoint();
         // console.log("value", value);
         // console.log("strokeWeight", currentPart.strokeWeight);
         toolbox.selectedTool.drawn = false;
@@ -121,6 +121,64 @@ function HelperFunctions() {
 
     }
     
+
+    this.setVertexArrayToStart = (p) => {
+        let part = p || drawManager.getPart(); 
+        part.currentVertex = 0;
+        helpers.updateCurrentVertex(part);
+        // drawManager.reDrawWithPoint();
+        toolbox.selectedTool.drawn = false;
+    }
+
+    this.setVertexArrayToEnd = (p) => {
+        let part = p || drawManager.getPart(); 
+        part.currentVertex = part.vertexArray.length;
+        helpers.updateCurrentVertex(part);
+        // drawManager.reDrawWithPoint();
+        toolbox.selectedTool.drawn = false;
+    }
+
+
+    this.decreaseVertexArray = (p) => {
+        let part = p || drawManager.getPart();  
+        part.currentVertex --;
+            if (part.currentVertex < 0)
+            {
+                part.currentVertex = part.vertexArray.length;
+
+            }
+        helpers.updateCurrentVertex(part);
+        // drawManager.reDrawWithPoint();
+        toolbox.selectedTool.drawn = false;
+    }
+
+    this.increaseVertexArray = (p) => {
+        let part = p || drawManager.getPart();
+        part.currentVertex ++;
+            if (part.currentVertex > part.vertexArray.length)
+            {
+                part.currentVertex = 0;
+            }
+            helpers.updateCurrentVertex(part); 
+            // drawManager.reDrawWithPoint();
+            toolbox.selectedTool.drawn = false;
+    }
+
+    this.deleteVertex = (p) => {
+        let part = p || drawManager.getPart();
+        if (part.vertexArray.length > 0)
+        {
+            part.vertexArray.splice(part.currentVertex,1);
+            if (part.currentVertex > 0)
+            {
+                part.currentVertex --;
+            }
+            
+        }
+        helpers.updateCurrentVertex(part); 
+        // drawManager.reDrawWithPoint();
+        toolbox.selectedTool.drawn = false;
+    }
     
     let screenshotIteration = 0;
     
@@ -150,7 +208,7 @@ function HelperFunctions() {
         currentFigure = drawManager.figures[currentFigureIndex];
         currentDrawing = currentFigure.drawings[currentDrawingIndex];
         currentPart = currentDrawing.parts[currentPartIndex];	
-        drawManager.reset();
+        drawManager.reDrawWithPoint();
 
 
 		
@@ -234,7 +292,7 @@ function keyPressed()
                     helpers.updateCurrentVertex(part);
                     
                     toolbox.selectedTool.drawn = false;
-                    drawManager.reset();
+                    drawManager.reDrawWithPoint();
 
                 }
             }
@@ -261,37 +319,36 @@ function keyPressed()
         if (keyCode === keyCodes.leftArrow)
         {
             // console.log("rightArrow")
-            part.currentVertex --;
-            if (part.currentVertex < 0)
-            {
-                part.currentVertex = vertexArray.length;
-
-            }
-            helpers.updateCurrentVertex(part);
+            helpers.decreaseVertexArray(part);
         } else if (keyCode === keyCodes.rightArrow)
         {
             // console.log("rightArrow")
-            part.currentVertex ++;
-            if (part.currentVertex > vertexArray.length)
-            {
-                part.currentVertex = 0;
-            }
-            helpers.updateCurrentVertex(part);
+            helpers.increaseVertexArray(part);
         } else if (keyCode === keyCodes.upArrow)
         {
-            part.currentVertex = 0;
-            helpers.updateCurrentVertex(part);
+            helpers.setVertexArrayToStart(part);
         } else if (keyCode === keyCodes.downArrow)
         {
-            part.currentVertex = vertexArray.length;
-            helpers.updateCurrentVertex(part);
+            helpers.setVertexArrayToEnd(part);
         }
 
         // return false;
 
 
     }
-
+    //invert the color but not fully invert blue, This is done to create high contrast, 
+    // and make the contrast visible also with grey colors
+    function invertColorMinusBlue(c)
+    {
+        return color( 255 - c.levels[0],
+                    255 - c.levels[1],
+                    135 - c.levels[2],
+                    255);
+        
+      
+        
+    }
+    
     //Takes an array, 
     function removePart(index, partOf, action)
     {

@@ -44,6 +44,9 @@ function DrawManager() {
     noFill: false,
     vertexMode: "",
     endShape: true,
+
+    selected: false,
+    draw: true,
   };
   this.defaultDrawing = 
   {
@@ -81,6 +84,13 @@ function DrawManager() {
   {
     minStrokeWeight: 1,
     maxStrokeWeight: 50,
+    
+    vertexPointsFactor: 5,
+    vertexPoints: true,
+    numberPoints: true,
+
+
+    lightMode: false,
     // MORE SETTINGS
     //Show number - number size -relative to stroke
     //
@@ -120,6 +130,8 @@ function DrawManager() {
         
       }
     }
+
+    
   };
 
 
@@ -143,7 +155,7 @@ function DrawManager() {
 
           if (part.vertexArray.length === 1) {
             beginShape(POINTS);
-            createVertex(...part.vertexArray[0]);
+            createVertex(part.vertexArray[0]);
             endShape();
           } else {
             switch (part.vertexMode) {
@@ -176,6 +188,7 @@ function DrawManager() {
                 break;
               default:
                 console.log("Error in DrawSoftVertecies");
+                
             }
             part.vertexArray.forEach(createVertex);
             if (part.endShape) {
@@ -240,17 +253,87 @@ function DrawManager() {
 
 
 
-  this.reset = function () {
+  this.reDraw = function () {
     // clear screen
     // console.log("reset Run")
-    clear();
+    background(200);
     // redraw
     let figures = storage.figures.length;
     for (let i = 0; i < figures; i++) {
       this.draw(storage.figures[i]);
     }
-    
   };
+
+  this.reDrawWithPoint = () =>
+  {
+    background(200);
+    // redraw
+    let figures = storage.figures.length;
+    for (let i = 0; i < figures; i++) {
+      this.draw(storage.figures[i]);
+    }
+    this.drawPoints();
+  }
+
+  this.drawPoints = () => {
+    let part = this.getPart();
+    if (part.vertexArray.length > 0)
+    {
+      push();
+      
+            stroke(invertColorMinusBlue(part.stroke))
+            strokeWeight(max(part.strokeWeight + drawManager.settings.vertexPointsFactor, 6))
+            part.vertexArray.forEach(elem => {
+              point(elem[0],
+                    elem[1]); 
+            });
+
+
+            if (drawManager.settings.numberPoints)
+            {
+              // stroke(part.stroke);
+              // fill(invertColor(part.stroke));
+              fill(part.stroke);
+              noStroke();
+              textAlign(CENTER,CENTER)
+              textSize(max(part.strokeWeight + drawManager.settings.vertexPointsFactor, 6))
+              let counter = 0;
+              part.vertexArray.forEach(elem => {
+                text(counter++, elem[0], elem[1]+1); 
+              });
+            }
+
+        //     if (part.currentVertex === 0)
+        //     {
+        //       point(part.vertexArray[part.currentVertex][0],
+        //         part.vertexArray[part.currentVertex][1] );
+        //     } else{
+        //       point(part.vertexArray[part.currentVertex-1][0],
+        //       part.vertexArray[part.currentVertex-1][1] );}
+      
+        // stroke(invertColor(part.stroke))
+        //     strokeWeight(max(part.strokeWeight*2, 5))
+        //     part.vertexArray.forEach(elem => {
+        //       point(elem[0],
+        //             elem[1]); 
+
+        //     });
+
+
+      // stroke(part.stroke);
+      // fill(invertColor(part.stroke));
+      // textAlign(CENTER,CENTER)
+      // textSize(max(part.strokeWeight*2, 5))
+
+      // if (part.currentVertex === 0)
+      // {
+      //   text(part.currentVertex)
+      // } else{
+      // point(part.vertexArray[part.currentVertex-1][0],
+      //       part.vertexArray[part.currentVertex-1][1] );}
+      pop();
+    }
+  }
   
   return this;
 }

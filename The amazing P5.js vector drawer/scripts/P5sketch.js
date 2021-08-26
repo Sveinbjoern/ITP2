@@ -32,7 +32,7 @@ function setup() {
 
 	//basic p5 settings:
 	frameRate(30);
-
+	background(120);
 	//create a canvas to fill the content div from index.html
 	canvasContainer = select('#drawField');
 	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
@@ -110,7 +110,7 @@ function fitToScreen(){
  canvasContainer = select('#drawField');
  var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
  c.parent('drawField');
- drawManager.reset();
+ drawManager.reDrawWithPoint();
 }
 
 // function mousePressed(){

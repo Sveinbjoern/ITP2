@@ -10,7 +10,7 @@ function LineToTool() {
   
   //drawing turns true when we press the buttons and you will have a display of the line
   this.drawn = false;
-  this.lightMode = false;
+  
   this.arrayLength = 0 ;
   
 	this.figure = drawManager.getFigure();
@@ -27,7 +27,7 @@ function LineToTool() {
       this.drawn = true;
     }
     if (this.arrayLength > 0 && mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-		if (this.lightMode)
+		if (drawManager.settings.lightMode)
 		{
 				updatePixels();
 				line(	this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray[arrayLength-1][0],
@@ -37,7 +37,7 @@ function LineToTool() {
 		{
 			this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray.push ([mouseX,mouseY])
 			
-			drawManager.reset();
+			drawManager.reDraw();
 			this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray.pop();
 		}
 		
@@ -55,7 +55,7 @@ function LineToTool() {
 		  //make mouse only work inside canvas
 		  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
 			self.figure.drawings[self.figure.currentDrawing].parts[self.figure.drawings[self.figure.currentDrawing].currentPart].vertexArray.push([mouseX, mouseY]);
-			drawManager.reset();
+			drawManager.reDraw();
 			// console.log("self in mousePressed", self)
 			self.drawn = false;
 		  }

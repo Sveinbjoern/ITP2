@@ -150,7 +150,7 @@ function SlideTemplates() {
         
         // console.log(self.currentDrawing);
         currentDrawing.currentPart = this.identity;
-        drawManager.reset();
+        drawManager.reDrawWithPoint();
         console.log(currentDrawing)
         helpers.updateSettingsCurrentS(currentDrawing.parts[currentDrawing.currentPart]);
         
@@ -159,7 +159,7 @@ function SlideTemplates() {
 
     
 
-}
+  }
 
 
 
@@ -199,7 +199,7 @@ function SlideTemplates() {
     mainTextElem.parent(newSlide);
     mainTextElem.style("position", "absolute");
     mainTextElem.style("left", "0px")
-    mainTextElem.style("top", "-25px")
+    mainTextElem.style("top", "-12px")
     // console.log("mainTextElem", mainTextElem)
 
     let fillText = createP("Fill:");
@@ -337,7 +337,7 @@ function SlideTemplates() {
     let xText = createP("X");
     xText.style("position", "absolute")
     xText.style("right", "17px")
-    xText.style("top", "-25px")
+    xText.style("top", "-12px")
     xText.parent(newSlide);
     // xText.style("float", "top")
 
@@ -527,7 +527,7 @@ function SlideTemplates() {
     mainTextElem.parent(newSlide);
     mainTextElem.style("position", "absolute");
     mainTextElem.style("left", "0px");
-    mainTextElem.style("top", "-25px");
+    mainTextElem.style("top", "-12px");
     // console.log("mainTextElem", mainTextElem)
 
     let fillText = createP("Fill:");
@@ -558,7 +558,7 @@ function SlideTemplates() {
       }
       console.log(elem[0].children[2].value, inpColorFill.elt.value);
       drawManager.getPart().fill = color(inpColorFill.elt.value);
-      drawManager.reset();
+      drawManager.reDrawWithPoint();
       toolbox.selectedTool.drawn = false
       
       
@@ -598,7 +598,7 @@ function SlideTemplates() {
 
 
       drawManager.getPart().noFill =  noFillBox.checked();
-      drawManager.reset();
+      drawManager.reDrawWithPoint();
      
     } );
     noFillBox.parent(newSlide);
@@ -633,7 +633,7 @@ function SlideTemplates() {
       
 
       drawManager.getPart().stroke = color(inpColorStroke.elt.value);
-      drawManager.reset();
+      drawManager.reDrawWithPoint();
       toolbox.selectedTool.drawn = false
       
     });
@@ -666,7 +666,7 @@ function SlideTemplates() {
 
 
       drawManager.getPart().noStroke =  noStrokeBox.checked();
-      drawManager.reset();
+      drawManager.reDrawWithPoint();
       
        
     } );
@@ -675,7 +675,7 @@ function SlideTemplates() {
     let xText = createP("X");
     xText.style("position", "absolute");
     xText.style("right", "17px");
-    xText.style("top", "-25px");
+    xText.style("top", "-12px");
     xText.parent(newSlide);
     // xText.style("float", "top")
 
@@ -717,7 +717,7 @@ function SlideTemplates() {
         toolbox.selectedTool.updateSettings = true;
       }
       drawManager.getPart().strokeWeight = parseInt(sWslider.elt.value);
-      drawManager.reset();
+      drawManager.reDrawWithPoint();
        toolbox.selectedTool.drawn = false
       // sWInput.elt.value = drawManager.defaultPart.strokeWeight;
       // console.log(drawManager.defaultPart.strokeWeight);
@@ -753,7 +753,7 @@ function SlideTemplates() {
       
       drawManager.getPart().strokeWeight = sWInput.elt.value;
       // console.log(sWInput.elt.value);
-      drawManager.reset();
+      drawManager.reDrawWithPoint();
       
        toolbox.selectedTool.drawn = false
     };
@@ -797,7 +797,7 @@ function SlideTemplates() {
         }
        }
 
-       drawManager.reset();
+       drawManager.reDrawWithPoint();
        toolbox.selectedTool.drawn = false
     }});
     button.parent(newSlide);
@@ -829,7 +829,7 @@ function SlideTemplates() {
         }
       }
       drawManager.getPart().vertexMode = sel.value()
-      drawManager.reset();
+      drawManager.reDrawWithPoint();
 
     });
     sel.parent(newSlide);
@@ -837,32 +837,113 @@ function SlideTemplates() {
     let vText = createP("Vertecies:");
     vText.style("position", "absolute")
     vText.style("left", "0px")
-    vText.style("top", "93px")
+    vText.style("top", "110px")
     vText.parent(newSlide);
 
     console.log("part", part)
     let vNumText = createP(part.currentVertex + "/" + part.vertexArray.length);
     vNumText.style("position", "absolute")
-    vNumText.style("left", "100px")
-    vNumText.style("top", "93px")
+    vNumText.style("left", "80px")
+    vNumText.style("top", "110px")
     vNumText.parent(newSlide);
+
+
+
+
+
+    
+    
+    button = createButton("|<");
+    
+    button.style("position", "absolute");
+    button.style("left", "125px")
+    button.style("width", "auto")
+    button.style("top", "123px")
+    button.parent(newSlide);
+    button.mousePressed( () => {
+      console.log(button,this)
+      
+      helpers.setVertexArrayToStart();
+     
+
+    
+    
+    });
+
+    button = createButton("<");
+    
+    button.style("position", "absolute");
+    button.style("left", "151px")
+    button.style("width", "auto")
+    button.style("top", "123px")
+    button.parent(newSlide);
+    button.mousePressed( () => {
+      console.log(button,this)
+      
+      helpers.decreaseVertexArray();
+     
+
+    
+    
+    });
+    button = createButton("D");
+    
+    button.style("position", "absolute");
+    button.style("left", "174px")
+    button.style("width", "auto")
+    button.style("top", "123px")
+    button.parent(newSlide);
+    button.mousePressed( () => {
+      console.log(button,this)
+      
+      helpers.deleteVertex();
+     
+     
+
+    
+    
+    });
+    button = createButton(">");
+    
+    button.style("position", "absolute");
+    button.style("left", "198px")
+    button.style("width", "auto")
+    button.style("top", "123px")
+    button.parent(newSlide);
+    button.mousePressed( () => {
+      console.log(button,this)
+      
+      helpers.increaseVertexArray();
+     
+     
+
+    
+    
+    });
+    button = createButton(">|");
+    
+    button.style("position", "absolute");
+    button.style("left", "220px")
+    button.style("width", "auto")
+    button.style("top", "123px")
+    button.parent(newSlide);
+    button.mousePressed( () => {
+      console.log(button,this)
+      
+      helpers.setVertexArrayToEnd();
+     
+     
+
+    
+    
+    });
+
+
+
 
   };
 
  
-  
-}
-
-
-let createOrderFlexContiner = (side) => {
-
-  
-
-}
-
-let createSliderFlexContainer = () => {
-
-
   
 }
 

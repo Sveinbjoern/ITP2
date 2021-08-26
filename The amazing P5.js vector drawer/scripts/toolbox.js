@@ -17,7 +17,7 @@ function Toolbox() {
 		self.selectTool(toolName);
 
 		//reset the drawing
-		drawManager.reset();
+		drawManager.reDrawWithPoint();
 
 	}
 

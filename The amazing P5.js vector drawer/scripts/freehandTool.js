@@ -6,7 +6,7 @@ function FreehandTool(){
 
 
 	this.drawn = false;
-  	this.lightMode = false;
+  	
 	//to smoothly draw we'll draw a line from the previous mouse location
 	//to the current mouse location. The following values store
 	//the locations from the last frame. They are undefined to start with because
@@ -35,14 +35,19 @@ function FreehandTool(){
     
 	//   console.log("currentVertex in draw", this.currentVertex )
 	if (!this.drawn) {
-		
+		// drawManager.reDrawWithPoint();
+		if (drawManager.settings.vertexPoints)
+		{
+		  
+			drawManager.drawPoints();
+		}
+
 		loadPixels(); // loadPixels is in this case used to save the screeen at this point
-		
-      this.drawn = true;
+		this.drawn = true;
     }
     if (arrayLength > 0 && mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height && !this.itemInDistance && !this.itemHeld) {
 		let vertexArray = drawManager.getVertexArray();
-		if (this.lightMode)
+		if (drawManager.settings.lightMode)
 		{
 			
 				// updatePixels();
@@ -55,7 +60,7 @@ function FreehandTool(){
 			// console.log("part.currentVertex", part.currentVertex)
 			vertexArray.splice(part.currentVertex, 0,[mouseX,mouseY])
 			
-			drawManager.reset();
+			drawManager.reDrawWithPoint();
 			vertexArray.splice(part.currentVertex,1);
 			// console.log(vertexArray.slice(part.currentVertex,part.currentVertex +1));
 		
@@ -85,7 +90,7 @@ function FreehandTool(){
 					self.itemHeld = true;
 					self.drawn = false;
 
-					// drawManager.reset();
+					
 					// drawn = false;
 					} else
 					{
@@ -98,7 +103,7 @@ function FreehandTool(){
 						helpers.updateCurrentVertex(part);
 						self.drawn = false;
 					}
-					drawManager.reset();
+					drawManager.reDraw();
 					
 			}	
 			  // prevent default
@@ -114,7 +119,7 @@ function FreehandTool(){
 				vertexArray[self.closeVertex] = [mouseX,mouseY]
 				self.drawn = false;
 			  }
-			  drawManager.reset();
+			  drawManager.reDrawWithPoint();
 			  // prevent default
 			//   return false;
 			};
