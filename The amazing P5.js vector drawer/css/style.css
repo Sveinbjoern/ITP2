@@ -120,6 +120,7 @@ body {
 	left: 400;	
 }
 
+/* Drop down menus */
 .dropDownMenus
 {
 	position: relative;
@@ -127,12 +128,37 @@ body {
 
 #addSliderMenu{
 	display: none;
+	border: rgb(0, 0, 0);
+	border-style: solid;
+	border-radius: 3%;
+	background-color: rgb(255, 255, 255);
 	position: absolute;
 	width: auto;
 	height: auto;
+	text-align: left;
 	z-index: 1;
+	margin: 0%;
+	padding: 5px;
+	cursor: pointer;
+	left: 0px;
+	top: 0px;
 
 }
+
+#addSliderMenu p{
+	/* position: abso; */
+	font-size: large;
+	text-align: left;
+	margin: 2px;
+	padding: 0%;
+	
+	/* z-index: 1; */
+}
+
+#addSliderMenu p:hover {
+	background-color: rgb(73, 0, 0);
+}
+
 /* slides */
 .slide{
 	/* width: 300; */
@@ -189,8 +215,30 @@ body {
 }
 
 
+/* Add slider buttons */
+#sidebarLeftAddSliderButton,
+#sidebarRightAddSliderButton {
+	/* display: block; */
+	width: 300px;
+	height: 21px;
+	/* text-align: center; */
+	margin: auto;
+}
 
+#bottomBarAddSliderButton{
+	/* display: block; */
+	width: 21px;
+	height: 160px;
+	/* color: black; */
+	/* text-align: center; */
+	/* margin: auto; */
+}
 
+/* #addSliderButtonLeft,
+#addSliderButtonRight,
+#addSliderButtonBottom button{
+	
+} */
 
 
 

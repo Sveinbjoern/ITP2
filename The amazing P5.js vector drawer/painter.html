@@ -63,30 +63,37 @@
       </div>
       
       
-      <div class="box" id= "bottomBar"></div>
+      <div class="box" id= "bottomBar">
+
+        <button id="bottomBarAddSliderButton" onclick=sliderManager.openAddSliderMenu(this)>+</button>
+      </div>
       <!-- <div class="box options">options</div> -->
       <div class="box" id = "sidebarLeft">
        
+
           <div id="selectSlide">
             select mode:
             <input  type="checkbox" id="selectBox" name="selectBox" onclick="helpers.selectBox(this.checked)">
            
           </div>
 
+          <button id="sidebarLeftAddSliderButton" onclick=sliderManager.openAddSliderMenu(this)>+</button>
+
+
       </div>
       <div class="box" id = "sidebarRight">
         <!-- <div class="slide" id = "mirrorOptions">Yalla</div> -->
         
-        
+        <button id="sidebarRightAddSliderButton" onclick=sliderManager.openAddSliderMenu(this) >+</button>
         
       </div>
     </div>
 
-    <div id="addSliderMenu" class="box">
-      <p class="sliderMenuContent" onclick="sliderManager.createOrderSlide" style="">Create order slide</a>
-      <p class="sliderMenuContent" onclick="sliderManager.createCurrentSlide">Create current slide</a>
-      <p class="sliderMenuContent" onclick="sliderManager.createDefaultSlide">Create default slide</a>
-      <p class="sliderMenuContent" onclick="sliderManager.createSettingsSlide">Create settings slide</a>
+    <div id="addSliderMenu" >
+      <p class="sliderMenuContent" onclick="sliderManager.createOrderSlide(this)" >+ Create order slide</a>
+      <p class="sliderMenuContent" onclick="sliderManager.createCurrentSlide(this)">+ Create current slide</a>
+      <p class="sliderMenuContent" onclick="sliderManager.createDefaultSlide(this)">+ Create default slide</a>
+      <p class="sliderMenuContent" onclick="sliderManager.createSettingsSlide(this)">+ Create settings slide</a>
     </div>
     
   </body>

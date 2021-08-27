@@ -10,6 +10,7 @@ function SlideTemplates() {
     //     let figure = createDiv()
 
 
+
     
     // leftSidebarLenght ++;
 
@@ -44,7 +45,7 @@ function SlideTemplates() {
     {
         
         let part = createDiv();
-        part.parent("sidebarLeft");
+        part.parent(pos);
         
         //checkbox for isSelected: this is done with the standard javaScipt and jQuery
         // because the p5 code creates an unecessary div container
@@ -99,46 +100,7 @@ function SlideTemplates() {
         
         currentDrawing.parts[this.identity].name = this.elt.value;
     }
-    function makeNewHTMLPart(){
-        // let part = createDiv("part"+(i+1)+": ");
-        // part.parent(orderBar);
-        let elem = document.getElementById("sidebarLeft");
-        let partsLength = currentDrawing.parts.length
-        currentDrawing.parts.push(new Part("part"+ (partsLength+1) ));
-        
-        let part = createDiv();
-        part.parent(elem);
-
-        let checkBox = document.createElement("INPUT");
-        checkBox.setAttribute("type", "checkbox");
-        
-        part.elt.appendChild(checkBox);
-        $(checkBox).addClass( 'selectedBox');
-        checkBox.identity = partsLength
-        // $(checkBox).change(helpers.isSelected(this));
-        checkBox.addEventListener('change', helpers.isSelected);
-        // console.log("checkBox", checkBox)
-
-        button = createButton("part"+(partsLength+1)+": ");
-        button.parent(part)
-        button.identity = partsLength
-        button.mousePressed(choosePart);
-
-       
-       
-        input_text = currentDrawing.parts[partsLength].name
-        let inp = createInput(input_text);
-        inp.parent(part)
-        inp.identity = partsLength
-        // inp.position(0, 0);
-        // inp.size(100); 
-        // console.log(inp.elt.value)
-        inp.input(partInputEvent);
-        currentDrawing.currentPart = partsLength;
-
-        
-        
-    }
+    
     function removeHTMLPart(part, index){
         // TODO
         
@@ -156,7 +118,47 @@ function SlideTemplates() {
         
     }
 
+    function makeNewHTMLPart() {
+      // let part = createDiv("part"+(i+1)+": ");
+      // part.parent(orderBar);
+    console.log(this)
+      let elem = document.getElementById("sidebarLeft");
+      let partsLength = currentDrawing.parts.length
+      currentDrawing.parts.push(new Part("part"+ (partsLength+1) ));
+      
+      let part = createDiv();
+      part.parent(elem);
 
+      let checkBox = document.createElement("INPUT");
+      checkBox.setAttribute("type", "checkbox");
+      
+      part.elt.appendChild(checkBox);
+      $(checkBox).addClass( 'selectedBox');
+      checkBox.identity = partsLength
+      // $(checkBox).change(helpers.isSelected(this));
+      checkBox.addEventListener('change', helpers.isSelected);
+      // console.log("checkBox", checkBox)
+
+      button = createButton("part"+(partsLength+1)+": ");
+      button.parent(part)
+      button.identity = partsLength
+      button.mousePressed(choosePart);
+
+     
+     
+      input_text = currentDrawing.parts[partsLength].name
+      let inp = createInput(input_text);
+      inp.parent(part)
+      inp.identity = partsLength
+      // inp.position(0, 0);
+      // inp.size(100); 
+      // console.log(inp.elt.value)
+      inp.input(partInputEvent);
+      currentDrawing.currentPart = partsLength;
+
+      
+      
+  }
     
 
   }
@@ -710,14 +712,21 @@ function SlideTemplates() {
       // console.log(sWslider)
       // console.log(sWslider.value());
     
+      if (sWslider.elt.value > drawManager.settings.maxStrokeWeight)
+      {
+        sWslider.elt.value = drawManager.settings.maxStrokeWeight;
+      } else if (sWslider.elt.value < drawManager.settings.minStrokeWeight)
+      {
+        sWslider.elt.value = drawManager.settings.minStrokeWeight;
+      }
       let elem = document.getElementsByClassName("currentSlide");
       let length = elem.length;
       if (length > 0)
       {
         for (let i = 0; i< length; i++)
         {
-          elem[i].children[9].value = sWslider.elt.value;
-          elem[i].children[10].value = sWslider.elt.value;
+          elem[i].children[9].value = parseInt(sWslider.elt.value);
+          elem[i].children[10].value = parseInt(sWslider.elt.value);
         }
       }
       // console.log(elem[0].children[9].value);
@@ -732,6 +741,7 @@ function SlideTemplates() {
       drawManager.getPart().strokeWeight = parseInt(sWslider.elt.value);
       drawManager.reDrawWithPoint();
        toolbox.selectedTool.drawn = false
+       console.log("sWslider.elt.value",sWslider.elt.value);
       // sWInput.elt.value = drawManager.defaultPart.strokeWeight;
       // console.log(drawManager.defaultPart.strokeWeight);
     };
@@ -745,6 +755,8 @@ function SlideTemplates() {
     sWInput.style("top", "75px");
     sWInput.elt.onchange = () => {
       // console.log(sWslider.value());
+      // console.log(sWInput.elt.value);
+
       if (sWInput.elt.value > drawManager.settings.maxStrokeWeight)
       {
         sWInput.elt.value = drawManager.settings.maxStrokeWeight;
@@ -752,20 +764,20 @@ function SlideTemplates() {
       {
         sWInput.elt.value = drawManager.settings.minStrokeWeight;
       }
-
+      // console.log(sWInput.elt.value);
       let elem = document.getElementsByClassName("currentSlide");
       let length = elem.length;
       if (length > 0)
       {
         for (let i = 0; i< length; i++)
         {
-          elem[i].children[10].value = sWInput.elt.value;
-          elem[i].children[9].value = sWInput.elt.value;
+          elem[i].children[10].value = parseInt(sWInput.elt.value);
+          elem[i].children[9].value = parseInt(sWInput.elt.value);
         }
       }
       
-      drawManager.getPart().strokeWeight = sWInput.elt.value;
-      // console.log(sWInput.elt.value);
+      drawManager.getPart().strokeWeight = parseInt(sWInput.elt.value);
+      console.log("sWInput.elt.value",sWInput.elt.value);
       drawManager.reDrawWithPoint();
       
        toolbox.selectedTool.drawn = false
@@ -853,7 +865,7 @@ function SlideTemplates() {
     vText.style("top", "110px")
     vText.parent(newSlide);
 
-    console.log("part", part)
+    // console.log("part", part)
     let vNumText = createP(part.currentVertex + "/" + part.vertexArray.length);
     vNumText.style("position", "absolute")
     vNumText.style("left", "80px")

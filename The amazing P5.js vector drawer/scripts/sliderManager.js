@@ -18,6 +18,9 @@ function SliderManager(){
     let temporary;
     let self = this;
 
+
+    this.addSliderOpen = false;
+
    
 
     this.defaultSlides = {
@@ -33,10 +36,36 @@ function SliderManager(){
     // this.getSlides = (type) =>  {
     //     return slides.type;
     // }
+    let createSlider = (type,pos) => {
+        
+        switch (type) {
+            case "order":
+                slideTemplates.createOrderSlide(pos);
+                break;
+            case "current": 
+                slideTemplates.createCurrentSlide(pos);
+                break;
+            case "default": 
+                slideTemplates.createDefaultSlide(pos);
+                
+                break;
+            default:
+                console.log(type + " is not a valid input at sliderManger.createSlider")
+        }
+       this.placeAddSliderButtonToEnd(pos);
+
+    }
 
     this.setup = function(){
        
 
+        window.onclick = function(event) {
+            if (!self.addSliderOpen) {
+              
+                let menu = document.getElementById("addSliderMenu");
+                menu.style.display = "none"
+            } else {self.addSliderOpen = false;}
+          }
         
             this.defaultSlides.leftSidebar.forEach( elem => {
                 switch (elem)
@@ -55,6 +84,8 @@ function SliderManager(){
                         console.log("In sliderManager.setup: " + elem + " is not valid element in switch");
                 }
             })
+            // console.log(helpers)
+            this.placeAddSliderButtonToEnd("sidebarLeft");
             
             
         
@@ -77,7 +108,7 @@ function SliderManager(){
                         console.log("In sliderManager.setup: " + elem + " is not valid element in switch");
                 }
             })
-            
+            this.placeAddSliderButtonToEnd("sidebarRight");
             
         
         
@@ -98,6 +129,7 @@ function SliderManager(){
                         console.log("In sliderManager.setup: " + elem + " is not valid element in switch");
                 }
             })
+            this.placeAddSliderButtonToEnd("bottomBar");
             
         
 
@@ -134,158 +166,7 @@ function SliderManager(){
 
  
 
-    // this.fillOrderBar = function(){
-    //     // figuresLength = drawManager.figrues.length
-    //     // for (let i = 0; i < figuresLength; i++)
-
-    //     //     let figure = createDiv()
-
-
-        
-    //     // leftSidebarLenght ++;
-
-        
-    //     let newPart = createDiv();
-    //     newPart.parent("#orderBar");
-        
-        
-    //     slides.leftSidebar.push($('#orderBar')[0])
-        
-    //     let button = createButton("create new part");
-    //     button.id("newPartButton");
-    //     button.parent(newPart)
-    //     button.mousePressed(makeNewHTMLPart);
-
-        
-
-        
-    //     // inp.position(0, 0);
-    //     // inp.size(100); 
-    //     // console.log(inp.elt.value)
-    //     // inp.input(partInputEvent);
-    //     let figure = drawManager.getFigure();
-    //     let currentDrawing = figure.drawings[figure.currentDrawing];
-        
-        
-    //     // console.log(figure);
-    //     // console.log("figure.drawings", figure.drawings)
-    //     let partsLength = currentDrawing.parts.length;
-    //     // console.log("partsLength", partsLength)
-    //     for (let i = 0; i < partsLength; i++)
-    //     {
-            
-    //         let part = createDiv();
-    //         part.parent("#orderBar");
-            
-    //         //checkbox for isSelected: this is done with the standard javaScipt and jQuery
-    //         // because the p5 code creates an unecessary div container
-    //         let checkBox = document.createElement("INPUT");
-    //         checkBox.setAttribute("type", "checkbox");
-            
-    //         part.elt.appendChild(checkBox);
-    //         $(checkBox).addClass( 'selectedBox');
-    //         checkBox.identity = i
-    //         // console.log("checkBox", checkBox)
-    //         // $(checkBox).change(helpers.isSelected(this));
-    //         checkBox.addEventListener('change', helpers.isSelected);
-            
-    //         // console.log("part", part.elt)
-            
-    //         // checkBox.parent(part);
-    //         // checkBox.addClass("selectedBox");
-    //         // checkBox.changed(helpers.isSelected);
-
-    //         //button for choosing currenfigure
-    //         button = createButton("part"+(i+1)+": ");
-    //         button.parent(part)
-    //         button.identity = i
-    //         // console.log("button", button)
-    //         button.mousePressed(choosePart);
-
-    //         // textField for naming the part
-    //         input_text = currentDrawing.parts[i].name
-    //         // console.log(i, input_text,currentDrawing)
-
-    //         let inp = createInput(input_text);
-    //         inp.parent(part)
-    //         inp.identity = i
-    //         // inp.position(0, 0);
-    //         // inp.size(100); 
-    //         inp.input(partInputEvent);
-           
-            
-            
-    //         // console.log("orderBar", orderBar);
-    //         // console.log("part",part)
-            
-    //     }
-
-        
-        
-
-
-    //     function partInputEvent(){
-    //         console.log(this.elt.value)
-    //         console.log(this.identity)
-            
-    //         currentDrawing.parts[this.identity].name = this.elt.value;
-    //     }
-    //     function makeNewHTMLPart(){
-    //         // let part = createDiv("part"+(i+1)+": ");
-    //         // part.parent(orderBar);
-            
-    //         let partsLength = currentDrawing.parts.length
-    //         currentDrawing.parts.push(new Part("part"+ (partsLength+1) ));
-            
-    //         let part = createDiv();
-    //         part.parent("#orderBar");
-
-    //         let checkBox = document.createElement("INPUT");
-    //         checkBox.setAttribute("type", "checkbox");
-            
-    //         part.elt.appendChild(checkBox);
-    //         $(checkBox).addClass( 'selectedBox');
-    //         checkBox.identity = partsLength
-    //         // $(checkBox).change(helpers.isSelected(this));
-    //         checkBox.addEventListener('change', helpers.isSelected);
-    //         console.log("checkBox", checkBox)
-
-    //         button = createButton("part"+(partsLength+1)+": ");
-    //         button.parent(part)
-    //         button.identity = partsLength
-    //         button.mousePressed(choosePart);
-
-           
-           
-    //         input_text = currentDrawing.parts[partsLength].name
-    //         let inp = createInput(input_text);
-    //         inp.parent(part)
-    //         inp.identity = partsLength
-    //         // inp.position(0, 0);
-    //         // inp.size(100); 
-    //         // console.log(inp.elt.value)
-    //         inp.input(partInputEvent);
-    //         currentDrawing.currentPart = partsLength;
-
-            
-            
-    //     }
-    //     function removeHTMLPart(part, index){
-    //         // TODO
-            
-    //     }
-
-    //     function choosePart(){
-    //         // console.log(this.identity);
-    //         // console.log(self);
-            
-    //         // console.log(self.currentDrawing);
-    //         currentDrawing.currentPart = this.identity;
-    //         drawManager.reset();
-    //         console.log(currentDrawing)
-    //         helpers.updateSettingsCurrentS(currentDrawing.parts[currentDrawing.currentPart]);
-            
-    //     } 
+   
 
 
         
@@ -293,9 +174,74 @@ function SliderManager(){
     // }
 
     this.createOrderSlide = (a)  => {
-        console.log(a)
+        // console.log("a",a.identity)
+
+        createSlider("order",a.identity)
+    } 
+    this.createDefaultSlide = (a)  => {
+        // console.log("a",a.identity)
+
+        createSlider("default",a.identity)
+    } 
+    this.createCurrentSlide = (a)  => {
+        // console.log("a",a.identity)
+
+        createSlider("current",a.identity)
+    } 
+    this.createSettingsSlide = (a)  => {
+        // console.log("a",a.identity)
+
+        createSlider("settings",a.identity)
     } 
 
+
+    this.placeAddSliderButtonToEnd = (bar) => 
+    {
+        
+        let sideBar = document.getElementById(bar);
+        // console.log(sideBar)
+        // let text = bar+"AddSliderButton"
+        // console.log(text)
+        let plussBar = $("#"+bar+"AddSliderButton").detach();
+        // console.log(plussBar[0])
+        
+        
+           
+            sideBar.append(plussBar[0]);
+            // elem.prepend(elem.children[0]);
+            // elem.prepend(elem.children[0]);
+
+            // console.log(elem.children);
+    }
+
+    this.openAddSliderMenu = (a) => {
+        // console.log(a)
+        // console.log(a.offsetTop)
+        // console.log(a.offsetLeft)
+        let adjustHeight = 22;
+        let adjustSide = 0;
+        let menu = $("#addSliderMenu")
+        if (a.offsetTop > window.innerHeight/2)
+        {
+            adjustHeight = -27* menu[0].children.length
+        }
+        if (a.parentElement.id == "bottomBar")
+        {
+            adjustSide = -150;
+        }
+        menu[0].style.display = "inline-block"
+        menu[0].style.left = (a.offsetLeft + adjustSide) + "px"
+        menu[0].style.top = (a.offsetTop+adjustHeight) + "px"
+        
+        console.log(a.parentElement.id)
+        menu[0].children.forEach( (elem) =>
+        {
+            elem.identity = a.parentElement.id
+        });
+
+        sliderManager.addSliderOpen = true;
+
+    }
 
     this.updateDefaultSlides = () => {
         let elem = document.getElementsByClassName("defaultSlide");

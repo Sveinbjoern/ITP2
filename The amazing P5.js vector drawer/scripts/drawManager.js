@@ -120,8 +120,8 @@ function DrawManager() {
   this.loadLocalStorage = () => {
     if (typeof(Storage) !== "undefined") {
       console.log("local Storage OK")// Code for localStorage
-      console.log("helpers", helpers)// Code for localStorage
-      console.log("all the globals", helpers,drawManager, sliderManager )// Code for localStorage
+      // console.log("helpers", helpers)// Code for localStorage
+      // console.log("all the globals", helpers,drawManager, sliderManager )// Code for localStorage
       
       
       helpers.loadFiguesFromStorage(storage);

@@ -6,6 +6,10 @@ function HelperFunctions() {
     let currentDrawing = figure.drawings[figure.currentDrawing]
     let currentPart = currentDrawing.parts[currentDrawing.currentPart]
     // Buttons and checkboxes and field functions
+    
+    
+    
+    
     this.noStrokeButton = function(checked)
     {
         // console.log(checked);
@@ -201,7 +205,7 @@ function HelperFunctions() {
     this.loadSettingsFromStorage = (settings) =>
     {
         let set = window.localStorage.getItem("settings")
-        console.log("settings from loadSettingsFromStorage", settings)
+        // console.log("settings from loadSettingsFromStorage", settings)
       if (set)
         {
           set = JSON.parse(set);
@@ -209,6 +213,8 @@ function HelperFunctions() {
   
         } 
     }
+
+    
 
 
 
@@ -390,7 +396,7 @@ function keyPressed()
         
         
         let grey = (c.levels[0] + c.levels[1] + c.levels[2])/3 
-        console.log(grey)
+        // console.log(grey)
         if (grey > 180 || grey < 90)
         {
             return color( 255 - c.levels[0],
