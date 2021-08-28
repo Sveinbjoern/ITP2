@@ -16,6 +16,7 @@ function SlideTemplates() {
 
     
     let newSlide = createDiv();
+    newSlide.addClass("order"); 
     newSlide.parent(pos);
     
     
@@ -99,6 +100,18 @@ function SlideTemplates() {
         console.log(this.identity)
         
         currentDrawing.parts[this.identity].name = this.elt.value;
+
+        let elem = document.getElementsByClassName("order");
+        console.log("order elem", elem)
+        elem.forEach(element => {
+          console.log("order elemement", element)
+        });
+        elem =  document.getElementsByClassName("currentSlide");
+        console.log("currentSlider elem", elem)
+        elem.forEach(element => {
+          console.log("current element", element.children[0].innerHTML)
+          element.children[0].innerHTML = "CURRENT: " + this.elt.value;
+        });
     }
     
     function removeHTMLPart(part, index){
@@ -528,11 +541,18 @@ function SlideTemplates() {
     // newSlide.style("padding", "0px")
     // newSlide.style("flex-direction", "row")
       let part =  drawManager.getPart();
-    let mainTextElem = createP("CURRENT PART: " + part.name);
+    let mainTextElem = createSpan("CURRENT: " + part.name);
     mainTextElem.parent(newSlide);
     mainTextElem.style("position", "absolute");
     mainTextElem.style("left", "0px");
-    mainTextElem.style("top", "-12px");
+    mainTextElem.style("top", "0px");
+    mainTextElem.style("width", "270px");
+    mainTextElem.style("overflow-x", "hidden");
+    mainTextElem.style("overflow-y", "auto");
+    // mainTextElem.style("display", "inline");
+    mainTextElem.style("height", "22px");
+
+
     // console.log("mainTextElem", mainTextElem)
 
     let fillText = createP("Fill:");
@@ -868,7 +888,7 @@ function SlideTemplates() {
     // console.log("part", part)
     let vNumText = createP(part.currentVertex + "/" + part.vertexArray.length);
     vNumText.style("position", "absolute")
-    vNumText.style("left", "80px")
+    vNumText.style("left", "65px")
     vNumText.style("top", "110px")
     vNumText.parent(newSlide);
 

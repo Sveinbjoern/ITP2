@@ -11,7 +11,7 @@ function FreehandTool(){
 	//to the current mouse location. The following values store
 	//the locations from the last frame. They are undefined to start with because
 	//we haven't started drawing yet.
-	this.dragDistanceBase = 4;
+	this.dragDistanceBase = 15;
 	this.dragDistance = this.dragDistanceBase + drawManager.getPart().strokeWeight/2;
 	this.dragging = false;
 	this.dragStart = null;
@@ -31,7 +31,7 @@ function FreehandTool(){
 		{
 			this.dragDistance = this.dragDistanceBase + drawManager.getPart().strokeWeight/2;
 			this.updateSettings = false;
-			console.log("dragDistance",  this.dragDistance);
+			// console.log("dragDistance",  this.dragDistance);
 		}
 		let part = drawManager.getPart();
 		let arrayLength = part.vertexArray.length;
@@ -82,6 +82,7 @@ function FreehandTool(){
 			mousePressed = function () {
 			//   console.log("mousePressed freehandtool")
 				//make mouse only work inside canvas
+
 			  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height)
 			  {
 				  let part = drawManager.getPart();
@@ -108,6 +109,8 @@ function FreehandTool(){
 						self.drawn = false;
 						self.dragging = true;
 						self.dragStart = [mouseX,mouseY];
+						if (drawManager.settings.autoSave)
+						{drawManager.saveFiguresToStorage()};
 					}
 					drawManager.reDraw();
 					
@@ -117,25 +120,32 @@ function FreehandTool(){
 			};
 	  
 			mouseDragged = function () {
-			  //empty in this drawingMode
+				let part = drawManager.getPart();
+				let vertexArray = part.vertexArray;
+				
 				if (self.itemHeld)
 			  {
-				  let vertexArray = drawManager.getVertexArray();
+				  
 				
 				vertexArray[self.closeVertex] = [mouseX,mouseY]
 				self.drawn = false;
-			  } else if (this.dragging)
+			  } else if (self.dragging)
 			  {
 				  if (dist(mouseX,mouseY,self.dragStart[0],self.dragStart[1]) > self.dragDistance)
 				  {
 					vertexArray.splice(part.currentVertex, 0, [mouseX,mouseY]);
+					
 					// This increases the part.currentVertex unless you are have choosen the first vertex
 					if (part.currentVertex !== 0 || vertexArray.length === 1 )
 					{part.currentVertex ++}
-
+					
 					helpers.updateCurrentVertex(part);
+
 					self.drawn = false;
 					self.dragStart = [mouseX,mouseY];
+					
+					if (drawManager.settings.autoSave)
+					{drawManager.saveFiguresToStorage()};
 				  }
 			  }
 

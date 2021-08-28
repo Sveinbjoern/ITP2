@@ -3,22 +3,23 @@
 // drawManager will convert points into a vertex drawing
 
 function DrawManager() {
-  let storage = 
+  let myStorage = 
   {
     figures: [],
     currentFigure: -1,
   }
   this.getFigure = () => {
-    return storage.figures[storage.currentFigure];
+    console.log("currentfigure in getFigure", myStorage , myStorage.figures[myStorage.currentFigure])
+    return myStorage.figures[myStorage.currentFigure];
   };
 
   this.getDrawing = () => {
-    let get = storage.figures[storage.currentFigure];
+    let get = myStorage.figures[myStorage.currentFigure];
     return get.drawings[get.currentDrawing];
   };
 
   this.getPart = () => {
-    let get = storage.figures[storage.currentFigure].drawings[storage.figures[storage.currentFigure].currentDrawing];
+    let get = myStorage.figures[myStorage.currentFigure].drawings[myStorage.figures[myStorage.currentFigure].currentDrawing];
     return get.parts[get.currentPart];
   };
 
@@ -91,7 +92,7 @@ function DrawManager() {
     vertexPoints: true,
     numberPoints: true,
 
-
+    autoSave: true,
     lightMode: false,
     // MORE SETTINGS
     //Show number - number size -relative to stroke
@@ -102,8 +103,11 @@ function DrawManager() {
  
 
   this.setup = function () {
-    storage.figures.push(new Figure("start"));
-    storage.currentFigure ++;
+    
+    
+    this.loadLocalStorage(myStorage);
+    
+    
 
     // console.log("storage", storage)
     // if (this.figures[0].drawings[0].parts[0].vertexArray.length >= 1)
@@ -117,22 +121,69 @@ function DrawManager() {
 
   };
 
+  this.getMyStorage = () =>{
+      return myStorage
+  }
+
   this.loadLocalStorage = () => {
     if (typeof(Storage) !== "undefined") {
       console.log("local Storage OK")// Code for localStorage
       // console.log("helpers", helpers)// Code for localStorage
       // console.log("all the globals", helpers,drawManager, sliderManager )// Code for localStorage
+      loadFiguesFromStorage();
       
       
-      helpers.loadFiguesFromStorage(storage);
       
-      helpers.loadSettingsFromStorage(this.settings);
+      // helpers.loadSettingsFromStorage(this.settings);
       
-    
+      
     } else {
+      
       alert("No web Storage support, your settings and work cannot be saved!")// No web storage Support.
+
     }
   }
+
+  let loadFiguesFromStorage = () =>
+    {
+        let stored = window.localStorage.getItem("stored")
+      
+      if (stored)
+        {
+
+          // console.log("str",myStorage)
+          // console.log("stored",JSON.parse(stored))
+          myStorage = JSON.parse(stored);
+          
+          //The color elements where corrupted during the save process and need to be fixed
+          myStorage.figures.forEach( (figs) =>
+            {
+              figs.drawings.forEach( (draws) =>{
+                draws.parts.forEach( (prt) => {
+                  prt.fill = color(...prt.fill.levels);
+                  prt.stroke = color(...prt.stroke.levels);
+                })
+              })
+            }
+          )
+          // console.log("myStorage after save", myStorage)
+  
+        }  else
+        {
+            // console.log("str")
+            myStorage.figures.push(new Figure("start"));
+            myStorage.currentFigure ++;
+          
+        }
+    }
+
+    this.saveFiguresToStorage = () =>
+    {
+        
+        // console.log("storage to be saved in helpers.saveFiguresFromStorage()", myStorage)
+        // console.log(JSON.stringify(myStorage));
+        window.localStorage.setItem("stored", JSON.stringify(myStorage))
+    }
 
   this.draw = function (figure) {
     //check if it has a point!! before sending it to draw
@@ -280,21 +331,22 @@ function DrawManager() {
   this.reDraw = function () {
     // clear screen
     // console.log("reset Run")
-    background(200);
+    clear();
     // redraw
-    let figures = storage.figures.length;
+    let figures = myStorage.figures.length;
     for (let i = 0; i < figures; i++) {
-      this.draw(storage.figures[i]);
+      this.draw(myStorage.figures[i]);
     }
   };
 
   this.reDrawWithPoint = () =>
   {
-    background(200);
+    // background(200);
+    clear();
     // redraw
-    let figures = storage.figures.length;
+    let figures = myStorage.figures.length;
     for (let i = 0; i < figures; i++) {
-      this.draw(storage.figures[i]);
+      this.draw(myStorage.figures[i]);
     }
     this.drawPoints();
   }

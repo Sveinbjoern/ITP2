@@ -3,6 +3,7 @@ function HelperFunctions() {
 
     self = this;
     let figure = drawManager.getFigure();
+    console.log("figure", figure);
     let currentDrawing = figure.drawings[figure.currentDrawing]
     let currentPart = currentDrawing.parts[currentDrawing.currentPart]
     // Buttons and checkboxes and field functions
@@ -71,6 +72,7 @@ function HelperFunctions() {
         // console.log("strokeWeight", currentPart.strokeWeight);
         toolbox.selectedTool.drawn = false;
     }
+    
 
     this.updateSettingsCurrentS = function(part){
         
@@ -81,7 +83,7 @@ function HelperFunctions() {
         // console.log("#" + hex(part.fill.levels[0],2) + hex(part.fill.levels[1],2) + hex(part.fill.levels[2],2));
         for (i = 0; i < length; i ++)
         {
-        elem[i].children[0].innerHTML = "CURRENT PART: " + part.name;
+        elem[i].children[0].innerHTML = "CURRENT: " + part.name;
         let hexPart;
         hexPart = "#" + hex(part.fill.levels[0],2) + hex(part.fill.levels[1],2) + hex(part.fill.levels[2],2)
         elem[i].children[2].value = hexPart;
@@ -170,36 +172,29 @@ function HelperFunctions() {
 
     this.deleteVertex = (p) => {
         let part = p || drawManager.getPart();
-        if (part.vertexArray.length > 0)
+        let vertexArray = part.vertexArray;
+        // console.log(vertexArray.length, part.currentVertex);
+                    // let currentDrawing = figure.drawings[figure.currentDrawing];
+        if (vertexArray.length <= part.currentVertex)
         {
-            part.vertexArray.splice(part.currentVertex,1);
-            if (part.currentVertex > 0)
-            {
-                part.currentVertex --;
-            }
-            
+            vertexArray.splice(part.currentVertex-1,1);
+        } else {
+            vertexArray.splice(part.currentVertex,1);
         }
-        helpers.updateCurrentVertex(part); 
-        // drawManager.reDrawWithPoint();
-        toolbox.selectedTool.drawn = false;
-    }
-
-    this.loadFiguesFromStorage = (stor) =>
-    {
-        let stored = window.localStorage.getItem("stored")
-      
-      if (stored)
+        // console.log(vertexArray.splice(part.currentVertex -1,1));
+        part.currentVertex--;
+        if (part.currentVertex < 0)
         {
-          stor = JSON.parse(stored);
-  
-        } 
+            part.currentVertex = 0;
+        }
+        helpers.updateCurrentVertex(part);
+        toolbox.selectedTool.drawn = false;
+        drawManager.reDrawWithPoint();
+        if (drawManager.settings.autoSave)
+			{drawManager.saveFiguresToStorage()};
     }
 
-    this.saveFiguresFromStorage = (storage) =>
-    {
-        console.log("storage to be saved in helpers.saveFiguresFromStorage()", storage)
-        window.localStorage.getItem("stored", JSON.stringify(storage))
-    }
+    
 
 
     this.loadSettingsFromStorage = (settings) =>
@@ -328,24 +323,7 @@ function keyPressed()
                 if (keyCode === keyCodes.backSpace)
                 {
                     
-                    // console.log(vertexArray.length, part.currentVertex);
-                    // let currentDrawing = figure.drawings[figure.currentDrawing];
-                    if (vertexArray.length <= part.currentVertex)
-                    {
-                        vertexArray.splice(part.currentVertex-1,1);
-                    } else {
-                        vertexArray.splice(part.currentVertex,1);
-                    }
-                    // console.log(vertexArray.splice(part.currentVertex -1,1));
-                    part.currentVertex--;
-                    if (part.currentVertex < 0)
-                    {
-                        part.currentVertex = 0;
-                    }
-                    helpers.updateCurrentVertex(part);
-                    
-                    toolbox.selectedTool.drawn = false;
-                    drawManager.reDrawWithPoint();
+                    helpers.deleteVertex(part);
 
                 }
             }
@@ -353,19 +331,22 @@ function keyPressed()
 
         if(keyCode === keyCodes.R)
         {
+            drawManager.saveFiguresToStorage();
+
+
             // removeElements();
 
             // currentPartIndex = keepIndexConsistent(currentPartIndex,  ,"remove");
-            console.log("keypressed R");
+            // console.log("keypressed R");
 
 
 
-            let elem = document.getElementById("sidebarRight");
-            elem.append(elem.children[0]);
-            // elem.prepend(elem.children[0]);
-            // elem.prepend(elem.children[0]);
+            // let elem = document.getElementById("sidebarRight");
+            // elem.append(elem.children[0]);
+            // // elem.prepend(elem.children[0]);
+            // // elem.prepend(elem.children[0]);
 
-            console.log(elem.children);
+            // console.log(elem.children);
 
         } else
 

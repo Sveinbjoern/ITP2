@@ -31,8 +31,8 @@ function preload() {
 function setup() {
 
 	//basic p5 settings:
-	frameRate(30);
-	background(120);
+	frameRate(60);
+	
 	//create a canvas to fill the content div from index.html
 	canvasContainer = select('#drawField');
 	var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
@@ -71,9 +71,9 @@ function setup() {
 	
 	//Run setups
 	sliderManager.setup();
-	drawManager.loadLocalStorage();
+	
 
-	// background(200);
+
 	// drawManager.draw(drawManager.figures[0]);
 
 	// console.log($("#sidebarRight").children());
