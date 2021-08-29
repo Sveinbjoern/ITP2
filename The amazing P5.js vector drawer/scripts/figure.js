@@ -38,17 +38,19 @@ function Point(name, type, position){
 function Part(name){
     this.vertexArray = [];//[20,21],[215,15],[465,456],[445,231]];
     this.name = name || drawManager.defaultPart.name;
-    this.localZeroPoint = drawManager.defaultPart.zeroPoint;
+    // this.localZeroPoint = drawManager.defaultPart.zeroPoint;
     this.isSelected = false;
 
     this.currentVertex = drawManager.defaultPart.currentVertex;
-
+    console.log(drawManager.defaultPart.showDetails)
+    this.showDetails = drawManager.defaultPart.showDetails;
     this.strokeAlpha = 1;
     this.stroke = drawManager.defaultPart.stroke;
     this.noStroke = drawManager.defaultPart.noStroke;
     this.strokeWeight = drawManager.defaultPart.strokeWeight;
+    this.draw = drawManager.defaultPart.draw;
     
-    this.fillAlpha = 1;
+    // this.fillAlpha = 1;
     this.fill = drawManager.defaultPart.fill;
     this.noFill = drawManager.defaultPart.noFill;
     this.vertexMode = drawManager.defaultPart.vertexMode;

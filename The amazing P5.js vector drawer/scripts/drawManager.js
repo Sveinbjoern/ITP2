@@ -8,18 +8,35 @@ function DrawManager() {
     figures: [],
     currentFigure: -1,
   }
-  this.getFigure = () => {
+
+  this.getMyStorage = () =>{
+    return myStorage
+  }
+
+  this.getFigure = (index) => {
+    if (index)
+    {
+      return myStorage.figures[index];
+    }
     // console.log("currentfigure in getFigure", myStorage , myStorage.figures[myStorage.currentFigure])
     return myStorage.figures[myStorage.currentFigure];
   };
 
-  this.getDrawing = () => {
+  this.getDrawing = (index) => {
     let get = myStorage.figures[myStorage.currentFigure];
+    if (index)
+    {
+      return get.drawings[index];
+    }
     return get.drawings[get.currentDrawing];
   };
 
-  this.getPart = () => {
+  this.getPart = (index) => {
     let get = myStorage.figures[myStorage.currentFigure].drawings[myStorage.figures[myStorage.currentFigure].currentDrawing];
+    if (index)
+    {
+      return get.parts[index];
+    }
     return get.parts[get.currentPart];
   };
 
@@ -43,6 +60,9 @@ function DrawManager() {
     noFill: false,
     vertexMode: "",
     endShape: true,
+
+    //menu relate defaults
+    showDetails: true,
 
     selected: false,
     draw: true,
@@ -94,6 +114,8 @@ function DrawManager() {
 
     autoSave: true,
     lightMode: false,
+
+    simpleTextForm: false,
     // MORE SETTINGS
     //Show number - number size -relative to stroke
     //
@@ -121,9 +143,7 @@ function DrawManager() {
 
   };
 
-  this.getMyStorage = () =>{
-      return myStorage
-  }
+  
 
   this.loadLocalStorage = () => {
     if (typeof(Storage) !== "undefined") {
@@ -279,7 +299,7 @@ function DrawManager() {
   }
 
   this.addPart = function(figureName, drawingName, partName){
-
+    
   }
   this.addDrawing = function (figureName, drawingName){
 
