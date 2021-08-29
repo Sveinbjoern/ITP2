@@ -3,7 +3,7 @@ function HelperFunctions() {
 
     self = this;
     let figure = drawManager.getFigure();
-    console.log("figure", figure);
+    // console.log("figure", figure);
     let currentDrawing = figure.drawings[figure.currentDrawing]
     let currentPart = currentDrawing.parts[currentDrawing.currentPart]
     // Buttons and checkboxes and field functions

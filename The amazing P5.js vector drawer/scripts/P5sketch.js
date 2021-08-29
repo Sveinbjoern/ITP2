@@ -43,7 +43,7 @@ function setup() {
 	drawManager = new DrawManager();
 	drawManager.setup();
 	//setup current values
-	console.log("running")
+	// console.log("running")
 	//create helper functions and the colour palette
 	helpers = new HelperFunctions();
 	
@@ -117,6 +117,7 @@ function fitToScreen(){
  var c = createCanvas(canvasContainer.size().width, canvasContainer.size().height);
  c.parent('drawField');
  drawManager.reDrawWithPoint();
+ 
 }
 
 // function mousePressed(){

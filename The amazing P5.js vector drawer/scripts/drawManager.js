@@ -9,7 +9,7 @@ function DrawManager() {
     currentFigure: -1,
   }
   this.getFigure = () => {
-    console.log("currentfigure in getFigure", myStorage , myStorage.figures[myStorage.currentFigure])
+    // console.log("currentfigure in getFigure", myStorage , myStorage.figures[myStorage.currentFigure])
     return myStorage.figures[myStorage.currentFigure];
   };
 
@@ -127,7 +127,7 @@ function DrawManager() {
 
   this.loadLocalStorage = () => {
     if (typeof(Storage) !== "undefined") {
-      console.log("local Storage OK")// Code for localStorage
+      // console.log("local Storage OK")// Code for localStorage
       // console.log("helpers", helpers)// Code for localStorage
       // console.log("all the globals", helpers,drawManager, sliderManager )// Code for localStorage
       loadFiguesFromStorage();
@@ -368,6 +368,7 @@ function DrawManager() {
 
             if (drawManager.settings.numberPoints)
             {
+              push();
               // stroke(part.stroke);
               // fill(invertColor(part.stroke));
               fill(part.stroke);
@@ -376,8 +377,10 @@ function DrawManager() {
               textSize(max(part.strokeWeight + drawManager.settings.vertexPointsFactor, 6))
               let counter = 0;
               part.vertexArray.forEach(elem => {
-                text(counter++, elem[0], elem[1]+1); 
+                text(counter++, elem[0], elem[1]+1); //The plus one corrects a small diaviation in height
+                
               });
+              pop();
             }
 
         //     if (part.currentVertex === 0)

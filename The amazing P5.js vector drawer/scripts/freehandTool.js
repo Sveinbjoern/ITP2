@@ -11,7 +11,7 @@ function FreehandTool(){
 	//to the current mouse location. The following values store
 	//the locations from the last frame. They are undefined to start with because
 	//we haven't started drawing yet.
-	this.dragDistanceBase = 15;
+	this.dragDistanceBase = 25;
 	this.dragDistance = this.dragDistanceBase + drawManager.getPart().strokeWeight/2;
 	this.dragging = false;
 	this.dragStart = null;
@@ -25,7 +25,7 @@ function FreehandTool(){
 
 
 	this.draw = function(){
-		
+		// console.log("should run every frame")
 	// console.log("this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart]", this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart])
 		if (this.updateSettings)
 		{

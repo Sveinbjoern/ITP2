@@ -215,24 +215,30 @@ body {
 	width: 130px;
 }
 
-.menuButton{
+/* .menuButton{
 	padding: 0px
 }
+.menuButton span {
+     font-size: 11px;
+    padding: 200px;
+} */
 
 /* Add slider buttons */
 #sidebarLeftAddSliderButton,
 #sidebarRightAddSliderButton {
 	/* display: block; */
 	width: 300px;
-	height: 21px;
+	height: 11px;
+	line-height: 0%;
 	/* text-align: center; */
 	/* margin: auto; */
 }
 
 #bottomBarAddSliderButton{
 	/* display: block; */
-	width: 21px;
+	width: 11px;
 	height: 160px;
+	padding: 0%;
 	/* color: black; */
 	/* text-align: center; */
 	/* margin: auto; */

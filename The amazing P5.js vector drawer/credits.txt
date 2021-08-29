@@ -20,3 +20,11 @@ document.addEventListener("mouseover", (event) => {
 Local storage for settings and values:
 https://blog.logrocket.com/localstorage-javascript-complete-guide/#browsersupport
 
+remove pointer-events for element that should not be clickable
+https://stackoverflow.com/questions/17462682/set-element-to-unclickable-and-then-to-clickable
+
+not clickable
+$("#ElementName").css("pointer-events","none");
+
+Clickable:
+$("#ElementName").css("pointer-events","auto");
