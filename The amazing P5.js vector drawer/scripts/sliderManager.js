@@ -18,6 +18,11 @@ function SliderManager(){
     let temporary;
     let self = this;
 
+    this.HTMLIndecies = {
+        firstFigure: 0,
+        firstDrawing: 12,
+        firstPart: 7,
+    }
 
     this.addSliderOpen = false;
 

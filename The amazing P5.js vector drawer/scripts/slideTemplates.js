@@ -131,7 +131,97 @@ function SlideTemplates() {
       });
       xText.parent(newSlide);
 
+
+      let linebreak = document.createElement("br");
+      if (newSlide.elt)
+      {
+        newSlide.elt.appendChild(linebreak);
+      }  else
+      {newSlide.appendChild(linebreak);}
       // console.log("mainTextElem", mainTextElem)
+
+
+
+      
+      let vText = createP("Drawings:");
+        // vText.style("position", "absolute");
+        // vText.style("left", "0px");
+        // vText.style("top", "110px");
+        vText.style("display", "inline");
+        vText.parent(newSlide);
+    
+        // console.log("part", part)
+        let vNumText = createP(figure.drawings.length);
+        // vNumText.style("position", "absolute");
+        // vNumText.style("left", "65px");
+        vNumText.style("max-width", "50px");
+        vNumText.style("display", "inline");
+        vNumText.parent(newSlide);
+
+
+
+        
+
+
+
+
+
+
+        buttonDis = createButton("Not Functional");
+        // button.style("position", "absolute");
+        // button.style("right", "30px");
+        // if (!part.showDetails)
+        // {
+        //   buttonDis.style("color", "red");
+        // }
+        buttonDis.style("display", "inline");
+        buttonDis.style("width", "auto");
+        buttonDis.style("margin-left", "5px" );
+        // button.style("display", "inline");
+        // button.style("top", "123px")
+        buttonDis.parent(newSlide);
+        // buttonDis.elt.onclick = (e) => {
+
+        
+
+          let selBox = createCheckbox("SELECT All", false);
+          // noFillBox.style("position", "absolute");
+          selBox.style("margin-left", "0px" );// noFillBox.style("left", "120px");
+          selBox.style("display", "inline");
+          selBox.changed(() => {
+            // console.log(noFillBox.checked())
+      
+            let elem = document.getElementsByClassName("currentSlide");
+            let length = elem.length;
+      
+            // console.log(elem[0].children[3].children[0].checked, noFillBox.checked());
+            if (length > 1) {
+              for (let i = 0; i < length; i++) {
+                elem[i].children[3].children[0].checked = noFillBox.checked();
+              }
+            }
+      
+            drawManager.getPart().noFill = noFillBox.checked();
+            drawManager.reDrawWithPoint();
+          });
+          selBox.parent(newSlide);
+        //   if (part.showDetails)
+        //   {
+        //     buttonDis.style("color", "red");
+        //     newPartInfo.elt.style.display = "none";
+        //     part.showDetails = false;
+            
+        //   } else
+        //   {
+        //     buttonDis.style("color", "black");
+        //     newPartInfo.elt.style.display = "inline-block";
+        //     part.showDetails = true;
+
+        //   }
+          
+        // };
+
+
 
       // for loop every drawing
       for (let j = 0; j < figure.drawings.length; j++) {
@@ -206,14 +296,17 @@ function SlideTemplates() {
       // console.log(newDrawing.elt.parentElement);
         newDrawing.elt.setAttribute(
           "style",
-          `     display: inline-block;    
+          `     display: block;    
                 font-size: 13px;
                 position: relative;
                 width: 285px;
                 height: auto;
                 background-color: rgb(19, 180, 192);
                 margin-left:  10px;
-                padding: 0px;
+                margin-bottom: 5px;
+                padding-bottom: 5px;
+                margin-top: 5px;
+                padding-top: 5px;
                 
                 text-align: left;
                 padding-bottom: 10px;
@@ -254,11 +347,11 @@ function SlideTemplates() {
         // button.style("top", "123px")
         button.style("display", "inline");
         button.parent(newDrawing);
-        button.mousePressed(() => {
+        button.mousePressed(
           // console.log(button, this);
 
-          createNewPart();
-        });
+          createNewPart
+        );
         
         button = createButton("&#x2191;");
 
@@ -302,6 +395,70 @@ function SlideTemplates() {
           helpers.deleteVertex();
         });
 
+
+        let vText = createP("Parts:");
+        // vText.style("position", "absolute");
+        // vText.style("left", "0px");
+        // vText.style("top", "110px");
+        vText.style("display", "inline");
+        vText.parent(newDrawing);
+    
+        // console.log("part", part)
+        let vNumText = createP(drawing.parts.length);
+        // vNumText.style("position", "absolute");
+        // vNumText.style("left", "65px");
+        vNumText.style("max-width", "50px");
+        vNumText.style("display", "inline");
+        vNumText.parent(newDrawing);
+
+
+
+        
+
+
+
+
+
+
+        buttonDis = createButton("Not Functional");
+        // button.style("position", "absolute");
+        // button.style("right", "30px");
+        // if (!part.showDetails)
+        // {
+        //   buttonDis.style("color", "red");
+        // }
+        buttonDis.style("display", "inline");
+        buttonDis.style("width", "auto");
+        buttonDis.style("margin-left", "35px" );
+        // button.style("display", "inline");
+        // button.style("top", "123px")
+        buttonDis.parent(newDrawing);
+        // buttonDis.elt.onclick = (e) => {
+
+        
+
+          let selBox = createCheckbox("SELECT All", false);
+          // noFillBox.style("position", "absolute");
+          selBox.style("margin-left", "0px" );// noFillBox.style("left", "120px");
+          selBox.style("display", "inline");
+          selBox.changed(() => {
+            // console.log(noFillBox.checked())
+      
+            let elem = document.getElementsByClassName("currentSlide");
+            let length = elem.length;
+      
+            // console.log(elem[0].children[3].children[0].checked, noFillBox.checked());
+            if (length > 1) {
+              for (let i = 0; i < length; i++) {
+                elem[i].children[3].children[0].checked = noFillBox.checked();
+              }
+            }
+      
+            drawManager.getPart().noFill = noFillBox.checked();
+            drawManager.reDrawWithPoint();
+          });
+          selBox.parent(newDrawing);
+
         for (let k = 0; k < drawing.parts.length; k++) {
           let part = drawing.parts[k];
           // newdrawing.addClass("order");
@@ -314,15 +471,37 @@ function SlideTemplates() {
 
           }
     }
+
+    function createNewDrawing(){
+
+    }
+
     function createNewPart(){
       
-      console.log(this.elt.parentElement)
-      let figure = this.elt.parentElement.parentElement.parentElement.identity;
-      let drawing = this.elt.parentElement.parentElement.identity;
-      let part = this.elt.parentElement.identity;
+      // console.log(this.elt.parentElement.identity)
+      let figureIndex = this.elt.parentElement.parentElement.parentElement.identity;
+      let drawingIndex = this.elt.parentElement.parentElement.identity;
+      let partIndex = this.elt.parentElement.identity;
+      // console.log(figureIndex, drawingIndex, partIndex)
 
-      drawManager.
-      console.log(figure, drawing, part)
+      let HTMLIndexDrawing = sliderManager.HTMLIndecies.firstDrawing + drawingIndex
+      let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2*partIndex++
+      
+      let drawing = drawManager.addPart(figureIndex, drawingIndex, partIndex);
+
+      let elem = document.getElementsByClassName("order");
+      elem.forEach( (orderSlide) => {
+        // console.log("going once", 
+        // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart]);
+        console.log(orderSlide.children[HTMLIndexDrawing].identity);
+        
+        createHTMLPart(drawing.parts[partIndex], orderSlide.children[HTMLIndexDrawing], partIndex);
+        helpers.sortHTMLElements( orderSlide.children[HTMLIndexDrawing], 
+                                partIndex+1, HTMLIndexPart+2, 2 , drawing.parts.length);
+        // createHTMLPart(part, newDrawing, k);
+      });
+      
+      console.log(this.elt.parentElement);
       // element to add to: this.elt.parentElement.parentElement
 
 
@@ -332,19 +511,27 @@ function SlideTemplates() {
     function createHTMLPart(part, newDrawing, k)
     {
       let linebreak = document.createElement("br");
+      if (newDrawing.elt)
+      {
+        newDrawing.elt.appendChild(linebreak);
+      }  else
+      {newDrawing.appendChild(linebreak);}
+      
+      // let linebreak = document.createElement("br");
       let newPart = createDiv();
       newPart.elt.identity = k;
       newPart.parent(newDrawing);
           newPart.elt.setAttribute(
             "style",
-            `     display: inline-block;    
+            `     display: block;    
                   font-size: 13px;
                   position: relative;
                   width: 272px;
                   height: auto;
                   background-color: rgb(119, 80, 192);
                   margin-left:  10px;
-                  padding: 0px;
+                  
+                  
                   
                   text-align: left;
                   
@@ -457,37 +644,50 @@ function SlideTemplates() {
         vNumText.parent(newPart);
 
 
-             buttonDis = createButton("Show Details");
+
+        let selBox = createCheckbox("SELECT", part.isSelcted);
+        // noFillBox.style("position", "absolute");
+        selBox.style("margin-left", "30px" );// noFillBox.style("left", "120px");
+        selBox.style("display", "inline");
+        selBox.changed(() => {
+          // console.log(noFillBox.checked())
     
+          let elem = document.getElementsByClassName("currentSlide");
+          let length = elem.length;
+    
+          // console.log(elem[0].children[3].children[0].checked, noFillBox.checked());
+          if (length > 1) {
+            for (let i = 0; i < length; i++) {
+              elem[i].children[3].children[0].checked = noFillBox.checked();
+            }
+          }
+    
+          drawManager.getPart().noFill = noFillBox.checked();
+          drawManager.reDrawWithPoint();
+        });
+        selBox.parent(newPart);
+
+
+
+
+
+
+        buttonDis = createButton("Show Details");
         // button.style("position", "absolute");
         // button.style("right", "30px");
         if (!part.showDetails)
         {
           buttonDis.style("color", "red");
         }
-        
-
-    buttonDis.style("display", "inline");
+        buttonDis.style("display", "inline");
         buttonDis.style("width", "auto");
-        buttonDis.style("margin-left", "40px" );
+        buttonDis.style("margin-left", "4px" );
         // button.style("display", "inline");
         // button.style("top", "123px")
         buttonDis.parent(newPart);
         buttonDis.elt.onclick = (e) => {
 
-          // console.log(buttonDis.elt.parentElement.identity)
-          // console.log(buttonDis.elt.parentElement.parentElement.identity)
-          // console.log(buttonDis.elt.parentElement.parentElement.parentElement.identity)
-          // let part = drawManager.getFigure(buttonDis.elt.parentElement.parentElement.parentElement.identity);
-          // part = part.drawings[buttonDis.elt.parentElement.parentElement.identity];
-          // part = part.parts[buttonDis.elt.parentElement.identity]
-          // console.log("newpart e", e);
-          console.log("part.showDetails", part);
-          console.log("part.showDetails", part.showDetails);
-          // console.log("newpart e", e);
-          // console.log("newpartInfo", newPartInfo);
-          // console.log(a);
-          // console.log(newPartInfo.elt.style.display)
+        
           if (part.showDetails)
           {
             buttonDis.style("color", "red");
@@ -503,6 +703,9 @@ function SlideTemplates() {
           }
           
         };
+
+
+        
         // let showText = createP(part.vertexArray.length);
         // // vNumText.style("position", "absolute");
         // // vNumText.style("left", "65px");
@@ -520,10 +723,10 @@ function SlideTemplates() {
           `
                 display: inline-block;
                 position: relative;
-                min-width: 272px;
+                min-width: 267px;
                 text-align: left;
                 
-                margin:  0px;
+                margin:  5px;
                 padding: 0px`
         );
         if (!part.showDetails)
@@ -544,7 +747,7 @@ function SlideTemplates() {
     
         let fillText = createP("Fill:");
         fillText.style("display", "inline");
-        // fillText.style("left", "0px");
+        fillText.style("margin-right", "15px");
         // fillText.style("top", "5px");
         fillText.parent(newPartInfo);
     
@@ -565,7 +768,7 @@ function SlideTemplates() {
               elem[i].children[2].value = inpColorFill.elt.value;
             }
           }
-          console.log(elem[0].children[2].value, inpColorFill.elt.value);
+          // console.log(elem[0].children[2].value, inpColorFill.elt.value);
           drawManager.getPart().fill = color(inpColorFill.elt.value);
           drawManager.reDrawWithPoint();
           toolbox.selectedTool.drawn = false;
@@ -603,6 +806,39 @@ function SlideTemplates() {
           drawManager.reDrawWithPoint();
         });
         noFillBox.parent(newPartInfo);
+
+
+        let drawBox = createCheckbox("Draw this part", part.draw);
+        // noFillBox.style("position", "absolute");
+        // drawBox.style("float", "right" );// noFillBox.style("left", "120px");
+        drawBox.style("margin-left", "30px");
+        drawBox.style("display", "inline");
+        drawBox.changed(() => {
+          // console.log(noFillBox.checked())
+    
+          let elem = document.getElementsByClassName("currentSlide");
+          let length = elem.length;
+    
+          // console.log(elem[0].children[3].children[0].checked, noFillBox.checked());
+          if (length > 1) {
+            for (let i = 0; i < length; i++) {
+              elem[i].children[3].children[0].checked = noFillBox.checked();
+            }
+          }
+    
+          drawManager.getPart().noFill = noFillBox.checked();
+          drawManager.reDrawWithPoint();
+        });
+        drawBox.parent(newPartInfo);
+
+
+
+
+
+
+
+
+
         linebreak = document.createElement("br");
         newPartInfo.elt.appendChild(linebreak);
         
@@ -786,7 +1022,7 @@ function SlideTemplates() {
         let sWInput = createInput(part.strokeWeight.toString(), "number");
         // sWInput.style("position", "absolute");
         // sWInput.style("right", "20px");
-        sWInput.style("width", "60px");
+        sWInput.style("width", "53px");
         sWInput.style("display", "inline");
         // sWInput.style("top", "75px");
         sWInput.elt.onchange = () => {
@@ -816,6 +1052,9 @@ function SlideTemplates() {
         };
         sWInput.parent(newPartInfo);
     
+
+        linebreak = document.createElement("br");
+        newPartInfo.elt.appendChild(linebreak);
         // let numberInput =
         // console.log("drawManager.settings",drawManager.settings);
         
@@ -860,7 +1099,7 @@ function SlideTemplates() {
         button = createButton(buttonText);
         // button.style("position", "absolute");
         // button.style("right", "20px");
-        button.style("width", "165px");
+        button.style("width", "155px");
         // button.style("top", "100px");
         button.style("display", "inline");
         button.mousePressed(() => {
@@ -889,10 +1128,10 @@ function SlideTemplates() {
         });
         button.parent(newPartInfo);
     
-       
+        // linebreak = document.createElement("br");
+        // newPartInfo.elt.appendChild(linebreak);
     
-       
-
+        
     }
     function makeNewHTMLPart() {
       // let part = createDiv("part"+(i+1)+": ");

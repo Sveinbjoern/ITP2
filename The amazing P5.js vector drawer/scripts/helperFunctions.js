@@ -209,6 +209,35 @@ function HelperFunctions() {
         } 
     }
 
+    this.sortHTMLElements = ( parentHTML, partIndex, HTMLIndex, diff ,length) => {
+        // console.log("sortHTMLElements", parentHTML.children[7], partIndex, HTMLIndex,  diff)
+        
+        
+        if (length === 0)
+        {
+            return false;
+        } else if(length === 1)
+        { 
+            return true;
+        } else
+        {
+            // length -= 1; 
+            // HTMLIndex + (length-1)*diff
+            // console.log("HTMLIndex",HTMLIndex,"length",length);
+            for (let i = partIndex; i < length; i++)
+            {
+                // console.log()
+                parentHTML.children[HTMLIndex].identity++;
+                for (let j = 0; j < diff; j++)
+                {
+                    let element = parentHTML.removeChild(parentHTML.children[HTMLIndex-1]);
+                    parentHTML.append(element);
+                }
+                console.log(parentHTML.children[HTMLIndex]);
+            }
+        }
+        // console.log(parentHTML.identity)
+    }
     
 
 
@@ -401,29 +430,3 @@ function keyPressed()
 
     
     
-    
-    //Takes an array, 
-    function removePart(index, partOf, action)
-    {
-        
-            
-            return --index;
-    }
-
-    // function 
-    //     else if (action === "move")
-    //     {
-
-    //     }
-    //     else if (action === "add")
-    //     {
-
-    //     }
-    //     else
-    //     {
-    //         console.log("not a valid action for function 'keepIndexConsistent'")
-    //     }
-
-    // }
-
-

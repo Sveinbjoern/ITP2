@@ -1,3 +1,46 @@
+30.08.2021
+  // console.log(buttonDis.elt.parentElement.identity)
+          // console.log(buttonDis.elt.parentElement.parentElement.identity)
+          // console.log(buttonDis.elt.parentElement.parentElement.parentElement.identity)
+          // let part = drawManager.getFigure(buttonDis.elt.parentElement.parentElement.parentElement.identity);
+          // part = part.drawings[buttonDis.elt.parentElement.parentElement.identity];
+          // part = part.parts[buttonDis.elt.parentElement.identity]
+          // console.log("newpart e", e);
+          // console.log("part.showDetails", part);
+          // console.log("part.showDetails", part.showDetails);
+          // console.log("newpart e", e);
+          // console.log("newpartInfo", newPartInfo);
+          // console.log(a);
+          // console.log(newPartInfo.elt.style.display)
+    
+    //Takes an array, 
+    // function removePart(index, partOf, action)
+    // {
+        
+            
+    //         return --index;
+    // }
+
+    // function 
+    //     else if (action === "move")
+    //     {
+
+    //     }
+    //     else if (action === "add")
+    //     {
+
+    //     }
+    //     else
+    //     {
+    //         console.log("not a valid action for function 'keepIndexConsistent'")
+    //     }
+
+    // }
+
+
+
+
+
 29.08.2021
 // let inpColorFill = createColorPicker(drawManager.defaultPart.fill);
         // // console.log();

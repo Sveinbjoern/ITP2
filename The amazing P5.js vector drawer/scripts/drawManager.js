@@ -298,8 +298,12 @@ function DrawManager() {
     }
   }
 
-  this.addPart = function(figureName, drawingName, partName){
-    
+  this.addPart = function(figureIndex, drawingIndex, partIndex){
+    let drawing = myStorage.figures[figureIndex].drawings[drawingIndex];
+    drawing.parts.splice(partIndex, 0, new Part);
+    drawing.currentPart = partIndex;
+    console.log(drawing.currentPart);
+    return drawing;
   }
   this.addDrawing = function (figureName, drawingName){
 
