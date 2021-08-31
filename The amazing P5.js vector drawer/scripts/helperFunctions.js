@@ -209,38 +209,126 @@ function HelperFunctions() {
         } 
     }
 
-    this.sortHTMLElements = ( parentHTML, partIndex, HTMLIndex, diff ,length) => {
+    this.insertHTMLElement = ( parentHTML, index, HTMLIndex, diff ,length) => {
         // console.log("sortHTMLElements", parentHTML.children[7], partIndex, HTMLIndex,  diff)
-        
-        
-        if (length === 0)
+        let chosenElemnent;
+        if (diff === 1)
         {
-            return false;
-        } else if(length === 1)
-        { 
-            return true;
-        } else
-        {
+            chosenElemnent = HTMLIndex
+        } else {
+            chosenElemnent = HTMLIndex+1-diff
+        }
+        
+       
             // length -= 1; 
             // HTMLIndex + (length-1)*diff
-            // console.log("HTMLIndex",HTMLIndex,"length",length);
-            for (let i = partIndex; i < length; i++)
+            // let x = 0;
+            // console.log("HTMLIndex",HTMLIndex,"length",length, "index",index);
+            for (let i = index+1; i < length; i++)
             {
-                // console.log()
+                // console.log(x++)
+                // console.log("move done")
                 parentHTML.children[HTMLIndex].identity++;
                 for (let j = 0; j < diff; j++)
                 {
-                    let element = parentHTML.removeChild(parentHTML.children[HTMLIndex-1]);
+                    let element = parentHTML.removeChild(parentHTML.children[chosenElemnent]);
                     parentHTML.append(element);
                 }
-                console.log(parentHTML.children[HTMLIndex]);
+                // console.log(parentHTML.children[HTMLIndex]);
             }
-        }
+        
         // console.log(parentHTML.identity)
     }
-    
 
 
+    this.moveHTMLUp = (parentHTML, index, HTMLIndex, diff, length)=>{
+        
+        // console.log("HTMLIndex-diff",HTMLIndex,HTMLIndex-diff)
+        parentHTML.children[HTMLIndex].identity--;
+        parentHTML.children[HTMLIndex-diff].identity++;
+
+        for (let j = 0; j < diff; j++)
+                    {
+                        //move two elements up one element down
+                        let element = parentHTML.removeChild(parentHTML.children[HTMLIndex+1-diff*2]);
+                        parentHTML.append(element);
+                    }
+
+        let chosenElement = HTMLIndex-diff +1;
+        // if (diff == 1)
+        // {
+        //     chosenElemnent = HTMLIndex+1
+        // } else{
+        //     chosenElemnent = HTMLIndex+diff+ 1-diff
+        // }
+                    let x = 0;
+        for (let i = index+1; i < length; i++)
+        {
+            console.log(x++)
+            // console.log("move done")
+            // parentHTML.children[HTMLIndex].identity++;
+            for (let j = 0; j < diff; j++)
+            {
+                let element = parentHTML.removeChild(parentHTML.children[chosenElement]);
+                parentHTML.append(element);
+            }
+            // console.log(parentHTML.children[HTMLIndex]);
+        }
+
+
+    }
+    this.moveHTMLDown = (parentHTML, index, HTMLIndex, diff, length)=>{
+        parentHTML.children[HTMLIndex].identity++;
+        parentHTML.children[HTMLIndex+diff].identity--;
+        // console.log("first item to move", )
+
+        
+        for (let j = 0; j < diff; j++)
+                    {
+                        //move two elements up one element down
+                        let element = parentHTML.removeChild(parentHTML.children[HTMLIndex-diff+1]);
+                        parentHTML.append(element);
+                    }
+
+        let chosenElement = HTMLIndex +1;
+        console.log("chosen element", chosenElement)
+
+        // if (diff == 1)
+        // {
+        //     chosenElemnent = HTMLIndex+1
+        // } else{
+        //     chosenElemnent = HTMLIndex+diff+ 1-diff
+        // }
+                    let x = 0;
+        for (let i = index+2; i < length; i++)
+        {
+            console.log(x++)
+            // console.log("move done")
+            // parentHTML.children[HTMLIndex].identity++;
+            for (let j = 0; j < diff; j++)
+            {
+                let element = parentHTML.removeChild(parentHTML.children[chosenElement]);
+                parentHTML.append(element);
+            }
+            // console.log(parentHTML.children[HTMLIndex]);
+        }
+    }
+
+    this.deleteHTMLElement = (parentHTML, index, HTMLIndex, diff, length) =>{
+        
+        for (let j = 0; j < diff; j++)
+                    {
+                        
+                        parentHTML.children[HTMLIndex-diff+1].remove();
+                        
+                    }
+        length -= index-1
+        for (let i = 0; i < length; i++)
+        {
+            parentHTML.children[HTMLIndex+diff*i].identity++
+
+        }
+    }
 
     this.saveSettingsFromStorage = (storage) =>
     {

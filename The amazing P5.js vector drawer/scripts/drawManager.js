@@ -230,6 +230,26 @@ function DrawManager() {
   };
 
 
+  this.setCurrentPart = (partIndex, drawingIndex, figureIndex) =>{
+    if (figureIndex)
+    {
+      myStorage.currentFigure = figureIndex;
+      myStorage.figures[figureIndex].currentDrawing =  drawingIndex;
+      myStorage.figures[figureIndex].drawings[drawingIndex].currentPart = partIndex;
+      return;
+    } else if (drawingIndex)
+    {
+      let figure = this.getFigure()
+      figure.currentDrawing = drawingIndex;
+      figure.drawings[drawingIndex] = partIndex;
+      return;
+    }
+    
+    if (partIndex < 0)
+    {partIndex = 0}
+    this.getDrawing().currentPart = partIndex
+  }
+
   function drawPart(part){
     
     
@@ -298,45 +318,70 @@ function DrawManager() {
     }
   }
 
+  function isCurrentPart(figureIndex, drawingIndex, partIndex){
+    // let testFigureIndex 
+    
+    let testFigureIndex = myStorage.currentFigure;
+    let testDrawingIndex = myStorage.figures[testFigureIndex].currentDrawing;
+    let testPartIndex = myStorage.figures[testFigureIndex].drawings[testDrawingIndex].currentPart;
+    console.log("Test the isCurrentPart", testFigureIndex, testDrawingIndex, testPartIndex)
+
+    if (
+      testFigureIndex === figureIndex &&
+      testDrawingIndex === drawingIndex &&
+      testPartIndex === partIndex
+    ) {return true;} else {return false;}
+  }
+
   this.addPart = function(figureIndex, drawingIndex, partIndex){
+    console.log("addpart",figureIndex,drawingIndex, partIndex);
     let drawing = myStorage.figures[figureIndex].drawings[drawingIndex];
+    partIndex++;
     drawing.parts.splice(partIndex, 0, new Part);
     drawing.currentPart = partIndex;
-    console.log(drawing.currentPart);
     return drawing;
   }
-  this.addDrawing = function (figureName, drawingName){
+  this.addDrawing = function (figureIndex, drawingIndex){
+    // console.log("addDrawing", figureIndex,drawingIndex)
+    let figure = myStorage.figures[figureIndex]
+    figure.drawings.splice(drawingIndex, 0, new Drawing);
+    figure.currentDrawing = drawingIndex;
+    return figure;
+  }
+  this.getLengthOfDrawing = (figureIndex,drawingIndex) =>
+  {
+    return myStorage.figures[figureIndex].drawings[drawingIndex].parts.length;
+  }
 
+  this.exchangeParts = (figureIndex, drawingIndex, partIndex, secondPartIndex) => {
+    let drawing = myStorage.figures[figureIndex].drawings[drawingIndex];
+    let temp = drawing.parts[partIndex];
+    drawing.parts[partIndex] = drawing.parts[secondPartIndex]
+    drawing.parts[secondPartIndex] = temp;
+    return drawing.parts.length;
+    // console.log(drawing);
   }
   this.addFigure = function (figureName)
   {
 
   }
 
-  this.removePart = function (figureName)
+  this.removePart = function (figureIndex, drawingIndex, partIndex)
   {
-
+    return myStorage.figures[figureIndex].drawings[drawingIndex].parts.splice(partIndex, 1);
   }
 
-  this.removeDrawing = function (figureName)
+  this.removeDrawing = function (figureIndex, drawingIndex)
   {
-
+    return myStorage.figures[figureIndex].drawings.splice(drawingIndex, 1);
   }
 
-  this.removefigure = function (figureName)
+  this.removefigure = function (figureIndex)
   {
-
+    return myStorage.figures.splice(figureIndex, 1);
   }
 
-  this.moveDrawing = function (figureName)
-  {
-
-  }
-
-  this.movePart = function (figureName)
-  {
-
-  }
+  
 
   this.copyPart = function (figureName)
   {

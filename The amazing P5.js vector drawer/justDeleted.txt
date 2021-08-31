@@ -1,3 +1,42 @@
+31.08.2021
+function makeNewHTMLPart() {
+      // let part = createDiv("part"+(i+1)+": ");
+      // part.parent(orderBar);
+      console.log(this);
+      let elem = document.getElementById("sidebarLeft");
+      let partsLength = currentDrawing.parts.length;
+      currentDrawing.parts.push(new Part("part" + (partsLength + 1)));
+
+      let part = createDiv();
+      part.parent(elem);
+
+      let checkBox = document.createElement("INPUT");
+      checkBox.setAttribute("type", "checkbox");
+
+      part.elt.appendChild(checkBox);
+      $(checkBox).addClass("selectedBox");
+      checkBox.identity = partsLength;
+      // $(checkBox).change(helpers.isSelected(this));
+      checkBox.addEventListener("change", helpers.isSelected);
+      // console.log("checkBox", checkBox)
+
+      button = createButton("part" + (partsLength + 1) + ": ");
+      button.parent(part);
+      button.identity = partsLength;
+      button.mousePressed(choosePart);
+
+      input_text = currentDrawing.parts[partsLength].name;
+      let inp = createInput(input_text);
+      inp.parent(part);
+      inp.identity = partsLength;
+      // inp.position(0, 0);
+      // inp.size(100);
+      // console.log(inp.elt.value)
+      inp.input(partInputEvent);
+      currentDrawing.currentPart = partsLength;
+    }
+
+
 30.08.2021
   // console.log(buttonDis.elt.parentElement.identity)
           // console.log(buttonDis.elt.parentElement.parentElement.identity)

@@ -42,7 +42,7 @@ function Part(name){
     this.isSelected = false;
 
     this.currentVertex = drawManager.defaultPart.currentVertex;
-    console.log(drawManager.defaultPart.showDetails)
+    // console.log(drawManager.defaultPart.showDetails)
     this.showDetails = drawManager.defaultPart.showDetails;
     this.strokeAlpha = 1;
     this.stroke = drawManager.defaultPart.stroke;

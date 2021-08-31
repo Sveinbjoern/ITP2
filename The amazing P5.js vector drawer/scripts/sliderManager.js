@@ -21,7 +21,7 @@ function SliderManager(){
     this.HTMLIndecies = {
         firstFigure: 0,
         firstDrawing: 12,
-        firstPart: 7,
+        firstPart: 11,
     }
 
     this.addSliderOpen = false;
