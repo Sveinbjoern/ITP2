@@ -14,30 +14,34 @@ function DrawManager() {
   }
 
   this.getFigure = (index) => {
-    if (index)
+    if (index === undefined)
     {
-      return myStorage.figures[index];
+      return myStorage.figures[myStorage.currentFigure];
     }
     // console.log("currentfigure in getFigure", myStorage , myStorage.figures[myStorage.currentFigure])
-    return myStorage.figures[myStorage.currentFigure];
+    return myStorage.figures[index];
   };
 
   this.getDrawing = (index) => {
-    let get = myStorage.figures[myStorage.currentFigure];
-    if (index)
+    
+    if (index === undefined)
     {
-      return get.drawings[index];
+      let get = myStorage.figures[myStorage.currentFigure];
+      return get.drawings[get.currentDrawing];
     }
-    return get.drawings[get.currentDrawing];
+    return get.figure().drawings[index];
   };
 
   this.getPart = (index) => {
-    let get = myStorage.figures[myStorage.currentFigure].drawings[myStorage.figures[myStorage.currentFigure].currentDrawing];
-    if (index)
+    
+    if (index === undefined)
     {
-      return get.parts[index];
-    }
-    return get.parts[get.currentPart];
+      let get = this.getDrawing();
+      return get.parts[get.currentPart];
+    } 
+
+
+    return this.getDrawing().parts[index];
   };
 
   this.getVertexArray = () => {
@@ -317,14 +321,14 @@ function DrawManager() {
       vertex(item[0], item[1]);
     }
   }
-
-  function isCurrentPart(figureIndex, drawingIndex, partIndex){
+  
+  this.isCurrentPart = (figureIndex, drawingIndex, partIndex) => {
     // let testFigureIndex 
     
     let testFigureIndex = myStorage.currentFigure;
     let testDrawingIndex = myStorage.figures[testFigureIndex].currentDrawing;
     let testPartIndex = myStorage.figures[testFigureIndex].drawings[testDrawingIndex].currentPart;
-    console.log("Test the isCurrentPart", testFigureIndex, testDrawingIndex, testPartIndex)
+    // console.log("Test the isCurrentPart", testFigureIndex, testDrawingIndex, testPartIndex)
 
     if (
       testFigureIndex === figureIndex &&
@@ -334,7 +338,7 @@ function DrawManager() {
   }
 
   this.addPart = function(figureIndex, drawingIndex, partIndex){
-    console.log("addpart",figureIndex,drawingIndex, partIndex);
+    // console.log("addpart",figureIndex,drawingIndex, partIndex);
     let drawing = myStorage.figures[figureIndex].drawings[drawingIndex];
     partIndex++;
     drawing.parts.splice(partIndex, 0, new Part);
@@ -368,6 +372,7 @@ function DrawManager() {
 
   this.removePart = function (figureIndex, drawingIndex, partIndex)
   {
+    
     return myStorage.figures[figureIndex].drawings[drawingIndex].parts.splice(partIndex, 1);
   }
 
@@ -422,6 +427,7 @@ function DrawManager() {
 
   this.drawPoints = () => {
     let part = this.getPart();
+    console.log(part)
     if (part.vertexArray.length > 0)
     {
       push();
@@ -433,25 +439,28 @@ function DrawManager() {
                 point(elem[0],
                       elem[1]); 
               });
+
+              if (drawManager.settings.numberPoints)
+                          {
+                            
+                            // stroke(part.stroke);
+                            // fill(invertColor(part.stroke));
+                            fill(part.stroke);
+                            noStroke();
+                            textAlign(CENTER,CENTER)
+                            textSize(max(part.strokeWeight + drawManager.settings.vertexPointsFactor, 6))
+                            let counter = 0;
+                            part.vertexArray.forEach(elem => {
+                              text(counter++, elem[0], elem[1]+1); //The plus one corrects a small diaviation in height
+                              
+                            });
+                            
+                          }
+
             }
 
-            if (drawManager.settings.numberPoints)
-            {
-              push();
-              // stroke(part.stroke);
-              // fill(invertColor(part.stroke));
-              fill(part.stroke);
-              noStroke();
-              textAlign(CENTER,CENTER)
-              textSize(max(part.strokeWeight + drawManager.settings.vertexPointsFactor, 6))
-              let counter = 0;
-              part.vertexArray.forEach(elem => {
-                text(counter++, elem[0], elem[1]+1); //The plus one corrects a small diaviation in height
-                
-              });
-              pop();
-            }
-
+           
+        
         //     if (part.currentVertex === 0)
         //     {
         //       point(part.vertexArray[part.currentVertex][0],

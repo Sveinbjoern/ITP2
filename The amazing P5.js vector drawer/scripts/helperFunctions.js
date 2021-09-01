@@ -261,10 +261,10 @@ function HelperFunctions() {
         // } else{
         //     chosenElemnent = HTMLIndex+diff+ 1-diff
         // }
-                    let x = 0;
+                    // let x = 0;
         for (let i = index+1; i < length; i++)
         {
-            console.log(x++)
+            // console.log(x++)
             // console.log("move done")
             // parentHTML.children[HTMLIndex].identity++;
             for (let j = 0; j < diff; j++)
@@ -291,7 +291,7 @@ function HelperFunctions() {
                     }
 
         let chosenElement = HTMLIndex +1;
-        console.log("chosen element", chosenElement)
+        // console.log("chosen element", chosenElement)
 
         // if (diff == 1)
         // {
@@ -299,10 +299,10 @@ function HelperFunctions() {
         // } else{
         //     chosenElemnent = HTMLIndex+diff+ 1-diff
         // }
-                    let x = 0;
+                    // let x = 0;
         for (let i = index+2; i < length; i++)
         {
-            console.log(x++)
+            // console.log(x++)
             // console.log("move done")
             // parentHTML.children[HTMLIndex].identity++;
             for (let j = 0; j < diff; j++)
@@ -325,7 +325,7 @@ function HelperFunctions() {
         length -= index-1
         for (let i = 0; i < length; i++)
         {
-            parentHTML.children[HTMLIndex+diff*i].identity++
+            parentHTML.children[HTMLIndex+diff*i].identity--;
 
         }
     }
@@ -352,16 +352,8 @@ function HelperFunctions() {
         
         
         
-        currentDrawingIndex = 0;
-        currentPartIndex = 0; 
-        // delete drawManager.figures[0];
         
-        figure = null;
-        currentDrawing = null;
-        currentPart = null;
-       
-
-        
+        // delete drawManager.figures[
         
         figure = new Figure("start");
         
@@ -448,9 +440,15 @@ function keyPressed()
 
         if(keyCode === keyCodes.R)
         {
-            drawManager.saveFiguresToStorage();
+            // drawManager.saveFiguresToStorage();
 
-
+            let elem = document.getElementsByClassName("order")
+            let length = elem[0].children[12].children.length;
+            for (let i = 11; i < length; i += 2)
+            {
+                console.log(elem[0].children[12].children[i].identity);
+            }
+            
             // removeElements();
 
             // currentPartIndex = keepIndexConsistent(currentPartIndex,  ,"remove");

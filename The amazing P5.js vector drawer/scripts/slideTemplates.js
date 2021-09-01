@@ -741,31 +741,7 @@ function SlideTemplates() {
 
       linebreak = document.createElement("br");
       newPartInfo.elt.appendChild(linebreak);
-      // let xText = createP("X");
-      // xText.style("position", "absolute");
-      // xText.style("right", "17px");
-      // xText.style("top", "-15px");
-      // xText.style("cursor", "pointer");
-      // xText.style("color", "#993030");
-      // xText.elt.onmouseover = function(){
-      //   $(this).css({ color: "orange"});
-      // };
-      // xText.elt.onmouseout = function(){
-      // $(this).css({ color: "#993030" });
-      // };
-      // xText.mousePressed(function () {
-      //   newSlide.remove();
-      // });
-      // xText.parent(newPartInfo);
-
-      // xText.click(
-      //   function() {
-      //     $( this ).append( $( "<span> ***</span>" ) );
-      //   }, function() {
-      //     $( this ).find( "span" ).last().remove();
-      //   }
-      // );
-      // xText.style("float", "top")
+     
 
       let sWText = createP("strokeWeight");
       // sWText.style("position", "absolute");
@@ -774,35 +750,6 @@ function SlideTemplates() {
       // sWText.style("top", "60px");
       sWText.style("display", "inline");
       sWText.parent(newPartInfo);
-
-      //     button = createButton("&#x2191;");
-
-      //     // button.style("position", "absolute");
-      //     // button.style("right", "30px");
-      //     // button.style("top", "0px");
-      // button.style("display", "inline");
-      //     button.style("width", "auto");
-      //     // button.style("display", "inline");
-      //     // button.style("top", "123px")
-      //     button.parent(newPartInfo);
-      //     button.mousePressed(() => {
-      //       console.log(button, this);
-
-      //       helpers.setVertexArrayToStart();
-      //     });
-
-      // button = createButton("&#x2193;");
-
-      // // button.style("position", "absolute");
-      // // button.style("right", "52px");
-      // // button.style("top", "0px");
-      // button.style("display", "inline");
-      // button.style("width", "auto");
-      // // button.style("display", "inline");
-      // // button.style("top", "123px")
-      // button.parent(newPartInfo);
-      // button.mousePressed(() => {
-      //   console.log(button, this);
 
       //   helpers.decreaseVertexArray();
       // });
@@ -1014,7 +961,7 @@ function SlideTemplates() {
         sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
       let HTMLIndexPart =
         sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
-      console.log("HTML INDICIES part drawing",HTMLIndexDrawing,HTMLIndexPart);
+      // console.log("HTML INDICIES part drawing",HTMLIndexDrawing,HTMLIndexPart);
       
 
       let elem = document.getElementsByClassName("order");
@@ -1040,8 +987,8 @@ function SlideTemplates() {
       let partIndex = this.elt.parentElement.identity;
       // exchange underlying part
 
-      console.log("deletePart()", figureIndex, drawingIndex, partIndex)
       let length = drawManager.getLengthOfDrawing(figureIndex,drawingIndex);
+      console.log("deletePart() +length", figureIndex, drawingIndex, partIndex, length)
 
       
       let drawingLength = drawManager.getLengthOfDrawing(figureIndex,drawingIndex)
@@ -1052,10 +999,7 @@ function SlideTemplates() {
       sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
       
       drawManager.removePart(figureIndex,drawingIndex,partIndex);
-       if (length <= 1)
-            {
-              createNewPart(figureIndex,drawingIndex,partIndex+1)
-            }
+      // console.log(drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex])
       let elem = document.getElementsByClassName("order");
             elem.forEach((orderSlide) => {
              
@@ -1065,7 +1009,7 @@ function SlideTemplates() {
                 partIndex,
                 HTMLIndexPart,
                 2,
-                drawingLength
+                drawingLength-2
               );
             
             });
@@ -1074,7 +1018,12 @@ function SlideTemplates() {
       {
         drawManager.setCurrentPart(partIndex-1);
       }
-      drawManager.reDrawWithPoint();
+
+      if (length <= 1)
+            {
+              createNewPart(figureIndex,drawingIndex,partIndex)
+            }
+      // drawManager.reDrawWithPoint();
       toolbox.selectedTool.drawn = false;
       
     }
@@ -1131,7 +1080,7 @@ function SlideTemplates() {
       if (partIndex === undefined)
       {partIndex = this.elt.parentElement.identity;}
       
-      console.log("figureIndex", figureIndex,drawingIndex,partIndex)
+      // console.log("figureIndex", figureIndex,drawingIndex,partIndex)
       // console.log(figureIndex, drawingIndex, partIndex)
       // figureIndex++;drawingIndex++;partIndex++;
       let HTMLIndexDrawing =
