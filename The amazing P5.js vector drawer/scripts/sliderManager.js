@@ -145,7 +145,7 @@ function SliderManager(){
             
         
 
-
+            drawManager.setCurrentPartR();
 
 
         // this.fillOrderBar();
