@@ -32,16 +32,18 @@ function FreehandTool() {
       // console.log("dragDistance",  this.dragDistance);
     }
     let part = drawManager.getPart();
+    // console.log(part.vertexArray);
     let arrayLength = part.vertexArray.length;
 
     //   console.log("currentVertex in draw", this.currentVertex )
     if (!this.drawn) {
       // drawManager.reDrawWithPoint();
-      if (drawManager.settings.vertexPoints) {
-        drawManager.drawPoints();
-      }
+      loadPixels();
+      // if (drawManager.settings.vertexPoints) {
+      //   drawManager.drawPoints();
+      // }
 
-      loadPixels(); // loadPixels is in this case used to save the screeen at this point
+      // loadPixels is in this case used to save the screeen at this point
       this.drawn = true;
     }
     if (

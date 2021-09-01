@@ -441,8 +441,9 @@ function keyPressed()
         if(keyCode === keyCodes.R)
         {
             // drawManager.saveFiguresToStorage();
-
-            let elem = document.getElementsByClassName("order")
+            // console.log(drawManager.getCurrentIndicies())            // let elem = document.getElementsByClassName("order")
+            
+            let elem = document.getElementsByClassName("order");
             let length = elem[0].children[12].children.length;
             for (let i = 11; i < length; i += 2)
             {

@@ -23,25 +23,26 @@ function DrawManager() {
   };
 
   this.getDrawing = (index) => {
-    
+    let get = myStorage.figures[myStorage.currentFigure];
     if (index === undefined)
     {
-      let get = myStorage.figures[myStorage.currentFigure];
+      
       return get.drawings[get.currentDrawing];
     }
-    return get.figure().drawings[index];
+    return get.drawings[index];
   };
 
   this.getPart = (index) => {
-    
+    let get = this.getDrawing();
     if (index === undefined)
     {
-      let get = this.getDrawing();
+      
+      // console.log("internal dM.getPart", get ,get.currentPart)
       return get.parts[get.currentPart];
     } 
 
 
-    return this.getDrawing().parts[index];
+    return get.parts[index];
   };
 
   this.getVertexArray = () => {
@@ -209,49 +210,39 @@ function DrawManager() {
         window.localStorage.setItem("stored", JSON.stringify(myStorage))
     }
 
-  this.draw = function (figure) {
-    //check if it has a point!! before sending it to draw
-    // console.log("drawManager.draw")
-    drawings = figure.drawings.length;
-    
-    for (let i = 0; i < drawings; i++) {
-      // console.log("i", i);
-      let drawing = figure.drawings[i];
-      let parts = drawing.parts.length;
-      for (let j = 0; j < parts; j++) {
-        let part = drawing.parts[j];
-        // console.log("part", part);
-        
-        // console.log("vertexArray",vertexArray)
-        
-          drawPart(part)
-         
-        
-      }
-    }
-
-    
-  };
+ 
 
 
   this.setCurrentPart = (partIndex, drawingIndex, figureIndex) =>{
-    if (figureIndex)
+    
+    // let elem = document.getElementsByClassName("order")
+    // elem
+
+    // console.log(partIndex,drawingIndex,)
+    if (figureIndex === undefined)
     {
+      if (drawingIndex === undefined)
+      {
+        if (partIndex === undefined)
+        {
+            console.log("no arguments for setCurrentPart")
+        }
+       
+            this.getDrawing().currentPart = partIndex
+        
+      }
+      let figure = this.getFigure()
+              figure.currentDrawing = drawingIndex;
+              figure.drawings[drawingIndex].currentPart = partIndex;
+              return;// console.log(figureIndex,drawingIndex,partIndex);
+      
+    }
       myStorage.currentFigure = figureIndex;
       myStorage.figures[figureIndex].currentDrawing =  drawingIndex;
       myStorage.figures[figureIndex].drawings[drawingIndex].currentPart = partIndex;
       return;
-    } else if (drawingIndex)
-    {
-      let figure = this.getFigure()
-      figure.currentDrawing = drawingIndex;
-      figure.drawings[drawingIndex] = partIndex;
-      return;
-    }
     
-    if (partIndex < 0)
-    {partIndex = 0}
-    this.getDrawing().currentPart = partIndex
+    
   }
 
   function drawPart(part){
@@ -321,6 +312,22 @@ function DrawManager() {
       vertex(item[0], item[1]);
     }
   }
+
+  this.manageCurrentParts = (figureIndex,drawingIndex,partIndex) =>{
+    console.log("values from manageCurrentParts",figureIndex,drawingIndex,partIndex)
+    let drawing = myStorage.figures[figureIndex].drawings[drawingIndex]
+   
+    // let partsLength = drawing.parts.length;
+
+
+    
+     
+     if (partIndex === 0)
+     {return} else if (partIndex <= drawing.currentPart)
+     {drawing.currentPart--;}
+   
+    
+  }
   
   this.isCurrentPart = (figureIndex, drawingIndex, partIndex) => {
     // let testFigureIndex 
@@ -337,12 +344,20 @@ function DrawManager() {
     ) {return true;} else {return false;}
   }
 
+  this.getCurrentIndicies = () => {
+    let figure = myStorage.figures[myStorage.currentFigure];
+    let drawing = figure.drawings[figure.currentDrawing]
+    return [myStorage.currentFigure, figure.currentDrawing,
+      drawing.currentPart]
+
+  }
+
   this.addPart = function(figureIndex, drawingIndex, partIndex){
     // console.log("addpart",figureIndex,drawingIndex, partIndex);
     let drawing = myStorage.figures[figureIndex].drawings[drawingIndex];
-    partIndex++;
+    
     drawing.parts.splice(partIndex, 0, new Part);
-    drawing.currentPart = partIndex;
+   
     return drawing;
   }
   this.addDrawing = function (figureIndex, drawingIndex){
@@ -352,7 +367,7 @@ function DrawManager() {
     figure.currentDrawing = drawingIndex;
     return figure;
   }
-  this.getLengthOfDrawing = (figureIndex,drawingIndex) =>
+  this.getLengthOfParts = (figureIndex,drawingIndex) =>
   {
     return myStorage.figures[figureIndex].drawings[drawingIndex].parts.length;
   }
@@ -362,6 +377,17 @@ function DrawManager() {
     let temp = drawing.parts[partIndex];
     drawing.parts[partIndex] = drawing.parts[secondPartIndex]
     drawing.parts[secondPartIndex] = temp;
+
+    let indicies = this.getCurrentIndicies()
+    if (indicies[0] === figureIndex && indicies[1] === drawingIndex && 
+          indicies[2] === partIndex || indicies[2] === secondPartIndex)
+          {
+            if (indicies[2] === partIndex)
+            {
+              this.setCurrentPart(secondPartIndex)
+            } else {this.setCurrentPart(partIndex)}
+          }
+
     return drawing.parts.length;
     // console.log(drawing);
   }
@@ -407,8 +433,8 @@ function DrawManager() {
     // console.log("reset Run")
     clear();
     // redraw
-    let figures = myStorage.figures.length;
-    for (let i = 0; i < figures; i++) {
+    let figuresLength = myStorage.figures.length;
+    for (let i = 0; i < figuresLength; i++) {
       this.draw(myStorage.figures[i]);
     }
   };
@@ -417,17 +443,45 @@ function DrawManager() {
   {
     // background(200);
     clear();
+    let drawing = myStorage.figures[myStorage.currentFigure].drawings[myStorage.figures[myStorage.currentFigure].currentDrawing]
+    // console.log(myStorage.currentFigure);
+    // console.log(myStorage.figures[myStorage.currentFigure].currentDrawing);
+    // console.log(drawing.currentPart);
     // redraw
-    let figures = myStorage.figures.length;
-    for (let i = 0; i < figures; i++) {
+    let figuresLength = myStorage.figures.length;
+    for (let i = 0; i < figuresLength; i++) {
       this.draw(myStorage.figures[i]);
     }
     this.drawPoints();
   }
 
+  this.draw = function (figure) {
+    //check if it has a point!! before sending it to draw
+    // console.log("drawManager.draw")
+    drawingsLength = figure.drawings.length;
+    
+    for (let i = 0; i < drawingsLength; i++) {
+      // console.log("i", i);
+      let drawing = figure.drawings[i];
+      let partsLength = drawing.parts.length;
+      for (let j = 0; j < partsLength; j++) {
+        let part = drawing.parts[j];
+        // console.log("part", part);
+        
+        // console.log("vertexArray",vertexArray)
+        
+          drawPart(part)
+         
+        
+      }
+    }
+
+    
+  };
+
   this.drawPoints = () => {
     let part = this.getPart();
-    console.log(part)
+    // console.log(part)
     if (part.vertexArray.length > 0)
     {
       push();

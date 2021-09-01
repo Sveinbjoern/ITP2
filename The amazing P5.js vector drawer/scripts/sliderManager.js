@@ -18,6 +18,13 @@ function SliderManager(){
     let temporary;
     let self = this;
 
+
+    this.col = {
+        currentColorPart: "rgb(100, 26, 26)",
+        partDefault: "rgb(119, 80, 192)",
+        drawing: "rgb(19, 180, 192)",
+        figure: "rgb(50, 50, 200)",
+    }
     this.HTMLIndecies = {
         firstFigure: 0,
         firstDrawing: 12,
