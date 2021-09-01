@@ -215,10 +215,10 @@ function DrawManager() {
 
   this.setCurrentPartR = (partIndex, drawingIndex, figureIndex) =>{
     
-    let indicies = this.getCurrentIndicies();
-
-    console.log("setCurrentPart()",partIndex,drawingIndex, figureIndex)
-    console.log("indicies",indicies)
+    let HTMLIndexDrawingOriginal = this.getCurrentIndicies()[1] +sliderManager.HTMLIndecies.firstDrawing;
+    
+    // console.log("setCurrentPart()",partIndex,drawingIndex, figureIndex)
+    // console.log("HTMLIndexDrawingOriginal",HTMLIndexDrawingOriginal)
     if (figureIndex === undefined)
     {
       if (drawingIndex === undefined)
@@ -246,19 +246,16 @@ function DrawManager() {
       myStorage.figures[figureIndex].currentDrawing =  drawingIndex;
       myStorage.figures[figureIndex].drawings[drawingIndex].currentPart = partIndex;
       }
-      console.log("setCurrentPart2()",partIndex,drawingIndex, figureIndex)
+      // console.log("setCurrentPart2()",partIndex,drawingIndex, figureIndex)
       // let elem = document.getElementsByClassName("order")
       let HTMLIndexDrawing =
       sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
       let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
 
       
-    // console.log(indicies);
+    // console.log("html draw part" ,HTMLIndexDrawing, HTMLIndexPart);
 
-    let HTMLIndexDrawingOriginal =
-      sliderManager.HTMLIndecies.firstDrawing + indicies[1];
-    let HTMLIndexPartOriginal =
-      sliderManager.HTMLIndecies.firstPart + 2 * indicies[2];
+    
     // console.log("stuff form createNewPart", figureIndex,drawingIndex,partIndex)
    
 
@@ -270,21 +267,20 @@ function DrawManager() {
       // console.log("going once",
       // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart]);
       // console.log(orderSlide.children[HTMLIndexDrawing].identity);
-      console.log("elements to add and remove color from",
-      orderSlide.children[HTMLIndexDrawingOriginal].children[
-        HTMLIndexPartOriginal
-      ],orderSlide.children[HTMLIndexDrawingOriginal].children[
-        HTMLIndexPartOriginal
-      ])
-      if (
-        orderSlide.children[HTMLIndexDrawingOriginal].children[
-          HTMLIndexPartOriginal
-        ].style
-      ) {
-        orderSlide.children[HTMLIndexDrawingOriginal].children[
-          HTMLIndexPartOriginal
-        ].style.backgroundColor = sliderManager.col.partDefault;
+      // console.log("elements to add and remove color from",
+      // orderSlide.children[HTMLIndexDrawingOriginal].children[
+      //   HTMLIndexPartOriginal
+      // ],orderSlide.children[HTMLIndexDrawingOriginal].children[
+      //   HTMLIndexPartOriginal
+      // ])
+      let length = orderSlide.children[HTMLIndexDrawingOriginal].children.length
+      for (let i = sliderManager.HTMLIndecies.firstPart; i < length ; i+=2)
+      {
+        
+          orderSlide.children[HTMLIndexDrawingOriginal].children[i].style.backgroundColor = sliderManager.col.partDefault;
+        
       }
+      
 
       orderSlide.children[HTMLIndexDrawing].children[
         HTMLIndexPart
@@ -366,22 +362,24 @@ function DrawManager() {
 
   this.manageCurrentParts = (figureIndex,drawingIndex,partIndex) =>{
     console.log("values from manageCurrentParts",figureIndex,drawingIndex,partIndex)
+    let indicies = this.getCurrentIndicies();
     let drawing = myStorage.figures[figureIndex].drawings[drawingIndex]
    
     // let partsLength = drawing.parts.length;
 
 
-    
-     
-     if (partIndex === 0)
-     {return 0} else if (partIndex <= drawing.currentPart)
-     {
-       return --drawing.currentPart;
-       
-      }
-     
-   
-    
+    if (indicies[0] === figureIndex && indicies[1] === drawingIndex && 
+      indicies[2] === partIndex)
+      {
+        if (partIndex <= indicies[2] && indicies[2] > 0)
+        {
+          
+            this.setCurrentPartR(partIndex-1);
+          
+        } else {
+          this.setCurrentPartR(partIndex);
+        }
+      } 
   }
   
   this.isCurrentPart = (figureIndex, drawingIndex, partIndex) => {
@@ -433,9 +431,12 @@ function DrawManager() {
     drawing.parts[secondPartIndex] = temp;
 
     let indicies = this.getCurrentIndicies()
+    console.log("indicies at exchangParts",indicies)
     if (indicies[0] === figureIndex && indicies[1] === drawingIndex && 
           indicies[2] === partIndex || indicies[2] === secondPartIndex)
           {
+            console.log("indicies[2] === partIndex",indicies[2] === partIndex)
+            console.log("indicies[2] === secondPartIndex",indicies[2] === secondPartIndex)
             if (indicies[2] === partIndex)
             {
               console.log("exchangeParts giving ", secondPartIndex," to setCurrentPart, instead of ", partIndex)

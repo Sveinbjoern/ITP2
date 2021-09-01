@@ -37,10 +37,14 @@ function FreehandTool() {
 
     //   console.log("currentVertex in draw", this.currentVertex )
     if (!this.drawn) {
-      // drawManager.reDrawWithPoint();
+
+      
+      drawManager.reDrawWithPoint();
+      
       loadPixels();
+      
       // if (drawManager.settings.vertexPoints) {
-      //   drawManager.drawPoints();
+        // drawManager.drawPoints();
       // }
 
       // loadPixels is in this case used to save the screeen at this point
@@ -56,13 +60,8 @@ function FreehandTool() {
       !this.itemHeld
     ) {
       let vertexArray = drawManager.getVertexArray();
-      if (drawManager.settings.lightMode) {
-        // updatePixels();
-        // if (part.currentVertex > 0)
-        // line(	vertexArray[part.currentVertex][0],
-        // 		vertexArray[part.currentVertex][1],
-        // 		mouseX,mouseY);
-      } else {
+      // if (!self.itemInDistance) 
+      {
         // console.log("part.currentVertex", part.currentVertex)
         vertexArray.splice(part.currentVertex, 0, [mouseX, mouseY]);
 

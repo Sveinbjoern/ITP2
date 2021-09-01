@@ -26,7 +26,7 @@ function SliderManager(){
         figure: "rgb(50, 50, 200)",
     }
     this.HTMLIndecies = {
-        firstFigure: 0,
+        firstFigure: 12,
         firstDrawing: 12,
         firstPart: 11,
     }
