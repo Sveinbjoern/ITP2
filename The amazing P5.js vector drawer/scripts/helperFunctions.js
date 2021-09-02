@@ -9,7 +9,16 @@ function HelperFunctions() {
     // Buttons and checkboxes and field functions
     
     
-    
+    this.updateCurSliderNameInput = function(value){
+        elem = document.getElementsByClassName("currentSlide");
+    //   console.log("currentSlider elem", elem);
+      elem.forEach((currentSlide) => {
+        // console.log("current element", element.children[0].innerHTML);
+        currentSlide.children[0].innerHTML = "CURRENT: " + value;
+      });
+    }
+
+   
     
     this.noStrokeButton = function(checked)
     {
@@ -74,8 +83,13 @@ function HelperFunctions() {
     }
     
 
-    this.updateSettingsCurrentS = function(part){
+    this.updateSettingsCurSlide = function(part){
         
+        if (part === undefined)
+        {
+            part = drawManager.getPart();
+        }
+        console.log("part.strokeWeight in updateCurslide", part.strokeWeight)
 
         let elem = $( ".currentSlide" )
         let length = elem.length;
@@ -95,17 +109,17 @@ function HelperFunctions() {
 
         elem[i].children[6].children[0].checked =  part.noStroke;
         
-        elem[i].children[9].value = part.strokeWeight;
-        elem[i].children[10].value = part.strokeWeight;    
+        elem[i].children[11].value = part.strokeWeight;
+        elem[i].children[12].value = part.strokeWeight;    
 
         if (part.endShape)
         {
-            elem[i].children[11].innerText = "endShape(CLOSE)";    
-        } else {elem[i].children[11].innerText = "endShape()";}
+            elem[i].children[12].innerText = "endShape(CLOSE)";    
+        } else {elem[i].children[12].innerText = "endShape()";}
 
-        elem[i].children[12].value = part.vertexMode;
+        elem[i].children[13].value = part.vertexMode;
 
-        elem[i].children[14].innerHTML = part.currentVertex + "/"+ part.vertexArray.length;
+        elem[i].children[15].innerHTML = part.currentVertex + "/"+ part.vertexArray.length;
 
         }
         // if (elem[i].children[13].innerHTML)

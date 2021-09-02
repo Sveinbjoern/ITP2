@@ -29,6 +29,7 @@ function SliderManager(){
         firstFigure: 12,
         firstDrawing: 12,
         firstPart: 11,
+        divInPart: 11,
     }
 
     this.addSliderOpen = false;
@@ -128,6 +129,7 @@ function SliderManager(){
                 switch (elem)
                 {
                     case "order":
+                       
                         slideTemplates.createOrderSlide("bottomBar");
                         break;
                     case "current":
@@ -145,7 +147,7 @@ function SliderManager(){
             
         
 
-            drawManager.setCurrentPartR();
+            // drawManager.setCurrentPartR();
 
 
         // this.fillOrderBar();

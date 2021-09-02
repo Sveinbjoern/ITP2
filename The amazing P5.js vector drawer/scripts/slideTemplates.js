@@ -211,6 +211,8 @@ function SlideTemplates() {
         let drawing = figure.drawings[j];
         createHTMLDrawing(drawing, newSlide, j);
       }
+
+      drawManager.setCurrentPartR();
     }
 
     function createHTMLDrawing(drawing, newSlide, j) {
@@ -432,7 +434,7 @@ function SlideTemplates() {
 
       // // inp.position(0, 0);
       // // inp.size(100);
-      inp.input(drawingNameInputEvent);
+      inp.input(partNameInputEvent);
 
       let button = createButton("C");
 
@@ -499,27 +501,14 @@ function SlideTemplates() {
       vNumText.style("display", "inline");
       vNumText.parent(newPart);
 
-      let selBox = createCheckbox("SELECT", part.isSelected);
+      let drawBox = createCheckbox("Draw this", part.draw);
       // noFillBox.style("position", "absolute");
-      selBox.style("margin-left", "30px"); // noFillBox.style("left", "120px");
-      selBox.style("display", "inline");
-      selBox.changed(() => {
-        // console.log(noFillBox.checked())
-
-        let elem = document.getElementsByClassName("currentSlide");
-        let length = elem.length;
-
-        // console.log(elem[0].children[3].children[0].checked, noFillBox.checked());
-        if (length > 1) {
-          for (let i = 0; i < length; i++) {
-            elem[i].children[3].children[0].checked = noFillBox.checked();
-          }
-        }
-
-        drawManager.getPart().noFill = noFillBox.checked();
-        drawManager.reDrawWithPoint();
-      });
-      selBox.parent(newPart);
+      // drawBox.style("float", "right" );// noFillBox.style("left", "120px");
+      drawBox.style("margin-left", "30px");
+      drawBox.style("display", "inline");
+      drawBox.changed(inputDraw);
+      drawBox.parent(newPart);
+     
 
       buttonDis = createButton("Show Details");
       // button.style("position", "absolute");
@@ -533,17 +522,8 @@ function SlideTemplates() {
       // button.style("display", "inline");
       // button.style("top", "123px")
       buttonDis.parent(newPart);
-      buttonDis.elt.onclick = (e) => {
-        if (part.showDetails) {
-          buttonDis.style("color", "red");
-          newPartInfo.elt.style.display = "none";
-          part.showDetails = false;
-        } else {
-          buttonDis.style("color", "black");
-          newPartInfo.elt.style.display = "inline-block";
-          part.showDetails = true;
-        }
-      };
+      buttonDis.mousePressed(displayButtonInput);
+      
 
       // let showText = createP(part.vertexArray.length);
       // // vNumText.style("position", "absolute");
@@ -566,7 +546,7 @@ function SlideTemplates() {
                 padding: 0px`
       );
       if (!part.showDetails) {
-        newPartInfo.style.display = "none";
+        newPartInfo.elt.style.display = "none";
       }
 
       //  box-sizing: border-box;     overflow: hidden;
@@ -592,22 +572,7 @@ function SlideTemplates() {
       // inpColorFill.style("top", "25px");
       // inpColorFill.style("position", "absolute");
       // inpColorFill.style("height", "20px");
-      inpColorFill.input(() => {
-        // console.log(inpColorFill.elt.value);
-        // console.log(inpColorFill.elt.value);
-        let elem = document.getElementsByClassName("currentSlide");
-        let length = elem.length;
-
-        if (length > 1) {
-          for (let i = 0; i < length; i++) {
-            elem[i].children[2].value = inpColorFill.elt.value;
-          }
-        }
-        // console.log(elem[0].children[2].value, inpColorFill.elt.value);
-        drawManager.getPart().fill = color(inpColorFill.elt.value);
-        drawManager.reDrawWithPoint();
-        toolbox.selectedTool.drawn = false;
-      });
+      inpColorFill.input(colorFillInput);
       inpColorFill.parent(newPartInfo);
 
       // console.log("inpColorFill", inpColorFill)
@@ -624,46 +589,10 @@ function SlideTemplates() {
       // noFillBox.style("position", "absolute");
       // noFillBox.style("left", "120px");
       noFillBox.style("display", "inline");
-      noFillBox.changed(() => {
-        // console.log(noFillBox.checked())
-
-        let elem = document.getElementsByClassName("currentSlide");
-        let length = elem.length;
-
-        // console.log(elem[0].children[3].children[0].checked, noFillBox.checked());
-        if (length > 1) {
-          for (let i = 0; i < length; i++) {
-            elem[i].children[3].children[0].checked = noFillBox.checked();
-          }
-        }
-
-        drawManager.getPart().noFill = noFillBox.checked();
-        drawManager.reDrawWithPoint();
-      });
+      noFillBox.changed(noFillInput);
       noFillBox.parent(newPartInfo);
-
-      let drawBox = createCheckbox("Draw this part", part.draw);
-      // noFillBox.style("position", "absolute");
-      // drawBox.style("float", "right" );// noFillBox.style("left", "120px");
-      drawBox.style("margin-left", "30px");
-      drawBox.style("display", "inline");
-      drawBox.changed(() => {
-        // console.log(noFillBox.checked())
-
-        let elem = document.getElementsByClassName("currentSlide");
-        let length = elem.length;
-
-        // console.log(elem[0].children[3].children[0].checked, noFillBox.checked());
-        if (length > 1) {
-          for (let i = 0; i < length; i++) {
-            elem[i].children[3].children[0].checked = noFillBox.checked();
-          }
-        }
-
-        drawManager.getPart().noFill = noFillBox.checked();
-        drawManager.reDrawWithPoint();
-      });
-      drawBox.parent(newPartInfo);
+      
+     
 
       linebreak = document.createElement("br");
       newPartInfo.elt.appendChild(linebreak);
@@ -682,24 +611,7 @@ function SlideTemplates() {
       // inpColorStroke.style("left", "70px");
       // inpColorStroke.style("top", "50px");
       // inpColorStroke.style("height", "20px");
-      inpColorStroke.input(() => {
-        // console.log(inpColorStroke.elt.value);
-        // console.log(color(inpColorStroke.elt.value).levels);
-
-        let elem = document.getElementsByClassName("currentSlide");
-        let length = elem.length;
-
-        if (length > 1) {
-          for (let i = 0; i < length; i++) {
-            elem[i].children[5].value = inpColorStroke.elt.value;
-          }
-        }
-        console.log(elem[0].children[5], inpColorStroke.elt.value);
-
-        drawManager.getPart().stroke = color(inpColorStroke.elt.value);
-        drawManager.reDrawWithPoint();
-        toolbox.selectedTool.drawn = false;
-      });
+      inpColorStroke.input(colorStrokeInput);
       inpColorStroke.parent(newPartInfo);
 
       // let noStrokeText = createP("noStroke:");
@@ -713,22 +625,7 @@ function SlideTemplates() {
       // noStrokeBox.style("left", "120px");
       // noStrokeBox.style("top", "45px");
       noStrokeBox.style("display", "inline");
-      noStrokeBox.changed(() => {
-        console.log(noStrokeBox.checked());
-
-        let elem = document.getElementsByClassName("currentSlide");
-        let length = elem.length;
-
-        // console.log(elem[0].children[3].children[0].checked, noFillBox.checked());
-        if (length > 1) {
-          for (let i = 0; i < length; i++) {
-            elem[i].children[6].children[0].checked = noStrokeBox.checked();
-          }
-        }
-
-        drawManager.getPart().noStroke = noStrokeBox.checked();
-        drawManager.reDrawWithPoint();
-      });
+      noStrokeBox.changed(noStrokeInput);
       noStrokeBox.parent(newPartInfo);
 
       linebreak = document.createElement("br");
@@ -753,38 +650,7 @@ function SlideTemplates() {
       // sWslider.style("left", "80px");
       // sWslider.style("line-hight", "23px");
       sWslider.style("display", "inline");
-      sWslider.elt.onchange = () => {
-        // console.log(sWslider)
-        // console.log(sWslider.value());
-
-        if (sWslider.elt.value > drawManager.settings.maxStrokeWeight) {
-          sWslider.elt.value = drawManager.settings.maxStrokeWeight;
-        } else if (sWslider.elt.value < drawManager.settings.minStrokeWeight) {
-          sWslider.elt.value = drawManager.settings.minStrokeWeight;
-        }
-        let elem = document.getElementsByClassName("currentSlide");
-        let length = elem.length;
-        if (length > 0) {
-          for (let i = 0; i < length; i++) {
-            elem[i].children[9].value = parseInt(sWslider.elt.value);
-            elem[i].children[10].value = parseInt(sWslider.elt.value);
-          }
-        }
-        // console.log(elem[0].children[9].value);
-        // console.log(elem[0].children[10].value);
-
-        if (toolbox.selectedTool.hasOwnProperty("updateSettings")) {
-          // console.log("has own property: true");
-          // console.log("selectedTool", toolbox.selectedTool)
-          toolbox.selectedTool.updateSettings = true;
-        }
-        drawManager.getPart().strokeWeight = parseInt(sWslider.elt.value);
-        drawManager.reDrawWithPoint();
-        toolbox.selectedTool.drawn = false;
-        console.log("sWslider.elt.value", sWslider.elt.value);
-        // sWInput.elt.value = drawManager.defaultPart.strokeWeight;
-        // console.log(drawManager.defaultPart.strokeWeight);
-      };
+      sWslider.elt.onchange = strokeweightInput;
       sWslider.parent(newPartInfo);
 
       let sWInput = createInput(part.strokeWeight.toString(), "number");
@@ -793,31 +659,7 @@ function SlideTemplates() {
       sWInput.style("width", "53px");
       sWInput.style("display", "inline");
       // sWInput.style("top", "75px");
-      sWInput.elt.onchange = () => {
-        // console.log(sWslider.value());
-        // console.log(sWInput.elt.value);
-
-        if (sWInput.elt.value > drawManager.settings.maxStrokeWeight) {
-          sWInput.elt.value = drawManager.settings.maxStrokeWeight;
-        } else if (sWInput.elt.value < drawManager.settings.minStrokeWeight) {
-          sWInput.elt.value = drawManager.settings.minStrokeWeight;
-        }
-        // console.log(sWInput.elt.value);
-        let elem = document.getElementsByClassName("currentSlide");
-        let length = elem.length;
-        if (length > 0) {
-          for (let i = 0; i < length; i++) {
-            elem[i].children[10].value = parseInt(sWInput.elt.value);
-            elem[i].children[9].value = parseInt(sWInput.elt.value);
-          }
-        }
-
-        drawManager.getPart().strokeWeight = parseInt(sWInput.elt.value);
-        console.log("sWInput.elt.value", sWInput.elt.value);
-        drawManager.reDrawWithPoint();
-
-        toolbox.selectedTool.drawn = false;
-      };
+      sWInput.elt.onchange = strokeweightInput;
       sWInput.parent(newPartInfo);
 
       linebreak = document.createElement("br");
@@ -898,6 +740,311 @@ function SlideTemplates() {
       // newPartInfo.elt.appendChild(linebreak);
     }
 
+    //functions for buttons on orderSlide bellow
+
+    function displayButtonInput()
+    {
+      figureIndex =
+      this.elt.parentElement.parentElement.parentElement.identity;
+      drawingIndex = this.elt.parentElement.parentElement.identity;
+      partIndex = this.elt.parentElement.identity;
+
+      let part = drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex];
+      part.showDetails =  !part.showDetails;
+
+      let HTMLIndexDrawing =
+      sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+      let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
+
+      let elem = document.getElementsByClassName("order");
+      if (part.showDetails)
+      {
+        elem.forEach((orderSlide) => {
+          console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color);
+          orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color = "black";
+          console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[11].style.display);
+          orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[11].style.display = "inline-block";
+        });
+      } else
+      {
+        elem.forEach((orderSlide) => {
+          console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color);
+          orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color = "red";
+          console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[11].style.display);
+          orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[11].style.display = "none";
+          // console.log(part.showDetails);
+  
+          // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[9].children[0].checked = this.elt.children[0].checked;
+          // console.log("order elemement", element);
+        });
+      }
+      
+    }
+
+    function strokeweightInput (){
+      
+        // console.log(sWslider)
+        // console.log(this.parentElement.parentElement.identity);
+        console.log(this.value);
+        figureIndex =
+          this.parentElement.parentElement.parentElement.parentElement.identity;
+        drawingIndex = this.parentElement.parentElement.parentElement.identity;
+        partIndex = this.parentElement.parentElement.identity;
+
+
+        let valueAsNumber = parseInt(this.value);
+
+        let HTMLIndexDrawing =
+        sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+        let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
+
+        if (valueAsNumber > drawManager.settings.maxStrokeWeight) {
+          valueAsNumber = drawManager.settings.maxStrokeWeight;
+        } else if (valueAsNumber < drawManager.settings.minStrokeWeight) {
+          valueAsNumber = drawManager.settings.minStrokeWeight;
+        }
+
+        let part = drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex];
+        part.strokeWeight = valueAsNumber
+
+
+
+        // let elem = document.getElementsByClassName("currentSlide");
+        // let length = elem.length;
+        // if (length > 0) {
+        //   for (let i = 0; i < length; i++) {
+        //     elem[i].children[9].value = parseInt(sWslider.elt.value);
+        //     elem[i].children[10].value = parseInt(sWslider.elt.value);
+        //   }
+        // }
+
+        let elem = document.getElementsByClassName("order");
+        // let length = elem.length;
+        elem.forEach( (orderSlide) => {
+          // console.log("running");
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart])
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[9].value)
+          orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[9].value = valueAsNumber
+          orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[10].value = valueAsNumber
+          // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[6].children[0].checked = this.elt.children[0].checked;
+          // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[1].value = this.elt.value;
+        })
+
+        // console.log(elem[0].children[9].value);
+        // console.log(elem[0].children[10].value);
+
+        if (toolbox.selectedTool.hasOwnProperty("updateSettings")) {
+          toolbox.selectedTool.updateSettings = true;
+        }
+        console.log("isCurrentPArt",drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex))
+        if (drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex));
+        {helpers.updateSettingsCurSlide()}
+        toolbox.selectedTool.drawn = false;
+        // console.log("sWslider.elt.value", sWslider.elt.value);
+        // sWInput.elt.value = drawManager.defaultPart.strokeWeight;
+        // console.log(drawManager.defaultPart.strokeWeight);
+      
+    }
+
+
+    function noStrokeInput (){
+      figureIndex =
+          this.elt.parentElement.parentElement.parentElement.parentElement.identity;
+        drawingIndex = this.elt.parentElement.parentElement.parentElement.identity;
+        partIndex = this.elt.parentElement.parentElement.identity;
+        // console.log(this.elt.children[0].checked);
+  
+        // console.log(inpColorFill.elt.value);
+        
+
+        let HTMLIndexDrawing =
+        sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+        let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
+        let part = drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex];
+        part.noStroke =  this.elt.children[0].checked;
+        
+
+        let elem = document.getElementsByClassName("order");
+        // let length = elem.length;
+        elem.forEach( (orderSlide) => {
+          // console.log("running");
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[6].children[0])
+          orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[6].children[0].checked = this.elt.children[0].checked;
+          // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[1].value = this.elt.value;
+        })
+        // if (length > 1) {
+        //   for (let i = 0; i < length; i++) {
+        //     elem[i].children[2].value = inpColorFill.elt.value;
+        //   }
+        // }
+        // console.log(elem[0].children[2].value, inpColorFill.elt.value);
+        // drawManager.getPart().fill = color(this.elt.value);
+      
+
+        if (drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex));
+        {helpers.updateSettingsCurSlide(drawManager.getPart())}
+
+        toolbox.selectedTool.drawn = false;
+    }
+
+    function noFillInput (){
+      figureIndex =
+          this.elt.parentElement.parentElement.parentElement.parentElement.identity;
+        drawingIndex = this.elt.parentElement.parentElement.parentElement.identity;
+        partIndex = this.elt.parentElement.parentElement.identity;
+        // console.log(this.elt.children[0].checked);
+  
+        // console.log(inpColorFill.elt.value);
+        
+
+        let HTMLIndexDrawing =
+        sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+        let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
+        let part = drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex];
+        part.noFill =  this.elt.children[0].checked;
+        
+
+        let elem = document.getElementsByClassName("order");
+        // let length = elem.length;
+        elem.forEach( (orderSlide) => {
+          // console.log("running");
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[2].children[0])
+          orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[2].children[0].checked = this.elt.children[0].checked;
+          // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[1].value = this.elt.value;
+        })
+        // if (length > 1) {
+        //   for (let i = 0; i < length; i++) {
+        //     elem[i].children[2].value = inpColorFill.elt.value;
+        //   }
+        // }
+        // console.log(elem[0].children[2].value, inpColorFill.elt.value);
+        // drawManager.getPart().fill = color(this.elt.value);
+      
+
+        if (drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex));
+        {helpers.updateSettingsCurSlide(drawManager.getPart())}
+
+        toolbox.selectedTool.drawn = false;
+    }
+
+    function colorFillInput (){
+      
+
+      figureIndex =
+          this.elt.parentElement.parentElement.parentElement.parentElement.identity;
+        drawingIndex = this.elt.parentElement.parentElement.parentElement.identity;
+        partIndex = this.elt.parentElement.parentElement.identity;
+        // console.log(this.elt.value);
+  
+        // console.log(inpColorFill.elt.value);
+        
+
+        let HTMLIndexDrawing =
+        sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+        let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
+        let part = drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex];
+        part.fill =  color(this.elt.value);
+        
+
+        let elem = document.getElementsByClassName("order");
+        // let length = elem.length;
+        elem.forEach( (orderSlide) => {
+          // console.log(orderSlide.children);
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[1])
+          orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[1].value = this.elt.value;
+        })
+        // if (length > 1) {
+        //   for (let i = 0; i < length; i++) {
+        //     elem[i].children[2].value = inpColorFill.elt.value;
+        //   }
+        // }
+        // console.log(elem[0].children[2].value, inpColorFill.elt.value);
+        // drawManager.getPart().fill = color(this.elt.value);
+      
+
+        if (drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex));
+        {helpers.updateCurSliderFill(part)}
+
+        toolbox.selectedTool.drawn = false;
+      
+    }
+    function colorStrokeInput (){
+      
+
+      figureIndex =
+          this.elt.parentElement.parentElement.parentElement.parentElement.identity;
+        drawingIndex = this.elt.parentElement.parentElement.parentElement.identity;
+        partIndex = this.elt.parentElement.parentElement.identity;
+        // console.log(this.elt.value);
+  
+        // console.log(inpColorFill.elt.value);
+        
+
+        let HTMLIndexDrawing =
+        sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+        let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
+        let part = drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex];
+        part.stroke =  color(this.elt.value);
+        
+
+        let elem = document.getElementsByClassName("order");
+        // let length = elem.length;
+        elem.forEach( (orderSlide) => {
+          // console.log(orderSlide.children);
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[5])
+          orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[5].value = this.elt.value;
+        })
+        // if (length > 1) {
+        //   for (let i = 0; i < length; i++) {
+        //     elem[i].children[2].value = inpColorFill.elt.value;
+        //   }
+        // }
+        // console.log(elem[0].children[2].value, inpColorFill.elt.value);
+        // drawManager.getPart().fill = color(this.elt.value);
+      
+
+        if (drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex));
+        {helpers.updateCurSliderFill(part)}
+
+        toolbox.selectedTool.drawn = false;
+      
+    }
+
+    function inputDraw() {
+      figureIndex =
+          this.elt.parentElement.parentElement.parentElement.identity;
+        drawingIndex = this.elt.parentElement.parentElement.identity;
+        partIndex = this.elt.parentElement.identity;
+
+      // let indicies = drawManager.getCurrentIndicies();
+      console.log(this.elt.children[0].checked);
+      // console.log(this.elt.parentElement.identity);
+
+      let HTMLIndexDrawing =
+      sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+      let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
+
+
+      let part = drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex];
+      part.draw =  this.elt.children[0].checked;
+        
+
+      let elem = document.getElementsByClassName("order");
+      // console.log("order elem", elem);
+      elem.forEach((orderSlide) => {
+        // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[9].children[0].checked);
+        console.log(this.elt.value);
+
+        orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[9].children[0].checked = this.elt.children[0].checked;
+        // console.log("order elemement", element);
+      });
+      // if (indicies[0] == figureIndex && indicies[1] == drawingIndex && indicies[2] == partIndex)
+      // {
+      //   helpers.updateCurSliderNameInput(this.elt.value);
+      // }
+      
+    }
+
     function moveUpPart() {
       let figureIndex =
         this.elt.parentElement.parentElement.parentElement.identity;
@@ -910,22 +1057,15 @@ function SlideTemplates() {
       }
       // parentHTML = this.elt.parentElement.parentElement
       // console.log(parentHTML);
-      
-
 
       let HTMLIndexDrawing =
         sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
       let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
       // console.log("HTML INDICIES part drawing",HTMLIndexDrawing,HTMLIndexPart);
-      
-
 
       let elem = document.getElementsByClassName("order");
       // console.log("correct parent elem?",elem[0].children[HTMLIndexDrawing]);
       elem.forEach((orderSlide) => {
-
-
-
         helpers.moveHTMLUp(
           orderSlide.children[HTMLIndexDrawing],
           partIndex,
@@ -936,11 +1076,11 @@ function SlideTemplates() {
       });
       // parentHTML, index, HTMLIndex, diff, length
       drawManager.exchangeParts(
-              figureIndex,
-              drawingIndex,
-              partIndex,
-              partIndex - 1
-            );
+        figureIndex,
+        drawingIndex,
+        partIndex,
+        partIndex - 1
+      );
       //move HTML
       drawManager.reDrawWithPoint();
       toolbox.selectedTool.drawn = false;
@@ -956,16 +1096,14 @@ function SlideTemplates() {
       if (partIndex + 1 >= partsLength) {
         return;
       }
-      // let indicies = 
+      // let indicies =
       // parentHTML = this.elt.parentElement.parentElement
       // console.log(parentHTML);
-      
+
       let HTMLIndexDrawing =
         sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
       let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
       // console.log("HTML INDICIES part drawing",HTMLIndexDrawing,HTMLIndexPart);
-       
-        
 
       let elem = document.getElementsByClassName("order");
       // console.log("correct parent elem?",elem[0].children[HTMLIndexDrawing]);
@@ -980,11 +1118,11 @@ function SlideTemplates() {
       });
       // parentHTML, index, HTMLIndex, diff, length
       drawManager.exchangeParts(
-              figureIndex,
-              drawingIndex,
-              partIndex,
-              partIndex + 1
-            );
+        figureIndex,
+        drawingIndex,
+        partIndex,
+        partIndex + 1
+      );
       drawManager.reDrawWithPoint();
       toolbox.selectedTool.drawn = false;
     }
@@ -1002,55 +1140,52 @@ function SlideTemplates() {
       //   "this.elt.parentElement.identity",
       //   this.elt.parentElement.identity
       // );
-      console.log(
-        "figure drawing and partIndex",
-        figureIndex,
-        drawingIndex,
-        partIndex
-      );
+      // console.log(
+      //   "figure drawing and partIndex deletePart()",
+      //   figureIndex,
+      //   drawingIndex,
+      //   partIndex
+      // );
       // let length = drawManager.getLengthOfDrawing(figureIndex,drawingIndex);
       let partsLength = drawManager.getLengthOfParts(figureIndex, drawingIndex);
       // console.log("deletePart() +length", figureIndex, drawingIndex, partIndex, length)
       if (partsLength <= 1) {
-        createNewPart(figureIndex, drawingIndex, partIndex+1);
-        deletePart(figureIndex, drawingIndex, partIndex);
-      } 
-              let HTMLIndexDrawing =
-                sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
-              let HTMLIndexPart =
-                sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
+        createNewPart(figureIndex, drawingIndex, partIndex + 1);
+      }
+      let HTMLIndexDrawing =
+        sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+      let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
 
+      
+      drawManager.removePartFromStorage(figureIndex, drawingIndex, partIndex);
 
-              drawManager.removePart(figureIndex, drawingIndex, partIndex);
-              
-
-
-
-              // console.log(drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex])
-              let elem = document.getElementsByClassName("order");
-              elem.forEach((orderSlide) => {
-                   helpers.deleteHTMLElement(
-                    orderSlide.children[HTMLIndexDrawing],
-                    partIndex,
-                   HTMLIndexPart,
-                    2,
-                    partsLength - 2
-                );
-
-
-              });
-             
-          // console.log("ning");
-          // drawManager.setCurrentPart(partIndex-1);
-        
-        drawManager.manageCurrentParts(
-          figureIndex,
-          drawingIndex,
-          partIndex
+      // console.log(drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex])
+      let elem = document.getElementsByClassName("order");
+      elem.forEach((orderSlide) => {
+        helpers.deleteHTMLElement(
+          orderSlide.children[HTMLIndexDrawing],
+          partIndex,
+          HTMLIndexPart,
+          2,
+          partsLength - 2
         );
+          let HTMLlength = orderSlide.children[HTMLIndexDrawing].children.length;
+          
+        for (let i = sliderManager.HTMLIndecies.firstPart, j = 0; i < HTMLlength; i+=2, j++)
+        {
+          orderSlide.children[HTMLIndexDrawing].children[i].identity = j;
+        }
+
+      });
+
+      // console.log("ning");
+      // drawManager.setCurrentPart(partIndex-1);
+
+      drawManager.manageCurrentPartsAfterDelete(figureIndex, drawingIndex, partIndex);
+
+
       drawManager.reDrawWithPoint();
       toolbox.selectedTool.drawn = false;
-
     }
 
     function createNewDrawing() {
@@ -1123,7 +1258,6 @@ function SlideTemplates() {
       let drawing = drawManager.addPart(figureIndex, drawingIndex, partIndex);
 
       // console.log("part after creation", drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex].name)
-      
 
       let elem = document.getElementsByClassName("order");
       elem.forEach((orderSlide) => {
@@ -1161,29 +1295,51 @@ function SlideTemplates() {
         // );
       });
       drawManager.setCurrentPartR(partIndex, drawingIndex, figureIndex);
-
+      helpers.updateSettingsCurSlide(drawManager.getPart());
       // console.log(this.elt.parentElement);
       // element to add to: this.elt.parentElement.parentElement
     }
 
-    function partInputEvent() {
-      console.log(this.elt.value);
-      console.log(this.elt.parentElement.identity);
 
-      currentDrawing.parts[this.elt.parentElement.identity].name =
-        this.elt.value;
+    
+
+    function partNameInputEvent() {
+
+      figureIndex =
+          this.elt.parentElement.parentElement.parentElement.identity;
+        drawingIndex = this.elt.parentElement.parentElement.identity;
+        partIndex = this.elt.parentElement.identity;
+
+      let indicies = drawManager.getCurrentIndicies();
+      // console.log(this.elt.value);
+      // console.log(this.elt.parentElement.identity);
+
+      let HTMLIndexDrawing =
+      sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+      let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
+
+
+      let part = drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex];
+      part.name =  this.elt.value;
+        
 
       let elem = document.getElementsByClassName("order");
-      console.log("order elem", elem);
-      elem.forEach((element) => {
-        console.log("order elemement", element);
+      // console.log("order elem", elem);
+      elem.forEach((orderSlide) => {
+        // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[1].value);
+        orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[1].value = this.elt.value;
+        // console.log("order elemement", element);
       });
-      elem = document.getElementsByClassName("currentSlide");
-      console.log("currentSlider elem", elem);
-      elem.forEach((element) => {
-        console.log("current element", element.children[0].innerHTML);
-        element.children[0].innerHTML = "CURRENT: " + this.elt.value;
-      });
+      if (indicies[0] == figureIndex && indicies[1] == drawingIndex && indicies[2] == partIndex)
+      {
+        helpers.updateCurSliderNameInput(this.elt.value);
+      }
+      // elem = document.getElementsByClassName("currentSlide");
+      // console.log("currentSlider elem", elem);
+      // elem.forEach((element) => {
+      //   console.log("current element", element.children[0].innerHTML);
+      //   element.children[0].innerHTML = "CURRENT: " + this.elt.value;
+      // });
     }
 
     function drawingNameInputEvent() {
@@ -1236,10 +1392,9 @@ function SlideTemplates() {
         ].style.backgroundColor = sliderManager.col.currentColorPart;
       });
 
-
       drawManager.reDrawWithPoint();
       // console.log(currentDrawing);
-      helpers.updateSettingsCurrentS(drawManager.getPart());
+      helpers.updateSettingsCurSlide(drawManager.getPart());
       toolbox.selectedTool.drawn = false;
     }
   };

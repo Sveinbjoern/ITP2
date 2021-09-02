@@ -6,12 +6,12 @@ let helpers = null;
 let drawManager = null;
 let sliderManager = null;
 
-let currentFigureIndex = 0;
-let currentDrawingIndex = 0;
-let currentPartIndex = 0;
-let currentFigure;
-let currentDrawing;
-let currentPart;
+// let currentFigureIndex = 0;
+// let currentDrawingIndex = 0;
+// let currentPartIndex = 0;
+// let currentFigure;
+// let currentDrawing;
+// let currentPart;
 
 
 let soundeffects = {};

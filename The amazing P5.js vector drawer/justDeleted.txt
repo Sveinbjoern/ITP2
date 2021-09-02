@@ -1,3 +1,81 @@
+2.9.2021
+() => {
+        // console.log(sWslider.value());
+        // console.log(sWInput.elt.value);
+
+        if (sWInput.elt.value > drawManager.settings.maxStrokeWeight) {
+          sWInput.elt.value = drawManager.settings.maxStrokeWeight;
+        } else if (sWInput.elt.value < drawManager.settings.minStrokeWeight) {
+          sWInput.elt.value = drawManager.settings.minStrokeWeight;
+        }
+        // console.log(sWInput.elt.value);
+        let elem = document.getElementsByClassName("currentSlide");
+        let length = elem.length;
+        if (length > 0) {
+          for (let i = 0; i < length; i++) {
+            elem[i].children[10].value = parseInt(sWInput.elt.value);
+            elem[i].children[9].value = parseInt(sWInput.elt.value);
+          }
+        }
+
+        drawManager.getPart().strokeWeight = parseInt(sWInput.elt.value);
+        console.log("sWInput.elt.value", sWInput.elt.value);
+        drawManager.reDrawWithPoint();
+
+        toolbox.selectedTool.drawn = false;
+      };
+
+
+//   elt.onclick = (e) => {
+      //   if (part.showDetails) {
+      //     buttonDis.style("color", "red");
+      //     newPartInfo.elt.style.display = "none";
+      //     part.showDetails = false;
+      //   } else {
+      //     buttonDis.style("color", "black");
+      //     newPartInfo.elt.style.display = "inline-block";
+      //     part.showDetails = true;
+      //   }
+      // };
+
+      
+      // console.log("order elem", elem);
+      // elem.forEach((orderSlide) => {
+      //   // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[9].children[0].checked);
+      //   console.log(this.elt.value);
+
+      //   orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[9].children[0].checked = this.elt.children[0].checked;
+      //   // console.log("order elemement", element);
+      // });
+      // if (indicies[0] == figureIndex && indicies[1] == drawingIndex && indicies[2] == partIndex)
+      // {
+      //   helpers.updateCurSliderNameInput(this.elt.value);
+      // }
+
+
+
+ let selBox = createCheckbox("SELECT", part.isSelected);
+      // noFillBox.style("position", "absolute");
+      selBox.style("margin-left", "30px"); // noFillBox.style("left", "120px");
+      selBox.style("display", "inline");
+      selBox.changed(() => {
+        // console.log(noFillBox.checked())
+
+        let elem = document.getElementsByClassName("currentSlide");
+        let length = elem.length;
+
+        // console.log(elem[0].children[3].children[0].checked, noFillBox.checked());
+        if (length > 1) {
+          for (let i = 0; i < length; i++) {
+            elem[i].children[3].children[0].checked = noFillBox.checked();
+          }
+        }
+
+        drawManager.getPart().noFill = noFillBox.checked();
+        drawManager.reDrawWithPoint();
+      });
+      selBox.parent(newPart);
+
 1.9.2021
  // let xText = createP("X");
       // xText.style("position", "absolute");

@@ -360,7 +360,7 @@ function DrawManager() {
     }
   }
 
-  this.manageCurrentParts = (figureIndex,drawingIndex,partIndex) =>{
+  this.manageCurrentPartsAfterDelete = (figureIndex,drawingIndex,partIndex) =>{
     console.log("values from manageCurrentParts",figureIndex,drawingIndex,partIndex)
     let indicies = this.getCurrentIndicies();
     let drawing = myStorage.figures[figureIndex].drawings[drawingIndex]
@@ -368,18 +368,24 @@ function DrawManager() {
     // let partsLength = drawing.parts.length;
 
 
-    if (indicies[0] === figureIndex && indicies[1] === drawingIndex && 
-      indicies[2] === partIndex)
+    if (indicies[0] === figureIndex && indicies[1] === drawingIndex)
       {
-        if (partIndex <= indicies[2] && indicies[2] > 0)
+        // console.log("")
+        if (drawing.parts.length <= 1 )
         {
+          this.setCurrentPartR(0);
+        } 
+        // else if (indicies[2] >= drawing.parts.length)
+        // {
+        //     this.setCurrentPartR(partIndex-1);
           
-            this.setCurrentPartR(partIndex-1);
-          
-        } else {
-          this.setCurrentPartR(partIndex);
-        }
+        // } 
+        else if (partIndex <= indicies[2]){
+          this.setCurrentPartR(indicies[2]-1);
+        } 
       } 
+
+      helpers.updateSettingsCurSlide(this.getPart());
   }
   
   this.isCurrentPart = (figureIndex, drawingIndex, partIndex) => {
@@ -453,7 +459,7 @@ function DrawManager() {
 
   }
 
-  this.removePart = function (figureIndex, drawingIndex, partIndex)
+  this.removePartFromStorage = function (figureIndex, drawingIndex, partIndex)
   {
     
     return myStorage.figures[figureIndex].drawings[drawingIndex].parts.splice(partIndex, 1);
@@ -500,7 +506,7 @@ function DrawManager() {
   {
     // background(200);
     clear();
-    let drawing = myStorage.figures[myStorage.currentFigure].drawings[myStorage.figures[myStorage.currentFigure].currentDrawing]
+    // let drawing = myStorage.figures[myStorage.currentFigure].drawings[myStorage.figures[myStorage.currentFigure].currentDrawing]
     // console.log(myStorage.currentFigure);
     // console.log(myStorage.figures[myStorage.currentFigure].currentDrawing);
     // console.log(drawing.currentPart);
@@ -526,8 +532,11 @@ function DrawManager() {
         // console.log("part", part);
         
         // console.log("vertexArray",vertexArray)
-        
+        if (part.draw)
+        {
           drawPart(part)
+        }
+          
          
         
       }
@@ -539,7 +548,7 @@ function DrawManager() {
   this.drawPoints = () => {
     let part = this.getPart();
     // console.log(part)
-    if (part.vertexArray.length > 0)
+    if (part.vertexArray.length > 0 && part.draw)
     {
       push();
             if (drawManager.settings.vertexPoints)
