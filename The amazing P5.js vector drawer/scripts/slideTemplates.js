@@ -62,13 +62,10 @@ function SlideTemplates() {
       // button.style("left", "125px")
       button.style("width", "auto");
       button.style("display", "inline");
+      button.style("visibility" ,'hidden');
       // button.style("top", "123px")
       button.parent(newSlide);
-      button.mousePressed(() => {
-        console.log(button, this);
-
-        helpers.setVertexArrayToStart();
-      });
+      // button.mousePressed();
 
       button = createButton("&#x2191;");
 
@@ -78,11 +75,8 @@ function SlideTemplates() {
       button.style("display", "inline");
       // button.style("top", "123px")
       button.parent(newSlide);
-      button.mousePressed(() => {
-        console.log(button, this);
-
-        helpers.setVertexArrayToStart();
-      });
+      button.style("visibility" ,'hidden');
+      // button.mousePressed();
 
       button = createButton("&#x2193;");
 
@@ -90,13 +84,14 @@ function SlideTemplates() {
       // button.style("left", "151px")
       button.style("width", "auto");
       button.style("display", "inline");
+      button.style("visibility" ,'hidden');
       // button.style("top", "123px")
       button.parent(newSlide);
-      button.mousePressed(() => {
-        console.log(button, this);
+      // button.mousePressed(() => {
+      //   console.log(button, this);
 
-        helpers.decreaseVertexArray();
-      });
+      //   helpers.decreaseVertexArray();
+      // });
 
       button = createButton("D");
 
@@ -106,11 +101,12 @@ function SlideTemplates() {
       button.style("display", "inline");
       // button.style("top", "123px")
       button.parent(newSlide);
-      button.mousePressed(() => {
-        console.log(button, this);
+      button.style("visibility" ,'hidden');
+      // button.mousePressed(() => {
+      //   console.log(button, this);
 
-        helpers.deleteVertex();
-      });
+      //   helpers.deleteVertex();
+      // });
 
       let xText = createP("X");
       // xText.style("position", "absolute")
@@ -164,6 +160,7 @@ function SlideTemplates() {
       buttonDis.style("display", "inline");
       buttonDis.style("width", "auto");
       buttonDis.style("margin-left", "5px");
+      buttonDis.style("visibility" ,'hidden');
       // button.style("display", "inline");
       // button.style("top", "123px")
       buttonDis.parent(newSlide);
@@ -173,6 +170,7 @@ function SlideTemplates() {
       // noFillBox.style("position", "absolute");
       selBox.style("margin-left", "0px"); // noFillBox.style("left", "120px");
       selBox.style("display", "inline");
+      selBox.style("visibility" ,'hidden');
       selBox.changed(() => {
         // console.log(noFillBox.checked())
 
@@ -290,7 +288,7 @@ function SlideTemplates() {
       button.mousePressed(() => {
         console.log(button, this);
 
-        helpers.setVertexArrayToStart();
+        // helpers.setVertexArrayToStart();
       });
 
       button = createButton("&#x2193;");
@@ -304,7 +302,7 @@ function SlideTemplates() {
       button.mousePressed(() => {
         console.log(button, this);
 
-        helpers.decreaseVertexArray();
+        // helpers.decreaseVertexArray();
       });
 
       button = createButton("D");
@@ -318,7 +316,7 @@ function SlideTemplates() {
       button.mousePressed(() => {
         console.log(button, this);
 
-        helpers.deleteVertex();
+        // helpers.deleteVertex();
       });
 
       let vText = createP("Parts:");
@@ -336,7 +334,7 @@ function SlideTemplates() {
       vNumText.style("display", "inline");
       vNumText.parent(newDrawing);
 
-      buttonDis = createButton("Not Functional");
+      buttonDis = createButton("Show Details");
       // button.style("position", "absolute");
       // button.style("right", "30px");
       // if (!part.showDetails)
@@ -683,18 +681,7 @@ function SlideTemplates() {
       sel.option("QUADS");
       sel.option("TESS");
       sel.selected(part.vertexMode);
-      sel.changed(() => {
-        let elem = document.getElementsByClassName("currentSlide");
-        let length = elem.length;
-        if (length > 1) {
-          for (let i = 0; i < length; i++) {
-            console.log(elem[i].children[12].value);
-            elem[i].children[12].value = sel.value();
-          }
-        }
-        drawManager.getPart().vertexMode = sel.value();
-        drawManager.reDrawWithPoint();
-      });
+      sel.changed(selectMenuInput);
       sel.parent(newPartInfo);
 
       let buttonText;
@@ -742,6 +729,47 @@ function SlideTemplates() {
 
     //functions for buttons on orderSlide bellow
 
+    function selectMenuInput() {
+      figureIndex =
+      this.elt.parentElement.parentElement.parentElement.parentElement.identity;
+      drawingIndex = this.elt.parentElement.parentElement.parentElement.identity;
+      partIndex = this.elt.parentElement.parentElement.identity;
+
+      console.log(this.elt.value)
+      console.log(this.elt.parentElement.parentElement.identity)
+      console.log(figureIndex,drawingIndex,partIndex)
+
+      let part = drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex];
+      part.vertexMode =  this.elt.value;
+       
+      let HTMLIndexDrawing =
+      sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+      let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
+
+      let elem = document.getElementsByClassName("order");
+      
+     
+      
+        elem.forEach((orderSlide) => {
+          console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[12]);
+          orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[12].value = this.elt.value;
+          
+          // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color = "red";
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[13]);
+          // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[11].style.display = "none";
+          // console.log(part.showDetails);
+  
+          // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[9].children[0].checked = this.elt.children[0].checked;
+          // console.log("order elemement", element);
+        });
+      
+
+      if (drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex));
+        {helpers.updateSettingsCurSlide()}
+        toolbox.selectedTool.drawn = false;
+
+    } 
+
     function displayButtonInput()
     {
       figureIndex =
@@ -760,17 +788,17 @@ function SlideTemplates() {
       if (part.showDetails)
       {
         elem.forEach((orderSlide) => {
-          console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color);
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color);
           orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color = "black";
-          console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[11].style.display);
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[11].style.display);
           orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[11].style.display = "inline-block";
         });
       } else
       {
         elem.forEach((orderSlide) => {
-          console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color);
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color);
           orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color = "red";
-          console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[11].style.display);
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[11].style.display);
           orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[11].style.display = "none";
           // console.log(part.showDetails);
   
@@ -785,7 +813,7 @@ function SlideTemplates() {
       
         // console.log(sWslider)
         // console.log(this.parentElement.parentElement.identity);
-        console.log(this.value);
+        // console.log(this.value);
         figureIndex =
           this.parentElement.parentElement.parentElement.parentElement.identity;
         drawingIndex = this.parentElement.parentElement.parentElement.identity;
@@ -836,7 +864,7 @@ function SlideTemplates() {
         if (toolbox.selectedTool.hasOwnProperty("updateSettings")) {
           toolbox.selectedTool.updateSettings = true;
         }
-        console.log("isCurrentPArt",drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex))
+        // console.log("isCurrentPArt",drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex))
         if (drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex));
         {helpers.updateSettingsCurSlide()}
         toolbox.selectedTool.drawn = false;
@@ -926,6 +954,8 @@ function SlideTemplates() {
 
         toolbox.selectedTool.drawn = false;
     }
+
+
 
     function colorFillInput (){
       

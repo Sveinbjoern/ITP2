@@ -89,7 +89,7 @@ function HelperFunctions() {
         {
             part = drawManager.getPart();
         }
-        console.log("part.strokeWeight in updateCurslide", part.strokeWeight)
+        console.log("part.vertexMode in updateCurslide", part.vertexMode)
 
         let elem = $( ".currentSlide" )
         let length = elem.length;
@@ -114,11 +114,12 @@ function HelperFunctions() {
 
         if (part.endShape)
         {
-            elem[i].children[12].innerText = "endShape(CLOSE)";    
-        } else {elem[i].children[12].innerText = "endShape()";}
-
-        elem[i].children[13].value = part.vertexMode;
-
+            elem[i].children[13].innerText = "endShape(CLOSE)";    
+        } else {elem[i].children[13].innerText = "endShape()";}
+        
+        // console.log(elem[i].children[14]);
+        elem[i].children[14].value = part.vertexMode;
+        
         elem[i].children[15].innerHTML = part.currentVertex + "/"+ part.vertexArray.length;
 
         }

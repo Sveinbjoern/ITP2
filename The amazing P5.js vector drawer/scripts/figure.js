@@ -15,6 +15,7 @@ function Figure (name, currentDrawing ){
 function Drawing(name,zeroPoint, currentPart){
     this.name = name || drawManager.defaultDrawing.name;
     this.zeroPoint = zeroPoint || drawManager.defaultDrawing.zeroPoint;
+    this.showDetails = drawManager.defaultDrawing.showDetails;
     this.currentPart = currentPart || 0;
     this.isSelected = false;
     this.parts = [];
