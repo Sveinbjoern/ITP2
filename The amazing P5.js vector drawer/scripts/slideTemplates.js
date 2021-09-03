@@ -697,37 +697,53 @@ function SlideTemplates() {
       button.style("width", "155px");
       // button.style("top", "100px");
       button.style("display", "inline");
-      button.mousePressed(() => {
-        // console.log(button)
-        drawManager.getPart().endShape = !drawManager.getPart().endShape;
-
-        let elem = document.getElementsByClassName("currentSlide");
-        let length = elem.length;
-        if (length > 0) {
-          if (part.endShape) {
-            console.log("endShape true");
-            console.log("elem[0].children[11].innerText", elem[0].children);
-            for (let i = 0; i < length; i++) {
-              elem[i].children[11].innerText = "endShape(CLOSE)";
-            }
-          } else {
-            console.log("endShape false");
-            for (let i = 0; i < length; i++) {
-              elem[i].children[11].innerText = "endShape()";
-            }
-          }
-
-          drawManager.reDrawWithPoint();
-          toolbox.selectedTool.drawn = false;
-        }
-      });
+      button.mousePressed(endShapeInput)
+     
       button.parent(newPartInfo);
 
       // linebreak = document.createElement("br");
       // newPartInfo.elt.appendChild(linebreak);
     }
 
-    //functions for buttons on orderSlide bellow
+    //functions for buttons bellow, orderSlide
+
+    function endShapeInput() {
+      
+      figureIndex =
+      this.elt.parentElement.parentElement.parentElement.parentElement.identity;
+      drawingIndex = this.elt.parentElement.parentElement.parentElement.identity;
+      partIndex = this.elt.parentElement.parentElement.identity;
+
+      // console.log(this.elt.value)
+      // console.log(this.elt.parentElement.parentElement.identity)
+      // console.log(figureIndex,drawingIndex,partIndex)
+
+      let part = drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex];
+     part.endShape = !part.endShape; 
+
+      let HTMLIndexDrawing =
+      sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+      let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
+
+      let elem = document.getElementsByClassName("order");
+
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[13]); 
+          if (part.endShape) {
+              elem.forEach((orderSlide) => {
+                orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[13].innerHTML = "endShape(CLOSE)";
+              });
+          } else {
+            elem.forEach((orderSlide) => {
+              orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[13].innerHTML = "endShape()";
+            });
+          }
+
+      if (drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex));
+        {helpers.updateSettingsCurSlide()}
+        toolbox.selectedTool.drawn = false;
+        // console.log(button)
+    }
+
 
     function selectMenuInput() {
       figureIndex =
@@ -736,8 +752,8 @@ function SlideTemplates() {
       partIndex = this.elt.parentElement.parentElement.identity;
 
       console.log(this.elt.value)
-      console.log(this.elt.parentElement.parentElement.identity)
-      console.log(figureIndex,drawingIndex,partIndex)
+      // console.log(this.elt.parentElement.parentElement.identity)
+      // console.log(figureIndex,drawingIndex,partIndex)
 
       let part = drawManager.getFigure(figureIndex).drawings[drawingIndex].parts[partIndex];
       part.vertexMode =  this.elt.value;
@@ -751,7 +767,7 @@ function SlideTemplates() {
      
       
         elem.forEach((orderSlide) => {
-          console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[12]);
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[12]);
           orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[sliderManager.HTMLIndecies.divInPart].children[12].value = this.elt.value;
           
           // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color = "red";
@@ -993,7 +1009,7 @@ function SlideTemplates() {
       
 
         if (drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex));
-        {helpers.updateCurSliderFill(part)}
+        {helpers.updateSettingsCurSlide(part)}
 
         toolbox.selectedTool.drawn = false;
       
@@ -1034,7 +1050,7 @@ function SlideTemplates() {
       
 
         if (drawManager.isCurrentPart(figureIndex, drawingIndex,partIndex));
-        {helpers.updateCurSliderFill(part)}
+        {helpers.updateSettingsCurSlide(part)}
 
         toolbox.selectedTool.drawn = false;
       
@@ -1047,7 +1063,7 @@ function SlideTemplates() {
         partIndex = this.elt.parentElement.identity;
 
       // let indicies = drawManager.getCurrentIndicies();
-      console.log(this.elt.children[0].checked);
+      // console.log(this.elt.children[0].checked);
       // console.log(this.elt.parentElement.identity);
 
       let HTMLIndexDrawing =
@@ -1063,7 +1079,7 @@ function SlideTemplates() {
       // console.log("order elem", elem);
       elem.forEach((orderSlide) => {
         // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[9].children[0].checked);
-        console.log(this.elt.value);
+        // console.log(this.elt.value);
 
         orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[9].children[0].checked = this.elt.children[0].checked;
         // console.log("order elemement", element);
@@ -1246,15 +1262,11 @@ function SlideTemplates() {
           1,
           figure.drawings.length
         );
-        // console.log(
-        //   "arguments to sortHTML",
-        //   orderSlide.children[HTMLIndexDrawing],
-        //   partIndex + 1,
-        //   HTMLIndexPart,
-        //   2,
-        //   drawing.parts.length
-        // );
       });
+
+      drawManager.setCurrentPartR(0,drawingIndex,figureIndex)
+
+
     }
 
     function createNewPart(figureIndex, drawingIndex, partIndex) {
@@ -1373,23 +1385,55 @@ function SlideTemplates() {
     }
 
     function drawingNameInputEvent() {
-      console.log(this);
+      figureIndex =
+      this.elt.parentElement.parentElement.identity;
+      drawingIndex = this.elt.parentElement.identity;
+     
+      // console.log("drawingIndex", this.elt.parentElement.identity,
+      // "figureIndex",this.elt.parentElement.parentElement.identity)
+        let HTMLIndexDrawing =
+        sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+        
+
+
+        let drawing = drawManager.getFigure(figureIndex).drawings[drawingIndex];
+        drawing.name =  this.elt.value;
+          
+
+        let elem = document.getElementsByClassName("order");
+        // console.log("order elem", elem);
+        elem.forEach((orderSlide) => {
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[1].value);
+          // console.log("order elemement", element);
+
+          console.log(orderSlide.children[HTMLIndexDrawing].children[1]);
+          orderSlide.children[HTMLIndexDrawing].children[1].value = this.elt.value;
+        });
+  
     }
     function figureNameInputEvent() {
-      console.log(this);
-      currentDrawing.parts[this.parentElement.identity].name = this.elt.value;
+      figureIndex = this.elt.parentElement.identity;
+      
+     
+      // console.log("drawingIndex", this.elt.parentElement.identity,
+      // "figureIndex",this.elt.parentElement.parentElement.identity)
+        
+        
 
-      let elem = document.getElementsByClassName("order");
-      console.log("order elem", elem);
-      elem.forEach((element) => {
-        console.log("order elemement", element);
-      });
-      elem = document.getElementsByClassName("currentSlide");
-      console.log("currentSlider elem", elem);
-      elem.forEach((element) => {
-        console.log("current element", element.children[0].innerHTML);
-        element.children[0].innerHTML = "CURRENT: " + this.elt.value;
-      });
+
+        let figure = drawManager.getFigure(figureIndex);
+        figure.name =  this.elt.value;
+          
+
+        let elem = document.getElementsByClassName("order");
+        // console.log("order elem", elem);
+        elem.forEach((orderSlide) => {
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[1].value);
+          // console.log("order elemement", element);
+
+          console.log(orderSlide.children[1]);
+          orderSlide.children[1].value = this.elt.value;
+        });
     }
 
     function choosePart() {

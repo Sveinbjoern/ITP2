@@ -89,7 +89,7 @@ function HelperFunctions() {
         {
             part = drawManager.getPart();
         }
-        console.log("part.vertexMode in updateCurslide", part.vertexMode)
+        // console.log("part.vertexMode in updateCurslide", part.vertexMode)
 
         let elem = $( ".currentSlide" )
         let length = elem.length;
@@ -120,7 +120,7 @@ function HelperFunctions() {
         // console.log(elem[i].children[14]);
         elem[i].children[14].value = part.vertexMode;
         
-        elem[i].children[15].innerHTML = part.currentVertex + "/"+ part.vertexArray.length;
+        elem[i].children[16].innerHTML = part.currentVertex + "/"+ part.vertexArray.length;
 
         }
         // if (elem[i].children[13].innerHTML)

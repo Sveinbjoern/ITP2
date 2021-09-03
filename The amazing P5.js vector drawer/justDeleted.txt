@@ -1,4 +1,19 @@
 2.9.2021
+
+      let elem = document.getElementsByClassName("order");
+      console.log("order elem", elem);
+      elem.forEach((element) => {
+        console.log("order elemement", element);
+      });
+      elem = document.getElementsByClassName("currentSlide");
+      console.log("currentSlider elem", elem);
+      elem.forEach((element) => {
+        console.log("current element", element.children[0].innerHTML);
+        element.children[0].innerHTML = "CURRENT: " + this.elt.value;
+      });
+
+
+
 () => {
         // console.log(sWslider.value());
         // console.log(sWInput.elt.value);
