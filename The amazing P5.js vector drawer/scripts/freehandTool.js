@@ -9,7 +9,10 @@ function FreehandTool() {
   //to the current mouse location. The following values store
   //the locations from the last frame. They are undefined to start with because
   //we haven't started drawing yet.
-  this.dragDistanceBase = 25;
+  this.dragDistanceBase = 10;
+  this.dragNDrawDistanceBase = 30;
+
+  this.dragNDrawDistance = this.dragNDrawDistanceBase+ drawManager.getPart().strokeWeight/2
   this.dragDistance =
     this.dragDistanceBase + drawManager.getPart().strokeWeight / 2;
   this.dragging = false;
@@ -26,6 +29,7 @@ function FreehandTool() {
     // console.log("should run every frame")
     // console.log("this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart]", this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart])
     if (this.updateSettings) {
+      this.dragNDrawDistance = this.dragNDrawDistanceBase +drawManager.getPart().strokeWeight/2
       this.dragDistance =
         this.dragDistanceBase + drawManager.getPart().strokeWeight / 2;
       this.updateSettings = false;
@@ -122,7 +126,7 @@ function FreehandTool() {
       } else if (self.dragging) {
         if (
           dist(mouseX, mouseY, self.dragStart[0], self.dragStart[1]) >
-          self.dragDistance
+          self.dragNDrawDistance
         ) {
           vertexArray.splice(part.currentVertex, 0, [mouseX, mouseY]);
 

@@ -110,7 +110,8 @@ function HelperFunctions() {
         elem[i].children[6].children[0].checked =  part.noStroke;
         
         elem[i].children[11].value = part.strokeWeight;
-        elem[i].children[12].value = part.strokeWeight;    
+        elem[i].children[12].value = part.strokeWeight; 
+        // console.log(elem[i].children[11])
 
         if (part.endShape)
         {
@@ -124,6 +125,63 @@ function HelperFunctions() {
 
         }
         // if (elem[i].children[13].innerHTML)
+
+    }
+
+    this.updateNumberOfPartsText = (figureIndex,drawingIndex) =>{
+        let partsLength = drawManager.getFigure(figureIndex).drawings[drawingIndex].parts.length
+
+
+        let HTMLIndexDrawing =
+      sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+      
+
+
+        let elem = document.getElementsByClassName("order");
+    // console.log("order elem", elem);
+        elem.forEach((orderSlide) => {
+      // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[9].children[0].checked);
+      // console.log(this.elt.value);
+      // console.log(orderSlide.children[HTMLIndexDrawing].children[9].children[0].checked);
+    //   console.log(orderSlide.children[HTMLIndexDrawing].children[7])
+      orderSlide.children[HTMLIndexDrawing].children[7].innerHTML = partsLength;
+
+    });
+    }
+
+    this.updateNumberOfDrawingsText = (figureIndex) =>{
+        let drawingsLength = drawManager.getFigure(figureIndex).drawings.length;
+
+        let elem = document.getElementsByClassName("order");
+    // console.log("order elem", elem);
+        elem.forEach((orderSlide) => {
+     
+      orderSlide.children[9].innerHTML = drawingsLength;
+      console.log(orderSlide.children[9])
+
+    });
+    }
+
+
+    this.updateDrawingDraw = (figureIndex, drawingIndex, truthValue) => {
+      
+    let HTMLIndexDrawing =
+    sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
+   
+
+
+    let drawing = drawManager.getFigure(figureIndex).drawings[drawingIndex];
+    drawing.draw =  truthValue;
+     
+    let elem = document.getElementsByClassName("order");
+    // console.log("order elem", elem);
+    elem.forEach((orderSlide) => {
+      // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[9].children[0].checked);
+      // console.log(this.elt.value);
+      // console.log(orderSlide.children[HTMLIndexDrawing].children[9].children[0].checked);
+      orderSlide.children[HTMLIndexDrawing].children[9].children[0].checked = truthValue;
+
+    });
 
     }
 
@@ -337,12 +395,8 @@ function HelperFunctions() {
                         parentHTML.children[HTMLIndex-diff+1].remove();
                         
                     }
-        length -= index-1
-        for (let i = 0; i < length; i++)
-        {
-            parentHTML.children[HTMLIndex+diff*i].identity--;
-
-        }
+        
+        
     }
 
     this.saveSettingsFromStorage = (storage) =>
@@ -456,13 +510,22 @@ function keyPressed()
         if(keyCode === keyCodes.R)
         {
             // drawManager.saveFiguresToStorage();
-            console.log(drawManager.getCurrentIndicies())            // let elem = document.getElementsByClassName("order")
+            let indicies = drawManager.getCurrentIndicies()
+            console.log(indicies)            // let elem = document.getElementsByClassName("order")
             
-            let elem = document.getElementsByClassName("order");
-            let length = elem[0].children[12].children.length;
-            for (let i = 11; i < length; i += 2)
+            // console.log("identities of first part")
+            
+            // let elem = document.getElementsByClassName("order");
+            // let length = elem[0].children[12].children.length;
+            // for (let i = 11; i < length; i += 2)
+            // {
+            //     console.log(elem[0].children[12].children[i].identity);
+            // }
+            elem = document.getElementsByClassName("order");
+            length = elem[0].children.length;
+            for (let i = 12; i < length; i ++)
             {
-                console.log(elem[0].children[12].children[i].identity);
+                console.log(elem[0].children[i].identity);
             }
             
             // removeElements();

@@ -67,6 +67,7 @@ function DrawManager() {
     showDetails: true,
     zeroPoint: [0, 0],
     currentPart: 0,
+    draw: true,
   };
   this.defaultPoints = {
     name: "point",
@@ -166,10 +167,12 @@ function DrawManager() {
   };
 
   this.setCurrentPartR = (partIndex, drawingIndex, figureIndex) => {
+    let indicies = drawManager.getCurrentIndicies();
+    let HTMLIndexPartOriginal = indicies[2] +sliderManager.HTMLIndecies.firstPart;
     let HTMLIndexDrawingOriginal =
-      this.getCurrentIndicies()[1] + sliderManager.HTMLIndecies.firstDrawing;
+      indicies[1] + sliderManager.HTMLIndecies.firstDrawing;
 
-    // console.log("setCurrentPart()",partIndex,drawingIndex, figureIndex)
+    console.log("setCurrentPart()",partIndex,drawingIndex, figureIndex)
     // console.log("HTMLIndexDrawingOriginal",HTMLIndexDrawingOriginal)
     if (figureIndex === undefined) {
       if (drawingIndex === undefined) {
@@ -209,20 +212,22 @@ function DrawManager() {
 
     let elem = document.getElementsByClassName("order");
     elem.forEach((orderSlide) => {
-      // console.log("going once",
-      // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart]);
-      // console.log(orderSlide.children[HTMLIndexDrawing].identity);
-      // console.log("elements to add and remove color from",
-      // orderSlide.children[HTMLIndexDrawingOriginal].children[
-      //   HTMLIndexPartOriginal
-      // ],orderSlide.children[HTMLIndexDrawingOriginal].children[
-      //   HTMLIndexPartOriginal
-      // ])
-      let length =
+      
+      let lengthHTMLParts =
         orderSlide.children[HTMLIndexDrawingOriginal].children.length;
-      for (let i = sliderManager.HTMLIndecies.firstPart; i < length; i += 2) {
+      for (let i = sliderManager.HTMLIndecies.firstPart; i < lengthHTMLParts; i += 2) {
         orderSlide.children[HTMLIndexDrawingOriginal].children[
           i
+        ].style.backgroundColor = sliderManager.col.partDefault;
+      }
+
+      let lengthHTMLDrawings = 
+       orderSlide.children.length;
+      for (let i = sliderManager.HTMLIndecies.firstDrawing; i < lengthHTMLDrawings;i++)
+      {
+        
+        orderSlide.children[i].children[
+          HTMLIndexPartOriginal
         ].style.backgroundColor = sliderManager.col.partDefault;
       }
 
@@ -314,18 +319,66 @@ function DrawManager() {
       // console.log("")
       if (drawing.parts.length <= 1) {
         this.setCurrentPartR(0);
-      }
-      // else if (indicies[2] >= drawing.parts.length)
-      // {
-      //     this.setCurrentPartR(partIndex-1);
-
-      // }
-      else if (partIndex <= indicies[2]) {
+        helpers.updateSettingsCurSlide(this.getPart());
+        return;
+      } 
+      else if (indicies[2] === 0)
+      {
+        this.setCurrentPartR(0);
+        helpers.updateSettingsCurSlide(this.getPart());
+        return
+      } else if (partIndex <= indicies[2]) {
         this.setCurrentPartR(indicies[2] - 1);
+        helpers.updateSettingsCurSlide(this.getPart());
+      } else{
+        this.setCurrentPartR()
       }
+
+      
+    } else {
+      this.setCurrentPartR()
     }
 
-    helpers.updateSettingsCurSlide(this.getPart());
+    
+  };
+
+
+  this.manageCurrentDrawingsAfterDelete = (
+    figureIndex,
+    drawingIndex,
+  ) => {
+    console.log("values from manageCurrentdrawings",figureIndex,drawingIndex)
+    let indicies = this.getCurrentIndicies();
+    console.log("indicies",indicies)
+    let figure = myStorage.figures[figureIndex];
+
+    // let partsLength = drawing.parts.length;
+
+    if (indicies[0] === figureIndex) {
+      // console.log("")
+      if (figure.drawings.length <= 1) {
+        this.setCurrentPartR(0,0,figureIndex);
+        helpers.updateSettingsCurSlide(this.getPart());
+        return;
+      } 
+      else if (indicies[1] === 0)
+      {
+        this.setCurrentPartR(0,0,figureIndex);
+        helpers.updateSettingsCurSlide(this.getPart());
+        return
+      } else if (drawingIndex <= indicies[1]) {
+        this.setCurrentPartR(indicies[2], indicies[1] -1,indicies[0] );
+        helpers.updateSettingsCurSlide(this.getPart());
+      } else{
+        this.setCurrentPartR()
+      }
+
+      
+    } else {
+      this.setCurrentPartR()
+    }
+
+    
   };
 
   this.isCurrentPart = (figureIndex, drawingIndex, partIndex) => {
@@ -422,7 +475,53 @@ function DrawManager() {
     return drawing.parts.length;
     // console.log(drawing);
   };
-  this.addFigure = function (figureName) {};
+
+
+  this.exchangeDrawings = (
+    figureIndex,
+    drawingIndex,
+    secondDrawingIndex
+  ) => {
+    let figure = myStorage.figures[figureIndex];
+    let temp = figure.drawings[drawingIndex];
+    figure.drawings[drawingIndex] = figure.drawings[secondDrawingIndex];
+    figure.drawings[secondDrawingIndex] = temp;
+
+    let indicies = this.getCurrentIndicies();
+    console.log("indicies at exchangParts", indicies);
+    if (
+      (indicies[0] === figureIndex &&
+        indicies[1] === drawingIndex ||
+        indicies[2] === secondDrawingIndex)
+    ) {
+      console.log("indicies[1] === drawingIndex", indicies[1] === drawingIndex);
+      console.log(
+        "indicies[1] === secondDrawingIndex",
+        indicies[1] === secondDrawingIndex
+      );
+      if (indicies[1] === drawingIndex) {
+        console.log(
+          "exchangeParts giving ",
+          secondDrawingIndex,
+          " to setCurrentPart, instead of ",
+          drawingIndex
+        );
+        this.setCurrentPartR(indicies[0], secondDrawingIndex, figureIndex);
+      } else {
+        this.setCurrentPartR(indicies[0], drawingIndex, figureIndex);
+        console.log(
+          "exchangeParts giving ",
+          drawingIndex,
+          "to setCurrentPart, instead of ",
+          secondDrawingIndex
+        );
+      }
+    }
+
+    return figure.drawings.length;
+    // console.log(drawing);
+  };
+  
 
   this.removePartFromStorage = function (figureIndex, drawingIndex, partIndex) {
     return myStorage.figures[figureIndex].drawings[drawingIndex].parts.splice(
@@ -430,6 +529,11 @@ function DrawManager() {
       1
     );
   };
+
+  this.removeDrawingFromStorage = function (figureIndex, drawingIndex)
+  {
+    return myStorage.figures[figureIndex].drawings.splice(drawingIndex,1)
+  }
 
   this.removeDrawing = function (figureIndex, drawingIndex) {
     return myStorage.figures[figureIndex].drawings.splice(drawingIndex, 1);

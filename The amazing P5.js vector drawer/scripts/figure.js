@@ -19,6 +19,7 @@ function Drawing(name,zeroPoint, currentPart){
     this.currentPart = currentPart || 0;
     this.isSelected = false;
     this.parts = [];
+    this.draw = drawManager.defaultDrawing.draw;
     this.parts.push(new Part("firstPart"));
     // console.log(this.parts);
     // this.parts.push( new Part("secondPart"));
