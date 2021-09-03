@@ -97,14 +97,15 @@ function DrawManager() {
     minDragDistance: 5,
     maxDragDistance: 50,
 
-    vertexPointsFactor: -2,
-    vertexPoints: true,
-    numberPoints: true,
+    vertexPointsFactor: -5,
+    drawPoints: true,
+    drawNumbers: true,
+    
 
     autoSave: true,
     lightMode: false,
 
-    simpleTextForm: false,
+    
     // MORE SETTINGS
     //Show number - number size -relative to stroke
     //
@@ -166,13 +167,31 @@ function DrawManager() {
     window.localStorage.setItem("stored", JSON.stringify(myStorage));
   };
 
-  this.setCurrentPartR = (partIndex, drawingIndex, figureIndex) => {
+  this.removeCurrentPartMarking = () =>{
     let indicies = drawManager.getCurrentIndicies();
     let HTMLIndexPartOriginal = indicies[2] +sliderManager.HTMLIndecies.firstPart;
     let HTMLIndexDrawingOriginal =
       indicies[1] + sliderManager.HTMLIndecies.firstDrawing;
+    
+    let elem = document.getElementsByClassName("order");
+    elem.forEach((orderSlide) => {
+     
+     
+        
+      orderSlide.children[HTMLIndexDrawingOriginal].children[
+        HTMLIndexPartOriginal
+      ].style.backgroundColor = sliderManager.col.partDefault;
+      
 
-    console.log("setCurrentPart()",partIndex,drawingIndex, figureIndex)
+      // );
+    });
+  }
+
+
+  this.setCurrentPartR = (partIndex, drawingIndex, figureIndex) => {
+    
+
+    // console.log("setCurrentPart()",partIndex,drawingIndex, figureIndex)
     // console.log("HTMLIndexDrawingOriginal",HTMLIndexDrawingOriginal)
     if (figureIndex === undefined) {
       if (drawingIndex === undefined) {
@@ -199,6 +218,9 @@ function DrawManager() {
         partIndex;
     }
     // console.log("setCurrentPart2()",partIndex,drawingIndex, figureIndex)
+    // console.log("setCurrentPart() underlying",myStorage.figures[figureIndex].drawings[drawingIndex].currentPart ,
+    // myStorage.figures[figureIndex].currentDrawing ,
+    //  myStorage.currentFigure)
     // let elem = document.getElementsByClassName("order")
     let HTMLIndexDrawing =
       sliderManager.HTMLIndecies.firstDrawing + drawingIndex;
@@ -212,24 +234,6 @@ function DrawManager() {
 
     let elem = document.getElementsByClassName("order");
     elem.forEach((orderSlide) => {
-      
-      let lengthHTMLParts =
-        orderSlide.children[HTMLIndexDrawingOriginal].children.length;
-      for (let i = sliderManager.HTMLIndecies.firstPart; i < lengthHTMLParts; i += 2) {
-        orderSlide.children[HTMLIndexDrawingOriginal].children[
-          i
-        ].style.backgroundColor = sliderManager.col.partDefault;
-      }
-
-      let lengthHTMLDrawings = 
-       orderSlide.children.length;
-      for (let i = sliderManager.HTMLIndecies.firstDrawing; i < lengthHTMLDrawings;i++)
-      {
-        
-        orderSlide.children[i].children[
-          HTMLIndexPartOriginal
-        ].style.backgroundColor = sliderManager.col.partDefault;
-      }
 
       orderSlide.children[HTMLIndexDrawing].children[
         HTMLIndexPart
@@ -307,76 +311,63 @@ function DrawManager() {
   this.manageCurrentPartsAfterDelete = (
     figureIndex,
     drawingIndex,
-    partIndex
+    indicies
   ) => {
     // console.log("values from manageCurrentParts",figureIndex,drawingIndex,partIndex)
-    let indicies = this.getCurrentIndicies();
+    // let indicies = this.getCurrentIndicies();
     let drawing = myStorage.figures[figureIndex].drawings[drawingIndex];
 
     // let partsLength = drawing.parts.length;
-
-    if (indicies[0] === figureIndex && indicies[1] === drawingIndex) {
-      // console.log("")
+    // console.log("indicies from managePArt",indicies)
+    // console.log("arguments from managePArt",figureIndex,drawingIndex,partIndex)
+    
       if (drawing.parts.length <= 1) {
         this.setCurrentPartR(0);
-        helpers.updateSettingsCurSlide(this.getPart());
+        
         return;
       } 
       else if (indicies[2] === 0)
       {
         this.setCurrentPartR(0);
-        helpers.updateSettingsCurSlide(this.getPart());
+        
         return
-      } else if (partIndex <= indicies[2]) {
+      } else  {
         this.setCurrentPartR(indicies[2] - 1);
-        helpers.updateSettingsCurSlide(this.getPart());
-      } else{
-        this.setCurrentPartR()
+        
       }
 
       
-    } else {
-      this.setCurrentPartR()
-    }
-
     
   };
 
 
   this.manageCurrentDrawingsAfterDelete = (
     figureIndex,
-    drawingIndex,
+    indicies
   ) => {
-    console.log("values from manageCurrentdrawings",figureIndex,drawingIndex)
-    let indicies = this.getCurrentIndicies();
-    console.log("indicies",indicies)
+    // console.log("values from manageCurrentdrawings",figureIndex,drawingIndex)
+    
+    // console.log("indicies",indicies)
     let figure = myStorage.figures[figureIndex];
 
     // let partsLength = drawing.parts.length;
-
-    if (indicies[0] === figureIndex) {
+    // console.log("figure.drawings.length in manageCurrentDraw",figure.drawings.length)
+   
       // console.log("")
       if (figure.drawings.length <= 1) {
         this.setCurrentPartR(0,0,figureIndex);
-        helpers.updateSettingsCurSlide(this.getPart());
+       
         return;
       } 
-      else if (indicies[1] === 0)
+      else if (indicies[1] <= 0)
       {
         this.setCurrentPartR(0,0,figureIndex);
-        helpers.updateSettingsCurSlide(this.getPart());
+       
         return
-      } else if (drawingIndex <= indicies[1]) {
-        this.setCurrentPartR(indicies[2], indicies[1] -1,indicies[0] );
-        helpers.updateSettingsCurSlide(this.getPart());
-      } else{
-        this.setCurrentPartR()
+      } else  {
+        this.setCurrentPartR(indicies[2], indicies[1]-1 ,indicies[0] );
+        
       }
-
-      
-    } else {
-      this.setCurrentPartR()
-    }
 
     
   };
@@ -428,6 +419,13 @@ function DrawManager() {
   this.getLengthOfParts = (figureIndex, drawingIndex) => {
     return myStorage.figures[figureIndex].drawings[drawingIndex].parts.length;
   };
+  this.getLengthOfDrawings = (figureIndex) => {
+    
+    return myStorage.figures[figureIndex].drawings.length
+  }
+  this.getLengthOfFigures = () => {
+    return myStorage.figures.length
+  }
 
   this.exchangeParts = (
     figureIndex,
@@ -448,6 +446,8 @@ function DrawManager() {
         indicies[2] === partIndex) ||
       indicies[2] === secondPartIndex
     ) {
+        drawManager.removeCurrentPartMarking();
+      
       console.log("indicies[2] === partIndex", indicies[2] === partIndex);
       console.log(
         "indicies[2] === secondPartIndex",
@@ -490,10 +490,13 @@ function DrawManager() {
     let indicies = this.getCurrentIndicies();
     console.log("indicies at exchangParts", indicies);
     if (
-      (indicies[0] === figureIndex &&
+      indicies[0] === figureIndex &&
         indicies[1] === drawingIndex ||
-        indicies[2] === secondDrawingIndex)
+        indicies[2] === secondDrawingIndex
     ) {
+      
+        drawManager.removeCurrentPartMarking();
+        
       console.log("indicies[1] === drawingIndex", indicies[1] === drawingIndex);
       console.log(
         "indicies[1] === secondDrawingIndex",
@@ -506,9 +509,9 @@ function DrawManager() {
           " to setCurrentPart, instead of ",
           drawingIndex
         );
-        this.setCurrentPartR(indicies[0], secondDrawingIndex, figureIndex);
+        this.setCurrentPartR(indicies[2], secondDrawingIndex, figureIndex);
       } else {
-        this.setCurrentPartR(indicies[0], drawingIndex, figureIndex);
+        this.setCurrentPartR(indicies[2], drawingIndex, figureIndex);
         console.log(
           "exchangeParts giving ",
           drawingIndex,
@@ -554,7 +557,7 @@ function DrawManager() {
     // redraw
     let figuresLength = myStorage.figures.length;
     for (let i = 0; i < figuresLength; i++) {
-      this.draw(myStorage.figures[i]);
+      this.drawFigure(myStorage.figures[i]);
     }
   };
 
@@ -568,12 +571,12 @@ function DrawManager() {
     // redraw
     let figuresLength = myStorage.figures.length;
     for (let i = 0; i < figuresLength; i++) {
-      this.draw(myStorage.figures[i]);
+      this.drawFigure(myStorage.figures[i]);
     }
     this.drawPoints();
   };
 
-  this.draw = function (figure) {
+  this.drawFigure = function (figure) {
     //check if it has a point!! before sending it to draw
     // console.log("drawManager.draw")
     drawingsLength = figure.drawings.length;
@@ -599,7 +602,7 @@ function DrawManager() {
     // console.log(part)
     if (part.vertexArray.length > 0 && part.draw) {
       push();
-      if (drawManager.settings.vertexPoints) {
+      if (drawManager.settings.drawPoints) {
         stroke(invertColor(part.stroke));
         strokeWeight(
           max(part.strokeWeight + drawManager.settings.vertexPointsFactor, 6)
@@ -608,7 +611,7 @@ function DrawManager() {
           point(elem[0], elem[1]);
         });
 
-        if (drawManager.settings.numberPoints) {
+        if (drawManager.settings.drawNumbers) {
           // stroke(part.stroke);
           // fill(invertColor(part.stroke));
           fill(part.stroke);

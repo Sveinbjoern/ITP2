@@ -157,7 +157,7 @@ function HelperFunctions() {
         elem.forEach((orderSlide) => {
      
       orderSlide.children[9].innerHTML = drawingsLength;
-      console.log(orderSlide.children[9])
+    //   console.log(orderSlide.children[9])
 
     });
     }
@@ -191,11 +191,24 @@ function HelperFunctions() {
         let elem = $( ".currentSlide" )
         let length = elem.length;
         
+        let indicies = drawManager.getCurrentIndicies()
+
+        let HTMLIndexDrawing =
+        sliderManager.HTMLIndecies.firstDrawing + indicies[1];
+        let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * indicies[2];
+       
         for (i = 0; i < length; i ++)
         {
-            elem[i].children[14].innerHTML = part.currentVertex + "/"+ part.vertexArray.length;
+            // console.log(elem[i].children[16])
+            elem[i].children[16].innerHTML = part.currentVertex + "/"+ part.vertexArray.length;
         }
         
+        elem = $( ".order" )
+        length = elem.length
+        for(i = 0; i < length;i++){
+            // console.log(elem[i].children[HTMLIndexDrawing].children[HTMLIndexPart].children[8]);
+            elem[i].children[HTMLIndexDrawing].children[HTMLIndexPart].children[8].innerHTML =  part.vertexArray.length;
+        }
         // if (elem[i].children[13].innerHTML)
 
     }
@@ -261,6 +274,7 @@ function HelperFunctions() {
             part.currentVertex = 0;
         }
         helpers.updateCurrentVertex(part);
+
         toolbox.selectedTool.drawn = false;
         drawManager.reDrawWithPoint();
         if (drawManager.settings.autoSave)
@@ -423,13 +437,8 @@ function HelperFunctions() {
         
         
         // delete drawManager.figures[
-        
-        figure = new Figure("start");
-        
-        currentFigure = drawManager.figures[currentFigureIndex];
-        currentDrawing = currentFigure.drawings[currentDrawingIndex];
-        currentPart = currentDrawing.parts[currentPartIndex];	
-        drawManager.reDrawWithPoint();
+            window.localStorage.clear();
+            location.reload();
 
 
 		
@@ -493,7 +502,7 @@ function keyPressed()
         let figure = drawManager.getFigure()
         let drawing = figure.drawings[figure.currentDrawing]
         let part = drawing.parts[drawing.currentPart]
-        let vertexArray =  part.vertexArray;
+        // let vertexArray =  part.vertexArray;
 
         if (mouseX >= 0 && mouseX <= width &&
             mouseY >= 0 && mouseY <= height)
@@ -521,12 +530,19 @@ function keyPressed()
             // {
             //     console.log(elem[0].children[12].children[i].identity);
             // }
-            elem = document.getElementsByClassName("order");
-            length = elem[0].children.length;
+            let elem = document.getElementsByClassName("order");
+            let length = elem[0].children.length;
             for (let i = 12; i < length; i ++)
             {
-                console.log(elem[0].children[i].identity);
+                console.log("drawing identities",elem[0].children[i].identity);
+                lengthH = elem[0].children[i].children.length
+                for (let j = 11; j < lengthH; j +=2)
+                {
+                    console.log("part identities",elem[0].children[i].children[j].identity);
+                    // console.log(elem[0].children[i].identity);
+                }
             }
+            
             
             // removeElements();
 

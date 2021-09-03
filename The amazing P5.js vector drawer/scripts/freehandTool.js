@@ -1,7 +1,7 @@
 function FreehandTool() {
   //set an icon and a name for the object
   this.icon = "assets/freehand.jpg";
-  this.name = "freehand";
+  this.name = "PointDrawing";
 
   this.drawn = false;
 

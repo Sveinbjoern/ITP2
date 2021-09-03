@@ -38,8 +38,11 @@ function SliderManager(){
 
     this.defaultSlides = {
         leftSidebar: ["order"],
-        rightSidebar: ["current","default"],
-        bottomBar: ["draw","current"],
+        rightSidebar: ["current","default", "drawMode", "current"],
+        bottomBar: ["drawMode","current"],
+        leftSidebarString: "sidebarLeft",
+        rightSideBarString: "sidebarRight",
+        bottomBarString: "bottomBar",
 
         leftSidebarOpen: true,
         rightSidebarOpen: true,
@@ -58,6 +61,9 @@ function SliderManager(){
             case "current": 
                 slideTemplates.createCurrentSlide(pos);
                 break;
+            case "drawMode": 
+                slideTemplates.createDrawModeSlide(pos);
+                break;
             case "default": 
                 slideTemplates.createDefaultSlide(pos);
                 
@@ -71,7 +77,7 @@ function SliderManager(){
 
     this.setup = function(){
        
-
+        //Removes the make slider menu when you click on the screen
         window.onclick = function(event) {
             if (!self.addSliderOpen) {
               
@@ -88,6 +94,9 @@ function SliderManager(){
                         break;
                     case "current":
                         slideTemplates.createCurrentSlide("sidebarLeft");
+                        break;
+                    case "drawMode": 
+                        slideTemplates.createDrawModeSlide("sidebarLeft");
                         break;
                     case "default":
                         slideTemplates.createDefaultSlide("sidebarLeft");
@@ -113,6 +122,9 @@ function SliderManager(){
                     case "current":
                         slideTemplates.createCurrentSlide("sidebarRight");
                         break;
+                    case "drawMode":
+                        slideTemplates.createDrawModeSlide("sidebarRight");
+                        break;
                     case "default":
                         slideTemplates.createDefaultSlide("sidebarRight");
                         break;
@@ -135,6 +147,9 @@ function SliderManager(){
                     case "current":
                         slideTemplates.createCurrentSlide("bottomBar");
                         break;
+                    case "drawMode":
+                        slideTemplates.createDrawModeSlide("bottomBar");
+                        break;
                     case "default":
                         slideTemplates.createDefaultSlide("bottomBar");
                         break;
@@ -144,53 +159,22 @@ function SliderManager(){
                 }
             })
             this.placeAddSliderButtonToEnd("bottomBar");
-            
-        
-
-            // drawManager.setCurrentPartR();
-
-
-        // this.fillOrderBar();
-        // slideTemplates.createCurrentSlide("sidebarRight");
-        // slideTemplates.createCurrentSlide("bottomBar");
-        // slideTemplates.createCurrentSlide("bottomBar");
-        // slideTemplates.createCurrentSlide("bottomBar");
-        // slideTemplates.createCurrentSlide("bottomBar");
-        // slideTemplates.createCurrentSlide("bottomBar");
-        // slideTemplates.createDefaultSlide("sidebarRight");
-        
-        // slideTemplates.createOrderSlide("sidebarLeft");
-        
-        // slideTemplates.createDefaultSlide("sidebarRight");
-        // slideTemplates.createDefaultSlide("sidebarRight");
-        // slideTemplates.createColorSlide("sidebarRight");
-        // slideTemplates.createColorSlide("sidebarRight");
-        // this.fillColorSlide("sidebarRight");
-        // this.fillColorSlide("sidebarRight");
-        
-        
-        
-        // console.log("slides",slides);
+      
 
     }
     
 
-    
 
-
- 
-
-   
-
-
-        
-
-    // }
 
     this.createOrderSlide = (a)  => {
         // console.log("a",a.identity)
 
         createSlider("order",a.identity)
+    } 
+    this.createDrawModeSlide = (a)  => {
+        // console.log("a",a.identity)
+
+        createSlider("drawMode",a.identity)
     } 
     this.createDefaultSlide = (a)  => {
         // console.log("a",a.identity)
@@ -235,17 +219,18 @@ function SliderManager(){
         let adjustHeight = 22;
         let adjustSide = 0;
         let menu = $("#addSliderMenu")
+        console.log(a)
         if (a.offsetTop > window.innerHeight/2)
         {
-            adjustHeight = -27* menu[0].children.length
+            adjustHeight = -110;
         }
         if (a.parentElement.id == "bottomBar")
         {
             adjustSide = -150;
         }
         menu[0].style.display = "inline-block"
-        menu[0].style.left = (a.offsetLeft + adjustSide) + "px"
-        menu[0].style.top = (a.offsetTop+adjustHeight) + "px"
+        menu[0].style.left = min (a.offsetLeft + adjustSide, window.innerWidth +adjustSide-300) + "px"
+        menu[0].style.top = min (a.offsetTop+adjustHeight, window.innerHeight +adjustHeight ) + "px"
         
         console.log(a.parentElement.id)
         menu[0].children.forEach( (elem) =>
