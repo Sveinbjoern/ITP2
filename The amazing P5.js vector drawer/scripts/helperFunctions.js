@@ -418,6 +418,8 @@ function HelperFunctions() {
         console.log("storage to be saved in helpers.saveSettingsFromStorage()", storage)
         window.localStorage.getItem("stored", JSON.stringify(storage))
     }
+
+
     
     let updateAllSetings = (settings) => {
         console.log("settings in updateAllSetings", settings)
@@ -473,7 +475,8 @@ function HelperFunctions() {
     function makeScreenshot ()
     {
         let formatted_number = formatNumberLength(screenshotIteration,4);
-        saveCanvas("screenshot"+formatted_number,"png");
+        drawManager.reDraw();
+        saveCanvas(drawManager.getFigure().name+formatted_number,"png");
 
         screenshotIteration ++;
     };

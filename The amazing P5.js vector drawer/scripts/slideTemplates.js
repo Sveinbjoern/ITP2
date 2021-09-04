@@ -34,49 +34,47 @@ function SlideTemplates() {
     mainTextElem.style("text-align", "left");
     mainTextElem.style("display", "inline");
 
+    if (toolbox.selectedTool.name == "PointDrawing") {
+      let modeTextElem = createP(toolbox.selectedTool.name);
+      modeTextElem.parent(newSlide);
+      // modeTextElem.style("position", "absolute");
+      // modeTextElem.style("left", "0px")
+      // modeTextElem.style("top", "-12px")
+      modeTextElem.style("margin", "0px");
+      modeTextElem.style("max-width", "200px");
+      modeTextElem.style("text-align", "left");
+      modeTextElem.style("display", "inline");
 
+      button = createButton("&#x2191;");
 
-    // console.log("from createdrawSlide",toolbox.selectedTool.name)
-    let modeTextElem = createP(toolbox.selectedTool.name);
-  modeTextElem.parent(newSlide);
-  // modeTextElem.style("position", "absolute");
-  // modeTextElem.style("left", "0px")
-  // modeTextElem.style("top", "-12px")
-  modeTextElem.style("margin", "0px");
-  modeTextElem.style("max-width", "200px");
-  modeTextElem.style("text-align", "left");
-  modeTextElem.style("display", "inline");
+      // button.style("position", "absolute");
+      button.style("float", "right");
+      button.style("margin-right", "30px");
+      // button.style("width", "auto");
+      button.style("display", "inline");
+      // button.style("text-align", "right")
+      button.parent(newSlide);
+      // button.style("visibility", "hidden");
+      // button.mousePressed();
 
-  button = createButton("&#x2191;");
+      button = createButton("&#x2193;");
+      // button.style("text-align", "right")
+      // button.style("position", "absolute");
+      // button.style("margin-right", "31px")
+      button.style("float", "right");
+      // button.style("width", "auto");
+      button.style("display", "inline");
+      // button.style("visibility", "hidden");
+      // button.style("top", "123px")
+      button.parent(newSlide);
 
-  // button.style("position", "absolute");
-  button.style("float", "right")
-  button.style("margin-right", "30px")
-  // button.style("width", "auto");
-  button.style("display", "inline");
-  // button.style("text-align", "right")
-  button.parent(newSlide);
-  // button.style("visibility", "hidden");
-  // button.mousePressed();
-
-  button = createButton("&#x2193;");
-  // button.style("text-align", "right")
-  // button.style("position", "absolute");
-  // button.style("margin-right", "31px")
-  button.style("float", "right")
-  // button.style("width", "auto");
-  button.style("display", "inline");
-  // button.style("visibility", "hidden");
-  // button.style("top", "123px")
-  button.parent(newSlide);
-
-  let xText = createP("X");
-  // button.style("text-align", "right")
-  xText.style("position", "absolute");
-  xText.style("right", "17px");
-  // xText.style("top", "-15px");
+      let xText = createP("X");
+      // button.style("text-align", "right")
+      xText.style("position", "absolute");
+      xText.style("right", "17px");
+      // xText.style("top", "-15px");
       // xText.style("top", "-12px")
-      button.style("float", "right")
+      button.style("float", "right");
       xText.style("margin", "0px");
       xText.style("display", "inline");
       xText.style("cursor", "pointer");
@@ -92,6 +90,168 @@ function SlideTemplates() {
       });
       xText.parent(newSlide);
 
+      let linebreak = document.createElement("br");
+      if (newSlide.elt) {
+        newSlide.elt.appendChild(linebreak);
+      } else {
+        newSlide.appendChild(linebreak);
+      }
+
+      let sWText = createP("Distance between points when dragging: ");
+      // sWText.style("position", "absolute");
+      sWText.style("font-size", "15px");
+      // sWText.style("left", "0px");
+      // sWText.style("top", "60px");
+      sWText.style("display", "inline");
+      sWText.parent(newSlide);
+
+      sWText = createP(toolbox.selectedTool.dragNDrawDistanceBase);
+      // sWText.style("position", "absolute");
+      sWText.style("font-size", "15px");
+      sWText.style("max-width", "100px");
+      sWText.style("overflow", "hidden");
+      sWText.addClass("dragNDrawDistanceText");
+
+      // sWText.style("top", "60px");
+      sWText.style("display", "inline");
+      sWText.parent(newSlide);
+      // console.log(drawManager.drawModeSettings)
+      let selBox = createCheckbox("Enable dragNdraw", drawManager.drawModeSettings.enableDragNDraw);
+      // noFillBox.style("position", "absolute"); 
+      selBox.style("float", "right"); // noFillBox.style("left", "120px");
+      selBox.style("margin-right", "30px"); // noFillBox.style("left", "120px");
+      selBox.style("display", "inline");
+      // selBox.style("visibility", "hidden");
+      selBox.changed(dragNDrawCheckBoxEvent)
+      selBox.parent(newSlide);
+
+      
+
+      linebreak = document.createElement("br");
+      if (newSlide.elt) {
+        newSlide.elt.appendChild(linebreak);
+      } else {
+        newSlide.appendChild(linebreak);
+      }
+
+      //   helpers.decreaseVertexArray();
+      // });
+      let sWslider = createSlider(
+        drawManager.drawModeSettings.dragNDrawDistanceMin,
+        drawManager.drawModeSettings.dragNDrawDistanceMax,
+        drawManager.drawModeSettings.dragNDrawDistanceBase
+      );
+      // sWslider.style("position", "absolute");
+      sWslider.style("width", "90%");
+      // sWslider.style("line-hight", "23px");
+      sWslider.style("display", "inline");
+      sWslider.elt.onchange = dragNDrawDistanceUpdate;
+      sWslider.parent(newSlide);
+
+      linebreak = document.createElement("br");
+      if (newSlide.elt) {
+        newSlide.elt.appendChild(linebreak);
+      } else {
+        newSlide.appendChild(linebreak);
+      }
+
+      sWText = createP("Distance from mouse pointer for holding:");
+      // sWText.style("position", "absolute");
+      sWText.style("font-size", "15px");
+      // sWText.style("left", "0px");
+      // sWText.style("top", "60px");
+      sWText.style("display", "inline");
+      sWText.parent(newSlide);
+
+
+      linebreak = document.createElement("br");
+      if (newSlide.elt) {
+        newSlide.elt.appendChild(linebreak);
+      } else {
+        newSlide.appendChild(linebreak);
+      }
+
+
+      sWText = createP(toolbox.selectedTool.dragDistanceBase);
+      // sWText.style("position", "absolute");
+      sWText.style("font-size", "15px");
+      sWText.addClass("dragDistanceText");
+      sWText.style("max-width", "30px");
+      sWText.style("overflow", "hidden");
+
+      // sWText.style("top", "60px");
+      sWText.style("display", "inline");
+      sWText.parent(newSlide);
+
+
+      selBox = createCheckbox("Enable dragging", drawManager.drawModeSettings.enableDragging);
+      // noFillBox.style("position", "absolute");
+      selBox.style("float", "right"); // noFillBox.style("left", "120px");
+      selBox.style("display", "inline");
+      selBox.style("margin-right", "45px");
+      // selBox.style("visibility", "hidden");
+      selBox.changed(draggingCheckBoxEvent)
+      selBox.parent(newSlide);
+      
+        
+
+      linebreak = document.createElement("br");
+      if (newSlide.elt) {
+        newSlide.elt.appendChild(linebreak);
+      } else {
+        newSlide.appendChild(linebreak);
+      }
+
+      //   helpers.decreaseVertexArray();
+      // });
+      sWslider = createSlider(
+        drawManager.drawModeSettings.dragDistanceMin,
+        drawManager.drawModeSettings.dragDistanceMax,
+        drawManager.drawModeSettings.dragDistanceBase
+      );
+      // sWslider.style("position", "absolute");
+      // sWslider.style("left", "80px");
+      sWslider.style("width", "90%");
+      // sWslider.style("line-hight", "23px");
+      sWslider.style("display", "inline");
+      sWslider.elt.onchange = dragDistanceUpdate;
+      sWslider.parent(newSlide);
+
+     
+      function dragNDrawDistanceUpdate() {
+        // console.log(this.value)
+        toolbox.selectedTool.dragNDrawDistanceBase = this.value;
+        
+        document.getElementsByClassName("dragNDrawDistanceText").forEach( (text) =>{
+          text.innerHTML = this.value;
+          console.log("text",text)
+        })
+        toolbox.selectedTool.updateSettings = true;
+        console.log(toolbox.selectedTool.dragNDrawDistance)
+      }
+      function dragDistanceUpdate() {
+              // console.log(this.value)
+              toolbox.selectedTool.dragDistanceBase = parseFloat(this.value);
+              // document.getElementById("dragDistanceText").innerHTML = this.value;
+              
+              let elem = document.getElementsByClassName("dragDistanceText")
+              elem.forEach((text)=>{
+                text.innerHTML = this.value;
+              })
+
+              toolbox.selectedTool.updateSettings = true;
+            }
+      function draggingCheckBoxEvent (){
+        drawManager.drawModeSettings.enableDragging = !drawManager.drawModeSettings.enableDragging;
+        console.log(drawManager.drawModeSettings.enableDragging)
+      }
+      function dragNDrawCheckBoxEvent (){
+        drawManager.drawModeSettings.enableDragNDraw = !drawManager.drawModeSettings.enableDragNDraw;
+        console.log(drawManager.drawModeSettings.enableDragNDraw)
+      }
+
+
+    }
   };
 
   this.createOrderSlide = function (pos) {
@@ -160,32 +320,6 @@ function SlideTemplates() {
       button.parent(newSlide);
       // button.mousePressed();
 
-      button = createButton("&#x2191;");
-
-      // button.style("position", "absolute");
-      // button.style("left", "125px")
-      button.style("width", "auto");
-      button.style("display", "inline");
-      // button.style("top", "123px")
-      button.parent(newSlide);
-      button.style("visibility", "hidden");
-      // button.mousePressed();
-
-      button = createButton("&#x2193;");
-
-      // button.style("position", "absolute");
-      // button.style("left", "151px")
-      button.style("width", "auto");
-      button.style("display", "inline");
-      button.style("visibility", "hidden");
-      // button.style("top", "123px")
-      button.parent(newSlide);
-      // button.mousePressed(() => {
-      //   console.log(button, this);
-
-      //   helpers.decreaseVertexArray();
-      // });
-
       button = createButton("D");
 
       // button.style("position", "absolute");
@@ -199,6 +333,32 @@ function SlideTemplates() {
       //   console.log(button, this);
 
       //   helpers.deleteVertex();
+      // });
+
+      button = createButton("&#x2191;");
+
+      // button.style("position", "absolute");
+      // button.style("left", "125px")
+      button.style("width", "auto");
+      button.style("display", "inline");
+      // button.style("top", "123px")
+      button.parent(newSlide);
+      // button.style("visibility", "hidden");
+      // button.mousePressed();
+
+      button = createButton("&#x2193;");
+
+      // button.style("position", "absolute");
+      // button.style("left", "151px")
+      button.style("width", "auto");
+      button.style("display", "inline");
+      // button.style("visibility", "hidden");
+      // button.style("top", "123px")
+      button.parent(newSlide);
+      // button.mousePressed(() => {
+      //   console.log(button, this);
+
+      //   helpers.decreaseVertexArray();
       // });
 
       let xText = createP("X");
@@ -278,7 +438,7 @@ function SlideTemplates() {
         }
 
         drawManager.getPart().noFill = noFillBox.checked();
-        drawManager.reDrawWithPoint();
+        toolbox.selectedTool.drawn = false;
       });
       selBox.parent(newSlide);
       //   if (part.showDetails)
@@ -1869,7 +2029,7 @@ function SlideTemplates() {
         ].style.backgroundColor = sliderManager.col.currentColorPart;
       });
 
-      drawManager.reDrawWithPoint();
+      
       // console.log(currentDrawing);
       helpers.updateSettingsCurSlide(drawManager.getPart());
       toolbox.selectedTool.drawn = false;
@@ -2264,7 +2424,7 @@ function SlideTemplates() {
       }
       console.log(elem[0].children[2].value, inpColorFill.elt.value);
       drawManager.getPart().fill = color(inpColorFill.elt.value);
-      drawManager.reDrawWithPoint();
+      
       toolbox.selectedTool.drawn = false;
     });
     inpColorFill.parent(newSlide);
@@ -2294,7 +2454,7 @@ function SlideTemplates() {
       }
 
       drawManager.getPart().noFill = noFillBox.checked();
-      drawManager.reDrawWithPoint();
+      toolbox.selectedTool.drawn = false;
     });
     noFillBox.parent(newSlide);
 
@@ -2325,7 +2485,7 @@ function SlideTemplates() {
       console.log(elem[0].children[5], inpColorStroke.elt.value);
 
       drawManager.getPart().stroke = color(inpColorStroke.elt.value);
-      drawManager.reDrawWithPoint();
+      
       toolbox.selectedTool.drawn = false;
     });
     inpColorStroke.parent(newSlide);
@@ -2354,7 +2514,7 @@ function SlideTemplates() {
       }
 
       drawManager.getPart().noStroke = noStrokeBox.checked();
-      drawManager.reDrawWithPoint();
+      toolbox.selectedTool.drawn = false;
     });
     noStrokeBox.parent(newSlide);
 
@@ -2456,7 +2616,7 @@ function SlideTemplates() {
         toolbox.selectedTool.updateSettings = true;
       }
       drawManager.getPart().strokeWeight = parseInt(sWslider.elt.value);
-      drawManager.reDrawWithPoint();
+      
       toolbox.selectedTool.drawn = false;
       console.log("sWslider.elt.value", sWslider.elt.value);
       // sWInput.elt.value = drawManager.defaultPart.strokeWeight;
@@ -2490,7 +2650,7 @@ function SlideTemplates() {
 
       drawManager.getPart().strokeWeight = parseInt(sWInput.elt.value);
       console.log("sWInput.elt.value", sWInput.elt.value);
-      drawManager.reDrawWithPoint();
+      
 
       toolbox.selectedTool.drawn = false;
     };
@@ -2530,7 +2690,7 @@ function SlideTemplates() {
           }
         }
 
-        drawManager.reDrawWithPoint();
+        
         toolbox.selectedTool.drawn = false;
       }
     });
@@ -2560,7 +2720,7 @@ function SlideTemplates() {
         }
       }
       drawManager.getPart().vertexMode = sel.value();
-      drawManager.reDrawWithPoint();
+      toolbox.selectedTool.drawn = false;
     });
     sel.parent(newSlide);
 
@@ -2644,4 +2804,7 @@ function SlideTemplates() {
       helpers.setVertexArrayToEnd();
     });
   };
+
+  function switchSliderUp() {}
+  function switchSliderDown() {}
 }

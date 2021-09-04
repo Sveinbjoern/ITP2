@@ -9,13 +9,13 @@ function FreehandTool() {
   //to the current mouse location. The following values store
   //the locations from the last frame. They are undefined to start with because
   //we haven't started drawing yet.
-  this.dragDistanceBase = 10;
-  this.dragNDrawDistanceBase = 30;
+  this.dragDistanceBase = drawManager.drawModeSettings.dragDistanceBase;
+  this.dragNDrawDistanceBase = drawManager.drawModeSettings.dragNDrawDistanceBase;
 
-  this.dragNDrawDistance = this.dragNDrawDistanceBase+ drawManager.getPart().strokeWeight/2
+  this.dragNDrawDistance = this.dragNDrawDistanceBase + drawManager.getPart().strokeWeight/2
   this.dragDistance =
     this.dragDistanceBase + drawManager.getPart().strokeWeight / 2;
-  this.dragging = false;
+  this.dragNDraw = false;
   this.dragStart = null;
 
   this.updateSettings = false;
@@ -29,9 +29,10 @@ function FreehandTool() {
     // console.log("should run every frame")
     // console.log("this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart]", this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart])
     if (this.updateSettings) {
-      this.dragNDrawDistance = this.dragNDrawDistanceBase +drawManager.getPart().strokeWeight/2
-      this.dragDistance =
-        this.dragDistanceBase + drawManager.getPart().strokeWeight / 2;
+      console.log("before",this.dragNDrawDistance, "this.dragNDrawDistanceBase",this.dragNDrawDistanceBase, "drawManager.getPart().strokeWeight",drawManager.getPart().strokeWeight/2)
+      this.dragNDrawDistance = this.dragNDrawDistanceBase +  drawManager.getPart().strokeWeight/2
+      this.dragDistance =     this.dragDistanceBase +  drawManager.getPart().strokeWeight / 2;
+      console.log("after",this.dragNDrawDistance,"this.dragNDrawDistanceBase",this.dragNDrawDistanceBase)
       this.updateSettings = false;
       // console.log("dragDistance",  this.dragDistance);
     }
@@ -86,7 +87,8 @@ function FreehandTool() {
       if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
         let part = drawManager.getPart();
         let vertexArray = part.vertexArray;
-        if (self.itemInDistance) {
+        console.log(drawManager.drawModeSettings.enableDragging)
+        if (self.itemInDistance && drawManager.drawModeSettings.enableDragging) {
           // currentVertex.push([mouseX, mouseY]);
           vertexArray[self.closeVertex] = [mouseX, mouseY];
 
@@ -105,13 +107,17 @@ function FreehandTool() {
 
           helpers.updateCurrentVertex(part);
           self.drawn = false;
-          self.dragging = true;
+          if (drawManager.drawModeSettings.enableDragNDraw)
+          {
+            self.dragNDraw = true;
           self.dragStart = [mouseX, mouseY];
+          }
+          
           if (drawManager.settings.autoSave) {
             drawManager.saveFiguresToStorage();
           }
         }
-        drawManager.reDraw();
+        // drawManager.reDraw();
       }
       // prevent default
     };
@@ -123,7 +129,7 @@ function FreehandTool() {
       if (self.itemHeld) {
         vertexArray[self.closeVertex] = [mouseX, mouseY];
         self.drawn = false;
-      } else if (self.dragging) {
+      } else if (self.dragNDraw) {
         if (
           dist(mouseX, mouseY, self.dragStart[0], self.dragStart[1]) >
           self.dragNDrawDistance
@@ -146,7 +152,7 @@ function FreehandTool() {
         }
       }
 
-      drawManager.reDrawWithPoint();
+      // drawManager.reDrawWithPoint();
       // prevent default
       //   return false;
     };
@@ -158,7 +164,7 @@ function FreehandTool() {
         // console.log("this", this);
 
         // console.log("closeVertex" , self.closeVertex)
-        if (!self.dragging) {
+        if (!self.dragNDraw && drawManager.drawModeSettings.enableDragging) {
           self.closeVertex = [];
           let vertexArray = drawManager.getVertexArray();
           let arrayLength = vertexArray.length;
@@ -231,7 +237,7 @@ function FreehandTool() {
       //empty in this drawingMode
       self.itemHeld = false;
       self.drawn = false;
-      self.dragging = false;
+      self.dragNDraw = false;
       // prevent default
       //   return false;
     };

@@ -111,6 +111,22 @@ function DrawManager() {
     //
   };
 
+  this.drawModeSettings = {
+    
+    //For the DrawMode
+    dragDistanceBase: 20,
+    dragNDrawDistanceBase: 5,
+
+    enableDragging: true,
+    enableDragNDraw: true,
+    
+    //For settings
+    dragDistanceMin: 5,
+    dragDistanceMax: 40,
+    dragNDrawDistanceMin: 1,
+    dragNDrawDistanceMax: 20,
+  }
+
   this.setup = function () {
     this.loadLocalStorage(myStorage);
 
@@ -375,16 +391,17 @@ function DrawManager() {
   this.isCurrentPart = (figureIndex, drawingIndex, partIndex) => {
     // let testFigureIndex
 
-    let testFigureIndex = myStorage.currentFigure;
-    let testDrawingIndex = myStorage.figures[testFigureIndex].currentDrawing;
-    let testPartIndex =
-      myStorage.figures[testFigureIndex].drawings[testDrawingIndex].currentPart;
+    let indicies = this.getCurrentIndicies();
+    // let testFigureIndex = myStorage.currentFigure;
+    // let testDrawingIndex = myStorage.figures[testFigureIndex].currentDrawing;
+    // let testPartIndex =
+    //   myStorage.figures[testFigureIndex].drawings[testDrawingIndex].currentPart;
     // console.log("Test the isCurrentPart", testFigureIndex, testDrawingIndex, testPartIndex)
 
     if (
-      testFigureIndex === figureIndex &&
-      testDrawingIndex === drawingIndex &&
-      testPartIndex === partIndex
+      indicies[0] === figureIndex &&
+      indicies[1] === drawingIndex &&
+      indicies[2] === partIndex
     ) {
       return true;
     } else {
@@ -475,6 +492,8 @@ function DrawManager() {
     return drawing.parts.length;
     // console.log(drawing);
   };
+
+  
 
 
   this.exchangeDrawings = (

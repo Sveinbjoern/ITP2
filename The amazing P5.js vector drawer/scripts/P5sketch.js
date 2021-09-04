@@ -76,12 +76,14 @@ function setup() {
 
 	// drawManager.draw(drawManager.figures[0]);
 
-	// console.log($("#sidebarRight").children());
-	let temporary = $("#sidebarRight").children()[1];
-	$("#sidebarRight").children()[1] = $("#sidebarRight").children()[0];
-	// console.log($("#sidebarRight").children());
-	$("#sidebarRight").children()[0] = temporary;
-	// console.log($("#sidebarRight").children());
+
+	// let temporary = $("#sidebarRight").children()[1];
+	// $("#sidebarRight").children()[1] = $("#sidebarRight").children()[0];
+	// // console.log($("#sidebarRight").children());
+	// $("#sidebarRight").children()[0] = temporary;
+	
+	
+
 	fitToScreen();
 
 

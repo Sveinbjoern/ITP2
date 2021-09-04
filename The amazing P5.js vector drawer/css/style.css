@@ -250,6 +250,31 @@ body {
 #addSliderButtonBottom button{
 	
 } */
+#sidebarRightButton {
+	height: 100%;
+	width: 11px;
+	grid-area: rightSideButton;
+	/* margin: 0px; */
+	padding: 0px;
+	line-height: 0%;
+	/* overflow: hidden; */
+}
+#sidebarLeftButton{
+	height: 100%;
+	width: 11px;
+	grid-area: leftSideButton;
+	/* margin: 0px; */
+	padding: 0px;
+	/* line-height: 0%; */
+	/* overflow: hidden; */
+}
+#bottomBarButton{
+	height: 11px;
+	width: 100%;
+	line-height: 0%;
+	grid-area: bottomBarButton;
+	/* overflow: hidden; */
+}
 
 
 
@@ -259,6 +284,7 @@ body {
   max-height: 40px;
   max-width: 40px;
   margin: 5px;
+
 }
 .colorFillField {
 	width: 40px;
@@ -277,12 +303,13 @@ body {
 	display: grid;
 	height: 100%;
 	grid-template: none;
-	grid-template-columns:300px 65px minmax(200px, 1fr)  300px;
-	grid-template-rows: auto minmax(200px, 1fr) 160px ;
+	grid-template-columns:300px 11px 65px minmax(200px, 1fr) 11px 300px;
+	grid-template-rows: auto minmax(200px, 1fr) 11px 160px ;
 	grid-template-areas:
-		"header header header header"
-		"sidebarLeft sidebar drawField sidebarRight"
-		"sidebarLeft bottomBar bottomBar sidebarRight";
+		"header header header header header header"
+		"sidebarLeft leftSideButton sidebar drawField rightSideButton sidebarRight"
+		"sidebarLeft bottomBarButton bottomBarButton bottomBarButton bottomBarButton sidebarRight"
+		"sidebarLeft bottomBar bottomBar bottomBar bottomBar sidebarRight";
 	/* background-color: #fff;
 	color: #444; */
 	/* align-items: stretch; */
