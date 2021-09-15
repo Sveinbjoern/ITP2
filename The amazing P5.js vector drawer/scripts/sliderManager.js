@@ -332,4 +332,6 @@ function SliderManager() {
 
 
     }
+
+    
 }

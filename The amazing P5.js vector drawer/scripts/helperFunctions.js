@@ -364,6 +364,26 @@ function HelperFunctions() {
 
 
     }
+
+    this.createNewPart =  () =>{
+        let elem = document.getElementsByClassName("order")
+        if (elem.length > 0)
+        {
+            let indicies =  drawManager.getCurrentIndicies();
+            // console.log( elem )
+            console.log($(elem)[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3]);
+            $(elem)[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3].click()
+            console.log( elem[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3]
+            )
+            
+            elem[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3].click()
+        } else {
+            drawManager.addPart(indicies[0], indicies[1], indicies[2]+1);
+        }
+
+
+    }
+
     this.moveHTMLDown = (parentHTML, index, HTMLIndex, diff, length)=>{
         parentHTML.children[HTMLIndex].identity++;
         parentHTML.children[HTMLIndex+diff].identity--;
@@ -488,6 +508,7 @@ function HelperFunctions() {
 const keyCodes = {
 
     backSpace: 8,
+    spacebar: 32,
 
     leftArrow: 37,
     upArrow: 38,
@@ -502,9 +523,11 @@ const keyCodes = {
 function keyPressed()
     {
         // console.log("keyPressed")
-        let figure = drawManager.getFigure()
-        let drawing = figure.drawings[figure.currentDrawing]
-        let part = drawing.parts[drawing.currentPart]
+
+        // let figure = drawManager.getFigure()
+        // let drawing = figure.drawings[figure.currentDrawing]
+        let part = drawManager.getPart();
+
         // let vertexArray =  part.vertexArray;
 
         if (mouseX >= 0 && mouseX <= width &&
@@ -516,7 +539,19 @@ function keyPressed()
                     helpers.deleteVertex(part);
 
                 }
+
+                        if (toolbox.selectedTool.name = "pointDraw")
+                {
+                    if (keyCode === keyCodes.spacebar)
+                    {
+                        helpers.createNewPart();
+
+                       
+                    }
+                }
             }
+
+        
 
 
         if(keyCode === keyCodes.R)
@@ -538,7 +573,7 @@ function keyPressed()
             for (let i = 12; i < length; i ++)
             {
                 console.log("drawing identities",elem[0].children[i].identity);
-                lengthH = elem[0].children[i].children.length
+                let lengthH = elem[0].children[i].children.length
                 for (let j = 11; j < lengthH; j +=2)
                 {
                     console.log("part identities",elem[0].children[i].children[j].identity);

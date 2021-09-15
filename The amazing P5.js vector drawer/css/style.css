@@ -8,6 +8,7 @@ body {
   margin: 0px;
   height: 100% ;
   padding: 0px;
+  overflow: hidden;
 }
 
 /* Hidden elements css */
@@ -163,6 +164,7 @@ body {
 
 /* slides */
 .slide{
+	width: 300;
 	/* width: 300; */
 	/* height: 200; */
 	/* display: block; */

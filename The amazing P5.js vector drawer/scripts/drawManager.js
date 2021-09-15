@@ -53,11 +53,11 @@ function DrawManager() {
     strokeWeight: 3,
     fill: color(120, 120, 120),
     noFill: false,
-    vertexMode: "",
+    vertexMode: '""',
     endShape: true,
 
     //menu relate defaults
-    showDetails: true,
+    showDetails: false,
 
     selected: false,
     draw: true,

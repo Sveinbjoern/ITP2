@@ -14,9 +14,9 @@ function SlideTemplates() {
       `         
             display: inline-block;
             position: relative;
-            min-width: 300px;
+            width: 300px;
             height: content;
-            
+            overflow-y: hidden;
             margin:  0px;
             padding: 0px;
             text-align: left;
@@ -282,6 +282,7 @@ function SlideTemplates() {
                 min-width: 300px;
                 height: content;
                 background-color: rgb(50, 50, 200);
+                overflow-y:auto;
                 margin:  0px;
                 padding: 0px;
                 text-align: left;
@@ -2048,7 +2049,7 @@ function SlideTemplates() {
                 position: relative;
                 min-width: 300px;
                 height: 160px;
-                
+                overflow-y: hidden;
                 margin:  0px;
                 padding: 0px`
     );
@@ -2373,6 +2374,7 @@ function SlideTemplates() {
             position: relative;
             min-width: 300px;
             height: 160px;
+            overflow-y: hidden;
             
             margin:  0px;
             padding: 0px`
@@ -2804,6 +2806,8 @@ function SlideTemplates() {
       helpers.setVertexArrayToEnd();
     });
   };
+
+  
 
   function switchSliderUp() {}
   function switchSliderDown() {}
