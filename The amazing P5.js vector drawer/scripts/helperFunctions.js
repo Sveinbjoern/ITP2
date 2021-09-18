@@ -370,11 +370,16 @@ function HelperFunctions() {
         if (elem.length > 0)
         {
             let indicies =  drawManager.getCurrentIndicies();
-            // console.log( elem )
-            console.log($(elem)[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3]);
-            $(elem)[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3].click()
-            console.log( elem[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3]
-            )
+            let button = elem[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3]
+            console.log(button)
+            
+            console.log("button. mouserdown",{button}, button.parentElement)
+            
+            // button.dispatchEvent("mousedownEvent"))
+            // console.log($(elem)[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3]);
+            // $(elem)[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3].click()
+            // console.log( elem[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3]
+            // )
             
             elem[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3].click()
         } else {
@@ -536,7 +541,7 @@ function keyPressed()
                 if (keyCode === keyCodes.backSpace)
                 {
                     
-                    helpers.deleteVertex(part);
+                    self.deleteVertex(part);
 
                 }
 
@@ -544,7 +549,8 @@ function keyPressed()
                 {
                     if (keyCode === keyCodes.spacebar)
                     {
-                        helpers.createNewPart();
+                        console.log("spacebar")
+                        self.createNewPart();
 
                        
                     }

@@ -12,7 +12,10 @@ function FreehandTool() {
   this.dragDistanceBase = drawManager.drawModeSettings.dragDistanceBase;
   this.dragNDrawDistanceBase = drawManager.drawModeSettings.dragNDrawDistanceBase;
 
+  console.log("does this update aswell?",this.dragNDrawDistance);
+  
   this.dragNDrawDistance = this.dragNDrawDistanceBase + drawManager.getPart().strokeWeight/2
+  console.log("drawManger.getPart().storkeWeight in setup of freehand tool",drawManager.getPart().strokeWeight);
   this.dragDistance =
     this.dragDistanceBase + drawManager.getPart().strokeWeight / 2;
   this.dragNDraw = false;
@@ -32,6 +35,7 @@ function FreehandTool() {
       console.log("before",this.dragNDrawDistance, "this.dragNDrawDistanceBase",this.dragNDrawDistanceBase, "drawManager.getPart().strokeWeight",drawManager.getPart().strokeWeight/2)
       this.dragNDrawDistance = this.dragNDrawDistanceBase +  drawManager.getPart().strokeWeight/2
       this.dragDistance =     this.dragDistanceBase +  drawManager.getPart().strokeWeight / 2;
+      console.log("strokeWeight in updateSettings",drawManager.getPart().strokeWeight)
       console.log("after",this.dragNDrawDistance,"this.dragNDrawDistanceBase",this.dragNDrawDistanceBase)
       this.updateSettings = false;
       // console.log("dragDistance",  this.dragDistance);

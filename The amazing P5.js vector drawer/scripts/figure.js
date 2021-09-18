@@ -37,9 +37,10 @@ function Point(name, type, position){
     return this;
 }
 
-function Part(name){
+function Part(name,type){
     this.vertexArray = [];//[20,21],[215,15],[465,456],[445,231]];
     this.name = name || drawManager.defaultPart.name;
+    this.type = type || drawManager.defaultPart.type;
     // this.localZeroPoint = drawManager.defaultPart.zeroPoint;
     this.isSelected = false;
 

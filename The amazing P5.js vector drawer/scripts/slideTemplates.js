@@ -220,7 +220,7 @@ function SlideTemplates() {
      
       function dragNDrawDistanceUpdate() {
         // console.log(this.value)
-        toolbox.selectedTool.dragNDrawDistanceBase = this.value;
+        toolbox.selectedTool.dragNDrawDistanceBase = parseFloat(this.value);
         
         document.getElementsByClassName("dragNDrawDistanceText").forEach( (text) =>{
           text.innerHTML = this.value;
@@ -687,6 +687,7 @@ function SlideTemplates() {
       // button.style("top", "123px")
       button.style("display", "inline");
       button.parent(newPart);
+      // console.log(button.onclick = createNewPart())
       button.mousePressed(createNewPart);
 
       button = createButton("&#x2191;");
@@ -1724,12 +1725,12 @@ function SlideTemplates() {
       let drawingIndex = this.elt.parentElement.identity;
       let partIndex = this.elt.identity;
 
-      console.log(
-        "deleteDrawing indicies:",
-        figureIndex,
-        drawingIndex,
-        partIndex
-      );
+      // console.log(
+      //   "deleteDrawing indicies:",
+      //   figureIndex,
+      //   drawingIndex,
+      //   partIndex
+      // );
 
       //If there is only one part, make one new in the slot after this one!
       let figure = drawManager.getFigure(figureIndex);
@@ -1737,11 +1738,11 @@ function SlideTemplates() {
       // console.log("deletePart() +length", figureIndex, drawingIndex, partIndex, length)
 
       if (drawingsLength <= 1) {
-        console.log(
-          "partIndex for createNewDrawing in delteDrawing",
-          figureIndex,
-          1
-        );
+        // console.log(
+        //   "partIndex for createNewDrawing in delteDrawing",
+        //   figureIndex,
+        //   1
+        // );
         createNewDrawing(figureIndex, 1);
         drawingsLength++;
       }
@@ -1831,7 +1832,7 @@ function SlideTemplates() {
         );
       });
       // console.log("values given to SetCurretP in newdrawing",drawingIndex,figureIndex)
-      drawManager.setCurrentPartR(0, drawingIndex, figureIndex);
+      drawManager.setCurrentPartR(figureIndex, drawingIndex, figureIndex);
       helpers.updateSettingsCurSlide(drawManager.getPart());
 
       helpers.updateNumberOfDrawingsText(figureIndex, drawingIndex);
@@ -1839,6 +1840,7 @@ function SlideTemplates() {
 
     function createNewPart(figureIndex, drawingIndex, partIndex) {
       // figureI++; drawingI++,partI++
+      console.log(this)
       // console.log("createNewPart Indicies:", figureIndex ,drawingIndex, partIndex)
       if (figureIndex === undefined) {
         figureIndex =

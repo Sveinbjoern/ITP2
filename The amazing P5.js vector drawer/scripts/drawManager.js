@@ -47,6 +47,7 @@ function DrawManager() {
   // this.curretPart;
   this.defaultPart = {
     name: "partDefault",
+    type: "vertex",
     currentVertex: 0,
     stroke: color(0, 0, 0),
     noStroke: false,
@@ -115,7 +116,7 @@ function DrawManager() {
     
     //For the DrawMode
     dragDistanceBase: 20,
-    dragNDrawDistanceBase: 5,
+    dragNDrawDistanceBase: 10,
 
     enableDragging: true,
     enableDragNDraw: true,

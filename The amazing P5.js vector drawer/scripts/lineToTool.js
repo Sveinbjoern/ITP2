@@ -3,84 +3,253 @@
 	Hold the mouse at the start of the line, press, hold and drag to where you want it to end
 */
 
-function LineToTool() {
-  this.icon = "assets/lineTo.jpg";
-  this.name = "LineTo";
-	self =this;
+function ShapesTool() {
+	//set an icon and a name for the object
+	this.icon = "assets/freehand.jpg";
+	this.name = "shapes";
   
-  //drawing turns true when we press the buttons and you will have a display of the line
-  this.drawn = false;
+	this.drawn = false;
   
-  this.arrayLength = 0 ;
+	//to smoothly draw we'll draw a line from the previous mouse location
+	//to the current mouse location. The following values store
+	//the locations from the last frame. They are undefined to start with because
+	//we haven't started drawing yet.
+	this.dragDistanceBase = drawManager.drawModeSettings.dragDistanceBase;
+	this.dragNDrawDistanceBase = drawManager.drawModeSettings.dragNDrawDistanceBase;
   
-	this.figure = drawManager.getFigure();
-  //draws a line when mouse is pressed, keeps the one that is there when you release
-  this.draw = function () {
-	//   console.log("draw linetotool this",this)
-    this.arrayLength = this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray.length
-    
-
-    if (!this.drawn) {
-		
-		loadPixels(); // loadPixels is in this case used to save the screeen at this point
-		   
-      this.drawn = true;
-    }
-    if (this.arrayLength > 0 && mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-		if (drawManager.settings.lightMode)
-		{
-				updatePixels();
-				line(	this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray[arrayLength-1][0],
-						this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray[arrayLength-1][1],
-						mouseX,mouseY);
-		} else
-		{
-			this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray.push ([mouseX,mouseY])
-			
-			drawManager.reDraw();
-			this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart].vertexArray.pop();
-		}
-		
-    } else {updatePixels()}
-
-    
-  };
-
-  this.setup = function(){
+	console.log("does this update aswell?",this.dragNDrawDistance);
 	
-		mousePressed = function () {
-			// console.log("mousePressed in lineToTool")
-			// console.log("self in lineToTool", self.currentVertex)
-			// console.log("self in lineToTool", self.arrayLength)
-		  //make mouse only work inside canvas
-		  if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
-			self.figure.drawings[self.figure.currentDrawing].parts[self.figure.drawings[self.figure.currentDrawing].currentPart].vertexArray.push([mouseX, mouseY]);
-			drawManager.reDraw();
-			// console.log("self in mousePressed", self)
+	this.dragNDrawDistance = this.dragNDrawDistanceBase + drawManager.getPart().strokeWeight/2
+	console.log("drawManger.getPart().storkeWeight in setup of freehand tool",drawManager.getPart().strokeWeight);
+	this.dragDistance =
+	  this.dragDistanceBase + drawManager.getPart().strokeWeight / 2;
+	this.dragNDraw = false;
+	this.dragStart = null;
+  
+	this.updateSettings = false;
+	this.itemHeld = false;
+	let self = this;
+  
+	this.itemInDistance = false;
+	this.closeVertex;
+  
+	this.draw = function () {
+	  // console.log("should run every frame")
+	  // console.log("this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart]", this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart])
+	  if (this.updateSettings) {
+		console.log("before",this.dragNDrawDistance, "this.dragNDrawDistanceBase",this.dragNDrawDistanceBase, "drawManager.getPart().strokeWeight",drawManager.getPart().strokeWeight/2)
+		this.dragNDrawDistance = this.dragNDrawDistanceBase +  drawManager.getPart().strokeWeight/2
+		this.dragDistance =     this.dragDistanceBase +  drawManager.getPart().strokeWeight / 2;
+		console.log("strokeWeight in updateSettings",drawManager.getPart().strokeWeight)
+		console.log("after",this.dragNDrawDistance,"this.dragNDrawDistanceBase",this.dragNDrawDistanceBase)
+		this.updateSettings = false;
+		// console.log("dragDistance",  this.dragDistance);
+	  }
+	  let part = drawManager.getPart();
+	  // console.log(part.vertexArray);
+	  let arrayLength = part.vertexArray.length;
+  
+	  //   console.log("currentVertex in draw", this.currentVertex )
+	  if (!this.drawn) {
+  
+		
+		drawManager.reDrawWithPoint();
+		
+		loadPixels();
+		
+		// if (drawManager.settings.vertexPoints) {
+		  // drawManager.drawPoints();
+		// }
+  
+		// loadPixels is in this case used to save the screeen at this point
+		this.drawn = true;
+	  }
+	  if (
+		arrayLength > 0 &&
+		mouseX >= 0 &&
+		mouseX <= width &&
+		mouseY >= 0 &&
+		mouseY <= height &&
+		!this.itemInDistance &&
+		!this.itemHeld
+	  ) {
+		let vertexArray = drawManager.getVertexArray();
+		// if (!self.itemInDistance) 
+		{
+		  // console.log("part.currentVertex", part.currentVertex)
+		  vertexArray.splice(part.currentVertex, 0, [mouseX, mouseY]);
+  
+		  drawManager.reDrawWithPoint();
+		  vertexArray.splice(part.currentVertex, 1);
+		  // console.log(vertexArray.slice(part.currentVertex,part.currentVertex +1));
+		}
+	  } else {
+		updatePixels();
+	  }
+	};
+  
+	this.setup = function () {
+	  mousePressed = function () {
+		//   console.log("mousePressed freehandtool")
+		//make mouse only work inside canvas
+  
+		if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
+		  let part = drawManager.getPart();
+		  let vertexArray = part.vertexArray;
+		  console.log(drawManager.drawModeSettings.enableDragging)
+		  if (self.itemInDistance && drawManager.drawModeSettings.enableDragging) {
+			// currentVertex.push([mouseX, mouseY]);
+			vertexArray[self.closeVertex] = [mouseX, mouseY];
+  
+			self.itemHeld = true;
 			self.drawn = false;
-		  }
-		  // prevent default
-		//   return false;
-		};
   
-		mouseDragged = function () {
-		  //empty in this drawingMode
+			// drawn = false;
+		  } else {
+			// console.log("why not?",this.figure)   //[this.figure.currentDrawing].parts) //[this.figure.drawings[this.figure.currentDrawing].currentPart] );
+  
+			vertexArray.splice(part.currentVertex, 0, [mouseX, mouseY]);
+			// This increases the part.currentVertex unless you are have choosen the first vertex
+			if (part.currentVertex !== 0 || vertexArray.length === 1) {
+			  part.currentVertex++;
+			}
+  
+			helpers.updateCurrentVertex(part);
+			self.drawn = false;
+			if (drawManager.drawModeSettings.enableDragNDraw)
+			{
+			  self.dragNDraw = true;
+			self.dragStart = [mouseX, mouseY];
+			}
 			
-		  // prevent default
-		//   return false;
-		};
-		mouseMoved = function () {
-		  //draws the line
+			if (drawManager.settings.autoSave) {
+			  drawManager.saveFiguresToStorage();
+			}
+		  }
+		  // drawManager.reDraw();
+		}
+		// prevent default
+	  };
   
-		  // prevent default
+	  mouseDragged = function () {
+		let part = drawManager.getPart();
+		let vertexArray = part.vertexArray;
+  
+		if (self.itemHeld) {
+		  vertexArray[self.closeVertex] = [mouseX, mouseY];
+		  self.drawn = false;
+		} else if (self.dragNDraw) {
+		  if (
+			dist(mouseX, mouseY, self.dragStart[0], self.dragStart[1]) >
+			self.dragNDrawDistance
+		  ) {
+			vertexArray.splice(part.currentVertex, 0, [mouseX, mouseY]);
+  
+			// This increases the part.currentVertex unless you are have choosen the first vertex
+			if (part.currentVertex !== 0 || vertexArray.length === 1) {
+			  part.currentVertex++;
+			}
+  
+			helpers.updateCurrentVertex(part);
+  
+			self.drawn = false;
+			self.dragStart = [mouseX, mouseY];
+  
+			if (drawManager.settings.autoSave) {
+			  drawManager.saveFiguresToStorage();
+			}
+		  }
+		}
+  
+		// drawManager.reDrawWithPoint();
+		// prevent default
 		//   return false;
-		};
-		mouseReleased = function () {
-		  //empty in this drawingMode
-		  // prevent default
+	  };
+	  mouseMoved = function () {
+		//draws the line
+		//   console.log("mouseMoved");
+		if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
+		  // console.log("mouseMoved First if");
+		  // console.log("this", this);
+  
+		  // console.log("closeVertex" , self.closeVertex)
+		  if (!self.dragNDraw && drawManager.drawModeSettings.enableDragging) {
+			self.closeVertex = [];
+			let vertexArray = drawManager.getVertexArray();
+			let arrayLength = vertexArray.length;
+			let possible = [];
+			let lowX = mouseX - self.dragDistance;
+			let highX = mouseX + self.dragDistance;
+			let lowY = mouseY - self.dragDistance;
+			let highY = mouseY + self.dragDistance;
+			// console.log("mousX, dragDistance", mouseX ,self.dragDistance)
+			for (let i = 0; i < arrayLength; i++) {
+			  if (lowX < vertexArray[i][0] && lowY < vertexArray[i][1]) {
+				possible.push(i);
+				// console.log("possible forloop1 i",i)
+			  }
+			}
+  
+			// console.log("self.currentVertex[0][0]",self.currentVertex[0][0],mouseX - self.dragDistance)
+			// console.log("self.currentVertex[0][1]",self.currentVertex[0][1],mouseY - self.dragDistance)
+			// console.log("mouseMoved:after first removed", possible)
+			let possibleLength = possible.length;
+			let withinDragDistance = [];
+  
+			for (let i = 0; i < possibleLength; i++) {
+			  if (
+				highX > vertexArray[possible[i]][0] &&
+				highY > vertexArray[possible[i]][1]
+			  ) {
+				withinDragDistance.push(possible[i]);
+			  }
+			  // console.log("first for loop");
+			}
+			// console.log("mouseMoved:after all removed removed", withinDragDistance)
+			let withinLength = withinDragDistance.length;
+			let closest = [self.dragDistance, 0];
+			let temp = 0;
+			if (withinLength > 0) {
+			  for (let i = 0; i < withinLength; i++) {
+				temp = dist(
+				  mouseX,
+				  mouseY,
+				  vertexArray[withinDragDistance[i]][0],
+				  vertexArray[withinDragDistance[i]][1]
+				);
+				if (temp <= closest[0]) {
+				  closest[0] = temp;
+				  closest[1] = withinDragDistance[i];
+				}
+				// console.log("temp", temp, "i", closest[1] )
+			  }
+			  if (closest[0] < self.dragDistance) {
+				self.itemInDistance = true;
+				document.getElementById("drawField").style.cursor = "pointer"; //  handpointer CSS
+				self.closeVertex = closest[1];
+				// console.log("closest Vertex in range is" ,self.closeVertex);
+			  } else {
+				self.itemInDistance = false;
+				document.getElementById("drawField").style.cursor = "default";
+			  }
+			} else {
+			  self.itemInDistance = false;
+			  document.getElementById("drawField").style.cursor = "default";
+			}
+		  }
+		}
+  
+		// prevent default
 		//   return false;
-		};
-	  
-  } 
-
-}
+	  };
+	  mouseReleased = function () {
+		//empty in this drawingMode
+		self.itemHeld = false;
+		self.drawn = false;
+		self.dragNDraw = false;
+		// prevent default
+		//   return false;
+	  };
+	};
+  }
+  
