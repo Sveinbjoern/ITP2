@@ -44,6 +44,19 @@ body {
   background-color: rgb(139, 139, 139);
 
 }
+#bottomBar {
+	grid-area: bottomBar;
+
+	display: flex;
+	overflow-y: hidden;
+	overflow-x: auto;
+
+
+	/* flex-direction: grid;
+	flex-flow: wrap; */
+	
+	/* text-align: left; */
+}
 #sidebarLeft{
 	grid-area: sidebarLeft;
 	height: 100%;
@@ -194,19 +207,7 @@ body {
   flex-direction: grid;
   flex-flow: wrap;
 }
-#bottomBar {
-	grid-area: bottomBar;
 
-	display: flex;
-	overflow-y: hidden;
-	
-
-
-	/* flex-direction: grid;
-	flex-flow: wrap; */
-	
-	/* text-align: left; */
-  }
 
 .inputs {
   

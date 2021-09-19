@@ -1,4 +1,4 @@
-// drawManager will containt all figures, drawings, parts and vertecies
+// drawManager will containt all figures, drawings, parts and verticies
 // drawManger will manage the reseting and updates of advanced drawing methods
 // drawManager will convert points into a vertex drawing
 
@@ -12,30 +12,50 @@ function DrawManager() {
     return myStorage;
   };
 
-  this.getFigure = (index) => {
-    if (index === undefined) {
+  this.getFigure = (figureIndex) => {
+    if (figureIndex === undefined) {
       return myStorage.figures[myStorage.currentFigure];
     }
     // console.log("currentfigure in getFigure", myStorage , myStorage.figures[myStorage.currentFigure])
-    return myStorage.figures[index];
+    return myStorage.figures[figureIndex];
   };
 
-  this.getDrawing = (index) => {
-    let get = myStorage.figures[myStorage.currentFigure];
-    if (index === undefined) {
-      return get.drawings[get.currentDrawing];
+  this.getDrawing = (figureIndex,drawingIndex) => {
+    let get;
+    if (drawingIndex === undefined)
+    {
+      get = myStorage.figures[myStorage.currentFigure];
+      if (figureIndex === undefined) {
+        
+        return get.drawings[get.currentDrawing];
+      } else{
+        return get.drawings[drawingIndex];
+      }
     }
-    return get.drawings[index];
+    get = myStorage.figures[figureIndex]
+    return get.drawings[get.currentDrawing];
   };
 
-  this.getPart = (index) => {
-    let get = this.getDrawing();
-    if (index === undefined) {
-      // console.log("internal dM.getPart", get ,get.currentPart)
-      return get.parts[get.currentPart];
-    }
+  this.getPart = (figureIndex, drawingIndex, partIndex) => {
+    let get;
+    if (partIndex === undefined){
+      if (drawingIndex === undefined){
+        if (figureIndex === undefined){
+          get = this.getDrawing()
+          return get.parts[get.currentPart];
+        } else {
+          get = this.getDrawing(figureIndex)
+          return get.parts[get.currentPart];
+        }
 
-    return get.parts[index];
+      } else {
+        get = this.getDrawing(figureIndex,drawingIndex)
+        return get.parts[get.currentPart];
+      }
+    } else {
+      get = this.getDrawing(figureIndex,drawingIndex)
+      return get.parts[partIndex];
+    }
   };
 
   this.getVertexArray = () => {
@@ -95,13 +115,10 @@ function DrawManager() {
     minStrokeWeight: 1,
     maxStrokeWeight: 50,
 
-    minDragDistance: 5,
-    maxDragDistance: 50,
-
     vertexPointsFactor: -5,
     drawPoints: true,
     drawNumbers: true,
-    
+    drawWithAlpha: true,
 
     autoSave: true,
     lightMode: false,
@@ -115,17 +132,17 @@ function DrawManager() {
   this.drawModeSettings = {
     
     //For the DrawMode
-    dragDistanceBase: 20,
+    dragDistanceBase: 5,
     dragNDrawDistanceBase: 10,
 
     enableDragging: true,
     enableDragNDraw: true,
     
     //For settings
-    dragDistanceMin: 5,
+    dragDistanceMin: 1,
     dragDistanceMax: 40,
     dragNDrawDistanceMin: 1,
-    dragNDrawDistanceMax: 20,
+    dragNDrawDistanceMax: 40,
   }
 
   this.setup = function () {
@@ -260,70 +277,6 @@ function DrawManager() {
     });
   };
 
-  function drawPart(part) {
-    //MARK The code in this function was made before the start of this semester
-    //by myself. It takes an array and the approprite setttings
-    //and draws with p5 to screen
-    strokeWeight(part.strokeWeight);
-    if (!part.noFill) {
-      fill(part.fill);
-    } else {
-      noFill();
-    }
-    if (!part.noStroke) {
-      stroke(part.stroke);
-    } else {
-      noStroke();
-    }
-
-    if (part.vertexArray.length === 1) {
-      beginShape(POINTS);
-      createVertex(part.vertexArray[0]);
-      endShape();
-    } else {
-      switch (part.vertexMode) {
-        case "":
-          beginShape();
-          break;
-        case "LINES":
-          beginShape(LINES);
-          break;
-        case "POINTS":
-          beginShape(POINTS);
-          break;
-        case "TRIANGLES":
-          beginShape(TRIANGLES);
-          break;
-        case "TRIANGLE_STRIP":
-          beginShape(TRIANGLE_STRIP);
-          break;
-        case "TRIANGLE_FAN":
-          beginShape(TRIANGLE_FAN);
-          break;
-        case "QUADS":
-          beginShape(QUADS);
-          break;
-        case "QUAD_STRIP":
-          beginShape(QUAD_STRIP);
-          break;
-        case "TESS":
-          beginShape(TESS);
-          break;
-        default:
-          beginShape();
-      }
-      part.vertexArray.forEach(createVertex);
-      if (part.endShape) {
-        endShape(CLOSE);
-      } else {
-        endShape();
-      }
-    }
-
-    function createVertex(item) {
-      vertex(item[0], item[1]);
-    }
-  }
 
   this.manageCurrentPartsAfterDelete = (
     figureIndex,
@@ -421,7 +374,7 @@ function DrawManager() {
   };
 
   this.addPart = function (figureIndex, drawingIndex, partIndex) {
-    // console.log("addpart",figureIndex,drawingIndex, partIndex);
+    console.log("addpart",figureIndex,drawingIndex, partIndex);
     let drawing = myStorage.figures[figureIndex].drawings[drawingIndex];
 
     drawing.parts.splice(partIndex, 0, new Part());
@@ -435,6 +388,7 @@ function DrawManager() {
     return figure;
   };
   this.getLengthOfParts = (figureIndex, drawingIndex) => {
+    
     return myStorage.figures[figureIndex].drawings[drawingIndex].parts.length;
   };
   this.getLengthOfDrawings = (figureIndex) => {
@@ -457,7 +411,7 @@ function DrawManager() {
     drawing.parts[secondPartIndex] = temp;
 
     let indicies = this.getCurrentIndicies();
-    console.log("indicies at exchangParts", indicies);
+    // console.log("indicies at exchangParts", indicies);
     if (
       (indicies[0] === figureIndex &&
         indicies[1] === drawingIndex &&
@@ -466,27 +420,27 @@ function DrawManager() {
     ) {
         drawManager.removeCurrentPartMarking();
       
-      console.log("indicies[2] === partIndex", indicies[2] === partIndex);
-      console.log(
-        "indicies[2] === secondPartIndex",
-        indicies[2] === secondPartIndex
-      );
+      // console.log("indicies[2] === partIndex", indicies[2] === partIndex);
+      // console.log(
+      //   "indicies[2] === secondPartIndex",
+      //   indicies[2] === secondPartIndex
+      // );
       if (indicies[2] === partIndex) {
-        console.log(
-          "exchangeParts giving ",
-          secondPartIndex,
-          " to setCurrentPart, instead of ",
-          partIndex
-        );
+        // console.log(
+        //   "exchangeParts giving ",
+        //   secondPartIndex,
+        //   " to setCurrentPart, instead of ",
+        //   partIndex
+        // );
         this.setCurrentPartR(secondPartIndex);
       } else {
         this.setCurrentPartR(partIndex);
-        console.log(
-          "exchangeParts giving ",
-          partIndex,
-          "to setCurrentPart, instead of ",
-          secondPartIndex
-        );
+        // console.log(
+        //   "exchangeParts giving ",
+        //   partIndex,
+        //   "to setCurrentPart, instead of ",
+        //   secondPartIndex
+        // );
       }
     }
 
@@ -508,7 +462,7 @@ function DrawManager() {
     figure.drawings[secondDrawingIndex] = temp;
 
     let indicies = this.getCurrentIndicies();
-    console.log("indicies at exchangParts", indicies);
+    // console.log("indicies at exchangParts", indicies);
     if (
       indicies[0] === figureIndex &&
         indicies[1] === drawingIndex ||
@@ -517,27 +471,27 @@ function DrawManager() {
       
         drawManager.removeCurrentPartMarking();
         
-      console.log("indicies[1] === drawingIndex", indicies[1] === drawingIndex);
-      console.log(
-        "indicies[1] === secondDrawingIndex",
-        indicies[1] === secondDrawingIndex
-      );
+      // console.log("indicies[1] === drawingIndex", indicies[1] === drawingIndex);
+      // console.log(
+      //   "indicies[1] === secondDrawingIndex",
+      //   indicies[1] === secondDrawingIndex
+      // );
       if (indicies[1] === drawingIndex) {
-        console.log(
-          "exchangeParts giving ",
-          secondDrawingIndex,
-          " to setCurrentPart, instead of ",
-          drawingIndex
-        );
+        // console.log(
+        //   "exchangeParts giving ",
+        //   secondDrawingIndex,
+        //   " to setCurrentPart, instead of ",
+        //   drawingIndex
+        // );
         this.setCurrentPartR(indicies[2], secondDrawingIndex, figureIndex);
       } else {
         this.setCurrentPartR(indicies[2], drawingIndex, figureIndex);
-        console.log(
-          "exchangeParts giving ",
-          drawingIndex,
-          "to setCurrentPart, instead of ",
-          secondDrawingIndex
-        );
+        // console.log(
+        //   "exchangeParts giving ",
+        //   drawingIndex,
+        //   "to setCurrentPart, instead of ",
+        //   secondDrawingIndex
+        // );
       }
     }
 
@@ -577,9 +531,49 @@ function DrawManager() {
     // redraw
     let figuresLength = myStorage.figures.length;
     for (let i = 0; i < figuresLength; i++) {
-      this.drawFigure(myStorage.figures[i]);
+      drawFigure(myStorage.figures[i]);
     }
   };
+
+  this.reDrawWithAlpha = () =>{
+
+    clear();
+    
+    let indicies = this.getCurrentIndicies();
+
+    
+    let figuresLength = myStorage.figures.length;
+    for (let i = 0; i < indicies[0]; i++) {
+      drawFigure(myStorage.figures[i]);
+    }
+    //draw the current figure, drawing and part with points
+    let figure = this.getFigure(indicies[0])
+    // console.log("figure at reDrawWithAlpha",figure)
+    for (let i = 0; i < indicies[1];i++){
+      // console.log("i",i)
+      // console.log("figure.drawings[i]",figure.drawings[i])
+      drawDrawing(figure.drawings[i]);
+    }
+    let drawing = this.getDrawing(indicies[0],indicies[1])
+    for (let i = 0; i <= indicies[2];i++ ){
+      drawPart(drawing.parts[i]);
+    }
+    this.drawPoints();
+    //draw every figure, drawing and Part after current with half alpha
+    length = drawManager.getLengthOfParts(indicies[0],indicies[1]);
+    for (let i = indicies[2]+1; i < length;i++ ){
+      drawPartAlpha( drawing.parts[i]   );
+    }
+    length = drawManager.getLengthOfDrawings(indicies[0]);
+    for (let i = indicies[1]+1; i < length;i++ )
+    {
+      drawDrawingAlpha(figure.drawings[i]);
+    }
+    for (let i = indicies[0]+1; i < figuresLength; i++){
+      drawFigureAlpha(myStorage.figures[i]);
+    }
+
+  }
 
   this.reDrawWithPoint = () => {
     // background(200);
@@ -591,12 +585,12 @@ function DrawManager() {
     // redraw
     let figuresLength = myStorage.figures.length;
     for (let i = 0; i < figuresLength; i++) {
-      this.drawFigure(myStorage.figures[i]);
+      drawFigure(myStorage.figures[i]);
     }
     this.drawPoints();
   };
 
-  this.drawFigure = function (figure) {
+  function drawFigure (figure) {
     //check if it has a point!! before sending it to draw
     // console.log("drawManager.draw")
     drawingsLength = figure.drawings.length;
@@ -612,6 +606,57 @@ function DrawManager() {
         // console.log("vertexArray",vertexArray)
         if (part.draw) {
           drawPart(part);
+        }
+      }
+    }
+  };
+  function drawDrawing (drawing) {
+    //check if it has a point!! before sending it to draw
+    // console.log("drawManager.draw")
+    partsLength = drawing.parts.length;
+
+    for (let i = 0; i < partsLength; i++) {
+      // console.log("i", i);
+      let part = drawing.parts[i];
+      
+        if (part.draw) {
+          drawPart(part);
+        }
+      
+    }
+  };
+  function drawDrawingAlpha (drawing) {
+    //check if it has a point!! before sending it to draw
+    // console.log("drawManager.draw")
+    partsLength = drawing.parts.length;
+    
+
+    for (let i = 0; i < partsLength; i++) {
+      // console.log("i", i);
+      let part = drawing.parts[i];
+      
+        if (part.draw) {
+          drawPartAlpha(part);
+        }
+      
+    }
+  };
+  function drawFigureAlpha (figure) {
+    //check if it has a point!! before sending it to draw
+    // console.log("drawManager.draw")
+    drawingsLength = figure.drawings.length;
+
+    for (let i = 0; i < drawingsLength; i++) {
+      // console.log("i", i);
+      let drawing = figure.drawings[i];
+      let partsLength = drawing.parts.length;
+      for (let j = 0; j < partsLength; j++) {
+        let part = drawing.parts[j];
+        // console.log("part", part);
+
+        // console.log("vertexArray",vertexArray)
+        if (part.draw) {
+          drawPartAlpha(part);
         }
       }
     }
@@ -677,6 +722,81 @@ function DrawManager() {
       pop();
     }
   };
+
+  
+  function drawPartAlpha (part){
+    part.stroke.setAlpha(90);
+    part.fill.setAlpha(90);
+    drawPart(part);
+    part.stroke.setAlpha(255);
+    part.fill.setAlpha(255);
+
+  }
+  function drawPart(part) {
+    //MARK The code in this function was made before the start of this semester
+    //by myself. It takes an array and the approprite setttings
+    //and draws with p5 to screen
+    strokeWeight(part.strokeWeight);
+    if (!part.noFill) {
+      fill(part.fill);
+    } else {
+      noFill();
+    }
+    if (!part.noStroke) {
+      stroke(part.stroke);
+    } else {
+      noStroke();
+    }
+
+    if (part.vertexArray.length === 1) {
+      beginShape(POINTS);
+      createVertex(part.vertexArray[0]);
+      endShape();
+    } else {
+      switch (part.vertexMode) {
+        case "":
+          beginShape();
+          break;
+        case "LINES":
+          beginShape(LINES);
+          break;
+        case "POINTS":
+          beginShape(POINTS);
+          break;
+        case "TRIANGLES":
+          beginShape(TRIANGLES);
+          break;
+        case "TRIANGLE_STRIP":
+          beginShape(TRIANGLE_STRIP);
+          break;
+        case "TRIANGLE_FAN":
+          beginShape(TRIANGLE_FAN);
+          break;
+        case "QUADS":
+          beginShape(QUADS);
+          break;
+        case "QUAD_STRIP":
+          beginShape(QUAD_STRIP);
+          break;
+        case "TESS":
+          beginShape(TESS);
+          break;
+        default:
+          beginShape();
+      }
+      part.vertexArray.forEach(createVertex);
+      if (part.endShape) {
+        endShape(CLOSE);
+      } else {
+        endShape();
+      }
+    }
+
+    function createVertex(item) {
+      vertex(item[0], item[1]);
+    }
+  }
+
 
   return this;
 }

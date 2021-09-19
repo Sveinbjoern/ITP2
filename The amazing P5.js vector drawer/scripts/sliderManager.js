@@ -85,7 +85,7 @@ function SliderManager() {
         self.addSliderOpen = false;
       }
     };
-
+    this.titleText.setup();
     this.defaultSlides.leftSidebar.forEach((elem) => {
       switch (elem) {
         case "order":
@@ -211,7 +211,7 @@ function SliderManager() {
     let adjustHeight = 22;
     let adjustSide = 0;
     let menu = $("#addSliderMenu");
-    console.log(a);
+    // console.log(a);
     if (a.offsetTop > window.innerHeight / 2) {
       adjustHeight = -110;
     }
@@ -225,7 +225,7 @@ function SliderManager() {
     menu[0].style.top =
       min(a.offsetTop + adjustHeight, window.innerHeight + adjustHeight) + "px";
 
-    console.log(a.parentElement.id);
+    // console.log(a.parentElement.id);
     menu[0].children.forEach((elem) => {
       elem.identity = a.parentElement.id;
     });
@@ -235,7 +235,7 @@ function SliderManager() {
 
   this.updateDefaultSlides = () => {
     let elem = document.getElementsByClassName("defaultSlide");
-    console.log(elem);
+    // console.log(elem);
   };
   this.updateSlides = () => {
     this.updateDefaultSlides();
@@ -243,8 +243,8 @@ function SliderManager() {
 
 
   this.collapseOrExtendBars = (a)=>{
-      console.log(a)
-      console.log(a.innerHTML)
+      // console.log(a)
+      // console.log(a.innerHTML)
       let wrapper = document.getElementsByClassName("wrapper")[0]
       
       switch (a.id) {
@@ -333,5 +333,218 @@ function SliderManager() {
 
     }
 
+  this.titleText = {
+    order: `The order slide gives an overview
+of everything you have drawn, and 
+lets you change the properties
+and order of any part.`,
+    default: `The default slide gives
+you choices for default properties 
+for when you make a new part.`,
+    current: `The current slide holds
+you choices for properties of the 
+part you are currently drawing.`,
+    drawMode: `The draw mode slide gives
+you choices for your current draw mode.
+To change draw mode you press the square
+pictures to the left of the drawing area.`,
+    settings: `The settings menu controls
+properties for the drawer,
+like autosave, max and min values and more. 
+when you make a new part.`,
+
+    //drawMode related text
+    drawModeDragNDraw: `DragNdraw mode:
+You can drag to draw. The distance between
+each point as you draw is given by the slider.
+You can turn dragNdraw off with the check box.`,
+    drawModeDragging: `Dragging mode:
+You can move points that you have already placed
+by clicking and holding and dragging any old point.
+The distance from the point where dragging starts
+to work is adjusted by the slider. You can turn off
+dragging with the check box.`,
+    drawMode: ``,
+    drawMode: ``,
+    drawMode: ``,
+
+    //Order related text
+    orderNewDrawing: `Create a new collection
+of parts to draw. A new drawing
+can be moved as one.`,
+    orderNewPart: `Create a new part to draw.
+A new part can have a different color, and be seperate.
+Use often! Every time you need to change color or place.
+
+Hotkey: Spacebar
+(Only, when mouse is over
+the drawing field)`,
+    orderMoveUpDrawing: `Move this whole drawing
+with all its parts one step up.
+Whatever is higher on the order
+list is drawn bellow and will
+be covered by other drawings.`,
+    orderMoveDownDrawing: `Move this whole drawing
+with all its parts one step down.
+Whatever is lower on the order
+list is drawn on top of others and
+will cover other drawings.`,
+    orderDeleteDrawing: `DELETES this whole
+drawing with all its parts.
+If only one drawing remains.
+A new default drawing is
+created.`,
+    orderUp: `Move this part up!
+Whatever is higher in the order
+list is drawn bellow and will
+be covered by other parts 
+lower on the list!`,
+    orderDown: `Move this part down!
+Whatever is lower in the order
+list is drawn on top of other
+parts so it will cover other 
+parts higher on the list!`,
+    orderDrawThis: `With this you can turn of
+drawing this part to the screen.`,  
+    orderFill: `Set the color to fill this shape.`,  
+    orderNoFill: `Turn of filling this shape with color.
+Leaving the lines connecting the shape`,  
+    orderStroke: `Set the color of the lines
+connecting the points of this shape`,  
+    orderNoStroke: `Turn of the lines connecting the points.
+Leaving the color inside the shape
+NB! Less than three points cannot
+be seen at all with noStroke on.`,  
+    orderStrokeWeight: `Adjust the thickness of the lines 
+connecting this shape.
+NB! Does nothing when noStroke is on`,  
+    orderFigure: `You only have one figure in
+this version. The name of the figure
+gives name to the screenshots you make.`,  
+    orderDrawThisDrawing: `Set all parts of the drawing 
+to either draw or not at once!
+With this you can hide the whole figure`,  
+    orderSetCurrent: `*IMPORTANT*
+You can only draw one part
+at the time! Use this button to
+set this part as your current part!`,  
+    order: ``,  
+    //Current related text
+    currentDeleteVertex: `Removes one vertex from
+your current part.
+
+HotKey: Backspace 
+(Only when mouse is over 
+the drawing field)`,
+    currentFill: `Set the color of the inside
+of the figure you are currently
+drawing on`,
+    currentNoFill: `Removes the fill or color in the center 
+of the part you are currently drawing.`,
+    currentStroke: `Set the color of the lines
+connecting your shape for 
+the part you are currently drawing.`,
+    currentNoStroke: `Removes the lines connecting 
+the shape you are currently drawing on.`,
+    currentStrokeWeight: ``,
+    currentVertex: `The current vertex decides where you 
+put the next point in this figure.
+To change current Vertex you can use hotkeys:
+To start: up arrow
+To end: down arrow
+Increse: right arrow
+Decrese: left arrrow`,
+    currentToStart: `Set the current vertex to 0.
+Allows you to draw from the the first vertex.
+
+Hotkey: up arrow`,
+    currentToEnd: `Set the current vertex to the last vertex.
+Allows you to draw from the the last vertex.
+
+Hotkey: down arrow`,
+    currentIncrease: `Increase the current vertex by one.
+Allows you to insert a vertex where you want.
+
+Hotkey: right arrow`,
+    currentDecrease: `Decrease the current vertex by one.
+Allows you to insert a vertex where you want.
+
+Hotkey: left arrow`,
+    current: ``,
+    //Settings related text
+    default7: ``,
+    //Default related text
+    defaultFill: `Set the color of the inside
+of any new part you make`,
+    defaultNoFill: `Removes the fill or color
+in the center of any 
+new part you make. Leaving 
+the edges still visible`,
+    defaultStroke: `Set the color of the lines
+connecting your shape for any 
+new part you make`,
+    defaultNoStroke: `Removes the lines connecting
+you shapes for any new part you make. 
+Leaving the color inside still visible`,
+    default13: ``,
+    default14: ``,
+    default15: ``,
+    default16: ``,
+    default21: ``,
+    default22: ``,
+    //general text, applies to several slides
+    generalX: `Remove this slide.
+You make new slides with
+the + button.`,
+    generalPlus: `Add a new slide.
+Slides control things like
+drawing mode settings
+color, order of drawing
+and much more`,
+    generalExpand: `Expand or contract this field`,
+    generalUp: `Move this slide up
+or if in the bottom
+to the left`,
+    generalDown: `Move this slide down
+or if in the bottom
+to the right`,
+    generalSelIntro: `Drawmode drastically changes what you draw! 
+Default is "" and you draw normally.`,
+    generalSelOutro: `see p5js.org with keyword beginShape for more information.`,
+    generalSelDefault: "Default, you draw normally.",
+    generalSelLines: "LINES makes every two point a line, there is no fill.",
+    generalSelTriangles: "TRIANGLES makes every three points a new triangle.",
+    generalSelTriangleFan: "TRIANGLE FAN creates triangels starting from the first point.",
+    generalSelTriangleStrip: "TRIANGLE STRIP creates connected triangles.\nRemove endshape unless you are making it circular.",
+    generalSelQuad: "QUADS makes a new four point figure for every four points.",
+    generalSelTess: "TESS (WebGl only) Handle irregular polygon for filling curve\nby explicit tessellation.",
+    generalSelPoints: `POINTS creates points with the size 
+of stroke weight`,
+    generalEndShape: `"endShape" decides if there is a line connection
+the last point to the first.
+Only affects shapes with more than two points.
+endshape(CLOSE) means this line is drawn.
+endshape() means it is not drawn. 
+For more info, see p5js.org, keyword "endShape"`,
+    general: ``,
+
+    setup: function(){
+      let elem = document.getElementById("addSliderMenu");
+      elem.children[0].title = this.order; 
+      elem.children[1].title = this.drawMode; 
+      elem.children[2].title = this.current; 
+      elem.children[3].title = this.default; 
+      elem.children[4].title = this.settings; 
+      
+      document.getElementById("sidebarLeftButton" ).title = this.generalExpand;
+      document.getElementById("sidebarRightButton").title = this.generalExpand;
+      document.getElementById("bottomBarButton"   ).title = this.generalExpand;
+
+      document.getElementById("sidebarRightAddSliderButton" ).title = this.generalPlus;
+      document.getElementById("sidebarLeftAddSliderButton"  ).title = this.generalPlus;
+      document.getElementById("bottomBarAddSliderButton"    ).title = this.generalPlus;
+    }
+  }
+  
     
 }

@@ -14,7 +14,8 @@ function SlideTemplates() {
       `         
             display: inline-block;
             position: relative;
-            width: 300px;
+            min-width: 300px;
+            max-width:300px;
             height: content;
             overflow-y: hidden;
             margin:  0px;
@@ -24,7 +25,7 @@ function SlideTemplates() {
             `
     ); // display: flex;// // ;flex-wrap: wrap;justify-content: flex-start;// background-color: rgb(50, 50, 200);
 
-    let mainTextElem = createP("DrawMode: ");
+    let mainTextElem = createP("Draw Mode: ");
     mainTextElem.parent(newSlide);
     // mainTextElem.style("position", "absolute");
     // mainTextElem.style("left", "0px")
@@ -33,6 +34,9 @@ function SlideTemplates() {
     mainTextElem.style("width", "61px");
     mainTextElem.style("text-align", "left");
     mainTextElem.style("display", "inline");
+    mainTextElem.elt.title = sliderManager.titleText.drawMode;
+
+   
 
     if (toolbox.selectedTool.name == "PointDrawing") {
       let modeTextElem = createP(toolbox.selectedTool.name);
@@ -44,7 +48,9 @@ function SlideTemplates() {
       modeTextElem.style("max-width", "200px");
       modeTextElem.style("text-align", "left");
       modeTextElem.style("display", "inline");
+      modeTextElem.elt.title = sliderManager.titleText.drawMode;
 
+ 
       button = createButton("&#x2191;");
 
       // button.style("position", "absolute");
@@ -55,7 +61,8 @@ function SlideTemplates() {
       // button.style("text-align", "right")
       button.parent(newSlide);
       // button.style("visibility", "hidden");
-      // button.mousePressed();
+      button.mousePressed(moveSlideUp);
+      button.elt.title = sliderManager.titleText.generalUp;
 
       button = createButton("&#x2193;");
       // button.style("text-align", "right")
@@ -66,6 +73,8 @@ function SlideTemplates() {
       button.style("display", "inline");
       // button.style("visibility", "hidden");
       // button.style("top", "123px")
+      button.mousePressed(moveSlideDown);
+      button.elt.title = sliderManager.titleText.generalDown;
       button.parent(newSlide);
 
       let xText = createP("X");
@@ -79,6 +88,7 @@ function SlideTemplates() {
       xText.style("display", "inline");
       xText.style("cursor", "pointer");
       xText.style("color", "#993030");
+      xText.elt.title = sliderManager.titleText.generalX;
       xText.elt.onmouseover = function () {
         $(this).css({ color: "orange" });
       };
@@ -90,20 +100,22 @@ function SlideTemplates() {
       });
       xText.parent(newSlide);
 
-      let linebreak = document.createElement("br");
-      if (newSlide.elt) {
-        newSlide.elt.appendChild(linebreak);
-      } else {
-        newSlide.appendChild(linebreak);
-      }
+    let linebreak = document.createElement("br");
+    if (newSlide.elt) {
+      newSlide.elt.appendChild(linebreak);
+    } else {
+      newSlide.appendChild(linebreak);
+    }
+     
 
-      let sWText = createP("Distance between points when dragging: ");
+      let sWText = createP("DragNdraw distance: ");
       // sWText.style("position", "absolute");
       sWText.style("font-size", "15px");
       // sWText.style("left", "0px");
       // sWText.style("top", "60px");
       sWText.style("display", "inline");
       sWText.parent(newSlide);
+      sWText.elt.title = sliderManager.titleText.drawModeDragNDraw;
 
       sWText = createP(toolbox.selectedTool.dragNDrawDistanceBase);
       // sWText.style("position", "absolute");
@@ -111,10 +123,11 @@ function SlideTemplates() {
       sWText.style("max-width", "100px");
       sWText.style("overflow", "hidden");
       sWText.addClass("dragNDrawDistanceText");
-
+      sWText.elt.title = sliderManager.titleText.drawModeDragNDraw;
       // sWText.style("top", "60px");
       sWText.style("display", "inline");
       sWText.parent(newSlide);
+
       // console.log(drawManager.drawModeSettings)
       let selBox = createCheckbox("Enable dragNdraw", drawManager.drawModeSettings.enableDragNDraw);
       // noFillBox.style("position", "absolute"); 
@@ -124,7 +137,7 @@ function SlideTemplates() {
       // selBox.style("visibility", "hidden");
       selBox.changed(dragNDrawCheckBoxEvent)
       selBox.parent(newSlide);
-
+      selBox.elt.title = sliderManager.titleText.drawModeDragNDraw;
       
 
       linebreak = document.createElement("br");
@@ -147,6 +160,7 @@ function SlideTemplates() {
       sWslider.style("display", "inline");
       sWslider.elt.onchange = dragNDrawDistanceUpdate;
       sWslider.parent(newSlide);
+      sWslider.elt.title = sliderManager.titleText.drawModeDragNDraw;
 
       linebreak = document.createElement("br");
       if (newSlide.elt) {
@@ -155,21 +169,16 @@ function SlideTemplates() {
         newSlide.appendChild(linebreak);
       }
 
-      sWText = createP("Distance from mouse pointer for holding:");
+      sWText = createP("Dragging distance:");
       // sWText.style("position", "absolute");
       sWText.style("font-size", "15px");
       // sWText.style("left", "0px");
       // sWText.style("top", "60px");
       sWText.style("display", "inline");
+      sWText.elt.title = sliderManager.titleText.drawModeDragging;
       sWText.parent(newSlide);
 
 
-      linebreak = document.createElement("br");
-      if (newSlide.elt) {
-        newSlide.elt.appendChild(linebreak);
-      } else {
-        newSlide.appendChild(linebreak);
-      }
 
 
       sWText = createP(toolbox.selectedTool.dragDistanceBase);
@@ -178,6 +187,7 @@ function SlideTemplates() {
       sWText.addClass("dragDistanceText");
       sWText.style("max-width", "30px");
       sWText.style("overflow", "hidden");
+      sWText.elt.title = sliderManager.titleText.drawModeDragging;
 
       // sWText.style("top", "60px");
       sWText.style("display", "inline");
@@ -189,6 +199,7 @@ function SlideTemplates() {
       selBox.style("float", "right"); // noFillBox.style("left", "120px");
       selBox.style("display", "inline");
       selBox.style("margin-right", "45px");
+      selBox.elt.title = sliderManager.titleText.drawModeDragging;
       // selBox.style("visibility", "hidden");
       selBox.changed(draggingCheckBoxEvent)
       selBox.parent(newSlide);
@@ -215,6 +226,7 @@ function SlideTemplates() {
       // sWslider.style("line-hight", "23px");
       sWslider.style("display", "inline");
       sWslider.elt.onchange = dragDistanceUpdate;
+      sWslider.elt.title = sliderManager.titleText.drawModeDragging;
       sWslider.parent(newSlide);
 
      
@@ -224,10 +236,10 @@ function SlideTemplates() {
         
         document.getElementsByClassName("dragNDrawDistanceText").forEach( (text) =>{
           text.innerHTML = this.value;
-          console.log("text",text)
+          // console.log("text",text)
         })
         toolbox.selectedTool.updateSettings = true;
-        console.log(toolbox.selectedTool.dragNDrawDistance)
+        // console.log(toolbox.selectedTool.dragNDrawDistance)
       }
       function dragDistanceUpdate() {
               // console.log(this.value)
@@ -243,11 +255,11 @@ function SlideTemplates() {
             }
       function draggingCheckBoxEvent (){
         drawManager.drawModeSettings.enableDragging = !drawManager.drawModeSettings.enableDragging;
-        console.log(drawManager.drawModeSettings.enableDragging)
+        // console.log(drawManager.drawModeSettings.enableDragging)
       }
       function dragNDrawCheckBoxEvent (){
         drawManager.drawModeSettings.enableDragNDraw = !drawManager.drawModeSettings.enableDragNDraw;
-        console.log(drawManager.drawModeSettings.enableDragNDraw)
+        // console.log(drawManager.drawModeSettings.enableDragNDraw)
       }
 
 
@@ -283,6 +295,7 @@ function SlideTemplates() {
                 height: content;
                 background-color: rgb(50, 50, 200);
                 overflow-y:auto;
+                overflow-x:hidden;
                 margin:  0px;
                 padding: 0px;
                 text-align: left;
@@ -299,13 +312,14 @@ function SlideTemplates() {
       mainTextElem.style("width", "61px");
       mainTextElem.style("text-align", "left");
       mainTextElem.style("display", "inline");
+      mainTextElem.elt.title = sliderManager.titleText.orderFigure;
 
       let inp = createInput(figure.name);
       inp.style("margin", "0px 2px");
       inp.style("width", "106px");
       inp.style("display", "inline");
       inp.parent(newSlide);
-
+      inp.elt.title = sliderManager.titleText.orderFigure;
       // // inp.position(0, 0);
       // // inp.size(100);
       inp.input(figureNameInputEvent);
@@ -317,12 +331,19 @@ function SlideTemplates() {
       button.style("width", "auto");
       button.style("display", "inline");
       button.style("visibility", "hidden");
+
       // button.style("top", "123px")
       button.parent(newSlide);
       // button.mousePressed();
 
       button = createButton("D");
-
+      button.elt.onmouseover = function () {
+        $(this).css({ color: "orange" });
+      };
+      button.elt.onmouseout = function () {
+        $(this).css({ color: "#993030" });
+      };
+      button.style("color", "#993030");
       // button.style("position", "absolute");
       // button.style("left", "174px")
       button.style("width", "auto");
@@ -345,7 +366,8 @@ function SlideTemplates() {
       // button.style("top", "123px")
       button.parent(newSlide);
       // button.style("visibility", "hidden");
-      // button.mousePressed();
+      button.mousePressed(moveSlideUp);
+      button.elt.title = sliderManager.titleText.generalUp;
 
       button = createButton("&#x2193;");
 
@@ -356,6 +378,8 @@ function SlideTemplates() {
       // button.style("visibility", "hidden");
       // button.style("top", "123px")
       button.parent(newSlide);
+      button.mousePressed(moveSlideDown);
+      button.elt.title = sliderManager.titleText.generalDown;
       // button.mousePressed(() => {
       //   console.log(button, this);
 
@@ -370,6 +394,7 @@ function SlideTemplates() {
       xText.style("display", "inline");
       xText.style("cursor", "pointer");
       xText.style("color", "#993030");
+      xText.elt.title = sliderManager.titleText.generalX;
       xText.elt.onmouseover = function () {
         $(this).css({ color: "orange" });
       };
@@ -525,6 +550,7 @@ function SlideTemplates() {
       // button.style("top", "123px")
       button.style("display", "inline");
       button.parent(newDrawing);
+      button.elt.title = sliderManager.titleText.orderNewDrawing;
       button.mousePressed(
         // console.log(button, this);
 
@@ -539,6 +565,8 @@ function SlideTemplates() {
       // button.style("top", "123px")
       button.style("display", "inline");
       button.parent(newDrawing);
+      button.elt.title = sliderManager.titleText.orderMoveUpDrawing;
+
       button.mousePressed(moveUpDrawing);
 
       button = createButton("&#x2193;");
@@ -550,15 +578,23 @@ function SlideTemplates() {
       // button.style("top", "123px")
       button.parent(newDrawing);
       button.mousePressed(moveDownDrawing);
+      button.elt.title = sliderManager.titleText.orderMoveDownDrawing;
 
       button = createButton("D");
-
+      button.elt.onmouseover = function () {
+        $(this).css({ color: "orange" });
+      };
+      button.elt.onmouseout = function () {
+        $(this).css({ color: "#993030" });
+      };
+      button.style("color", "#993030");
       // button.style("position", "absolute");
       // button.style("left", "174px")
       button.style("width", "auto");
       button.style("display", "inline");
       // button.style("top", "123px")
       button.parent(newDrawing);
+      button.elt.title = sliderManager.titleText.orderDeleteDrawing;
       button.mousePressed(deleteDrawing);
 
       let vText = createP("Parts:");
@@ -598,6 +634,7 @@ function SlideTemplates() {
       // noFillBox.style("position", "absolute");
       selBox.style("margin-left", "0px"); // noFillBox.style("left", "120px");
       selBox.style("display", "inline");
+      selBox.elt.title =  sliderManager.titleText.orderDrawThisDrawing;
       selBox.changed(inputDrawDrawing);
       selBox.parent(newDrawing);
 
@@ -678,6 +715,7 @@ function SlideTemplates() {
       button.style("display", "inline");
       button.parent(newPart);
       button.mousePressed(choosePart);
+      button.elt.title = sliderManager.titleText.orderSetCurrent;
 
       button = createButton("N");
 
@@ -686,9 +724,10 @@ function SlideTemplates() {
       button.style("width", "auto");
       // button.style("top", "123px")
       button.style("display", "inline");
-      button.parent(newPart);
-      // console.log(button.onclick = createNewPart())
-      button.mousePressed(createNewPart);
+      button.parent(newPart);      
+      button.elt.title = sliderManager.titleText.orderNewPart;
+      button.elt.onclick = createNewPart;
+      // button.mousePressed(createNewPart);
 
       button = createButton("&#x2191;");
 
@@ -699,7 +738,7 @@ function SlideTemplates() {
       button.style("display", "inline");
       button.parent(newPart);
       button.mousePressed(moveUpPart);
-
+      button.elt.title = sliderManager.titleText.orderUp;
       button = createButton("&#x2193;");
 
       // button.style("position", "absolute");
@@ -708,19 +747,27 @@ function SlideTemplates() {
       button.style("display", "inline");
       // button.style("top", "123px")
       button.parent(newPart);
+      button.elt.title = sliderManager.titleText.orderDown;
       button.mousePressed(moveDownPart);
 
       button = createButton("D");
-
+      button.elt.onmouseover = function () {
+        $(this).css({ color: "orange" });
+      };
+      button.elt.onmouseout = function () {
+        $(this).css({ color: "#993030" });
+      };
+      button.style("color", "#993030");
       // button.style("position", "absolute");
       // button.style("left", "174px")
       button.style("width", "auto");
       button.style("display", "inline");
       // button.style("top", "123px")
       button.parent(newPart);
+      button.elt.title = sliderManager.titleText.orderDeletePart;
       button.mousePressed(deletePart);
 
-      let vText = createP("Vertecies:");
+      let vText = createP("Verticies:");
       // vText.style("position", "absolute");
       // vText.style("left", "0px");
       // vText.style("top", "110px");
@@ -741,6 +788,8 @@ function SlideTemplates() {
       drawBox.style("margin-left", "30px");
       drawBox.style("display", "inline");
       drawBox.changed(inputDrawPart);
+      drawBox.elt.title = sliderManager.titleText.orderDrawThis;
+      
       drawBox.parent(newPart);
 
       buttonDis = createButton("Show Details");
@@ -797,6 +846,7 @@ function SlideTemplates() {
       fillText.style("margin-right", "15px");
       // fillText.style("top", "5px");
       fillText.parent(newPartInfo);
+      fillText.elt.title = sliderManager.titleText.orderFill; 
 
       let inpColorFill = createColorPicker(part.fill);
       inpColorFill.style("display", "inline");
@@ -806,7 +856,7 @@ function SlideTemplates() {
       // inpColorFill.style("height", "20px");
       inpColorFill.input(colorFillInput);
       inpColorFill.parent(newPartInfo);
-
+      inpColorFill.elt.title = sliderManager.titleText.orderFill; 
       // console.log("inpColorFill", inpColorFill)
 
       // let noFillText = createP("noFill:");
@@ -824,6 +874,8 @@ function SlideTemplates() {
       noFillBox.changed(noFillInput);
       noFillBox.parent(newPartInfo);
 
+      noFillBox.elt.title = sliderManager.titleText.orderNoFill;
+
       linebreak = document.createElement("br");
       newPartInfo.elt.appendChild(linebreak);
 
@@ -835,6 +887,8 @@ function SlideTemplates() {
       strokeText.style("display", "inline");
       strokeText.parent(newPartInfo);
 
+      strokeText.elt.title = sliderManager.titleText.orderStroke;
+
       let inpColorStroke = createColorPicker(part.stroke);
       inpColorStroke.style("display", "inline");
       // inpColorStroke.style("position", "absolute");
@@ -843,7 +897,7 @@ function SlideTemplates() {
       // inpColorStroke.style("height", "20px");
       inpColorStroke.input(colorStrokeInput);
       inpColorStroke.parent(newPartInfo);
-
+      inpColorStroke.elt.title = sliderManager.titleText.orderStroke;
       // let noStrokeText = createP("noStroke:");
       // noStrokeText.style("font-size", "20px");
       // noStrokeText.style("position", "absolute");
@@ -857,7 +911,7 @@ function SlideTemplates() {
       noStrokeBox.style("display", "inline");
       noStrokeBox.changed(noStrokeInput);
       noStrokeBox.parent(newPartInfo);
-
+      noStrokeBox.elt.title = sliderManager.titleText.orderNoStroke;
       linebreak = document.createElement("br");
       newPartInfo.elt.appendChild(linebreak);
 
@@ -867,6 +921,8 @@ function SlideTemplates() {
       // sWText.style("left", "0px");
       // sWText.style("top", "60px");
       sWText.style("display", "inline");
+      sWText.elt.title = sliderManager.titleText.orderStrokeWeight;
+      
       sWText.parent(newPartInfo);
 
       //   helpers.decreaseVertexArray();
@@ -881,6 +937,7 @@ function SlideTemplates() {
       // sWslider.style("line-hight", "23px");
       sWslider.style("display", "inline");
       sWslider.elt.onchange = strokeweightInput;
+      sWslider.elt.title = sliderManager.titleText.orderStrokeWeight;
       sWslider.parent(newPartInfo);
 
       let sWInput = createInput(part.strokeWeight.toString(), "number");
@@ -890,6 +947,7 @@ function SlideTemplates() {
       sWInput.style("display", "inline");
       // sWInput.style("top", "75px");
       sWInput.elt.onchange = strokeweightInput;
+      sWInput.elt.title = sliderManager.titleText.orderStrokeWeight;
       sWInput.parent(newPartInfo);
 
       linebreak = document.createElement("br");
@@ -916,6 +974,25 @@ function SlideTemplates() {
       sel.changed(selectMenuInput);
       sel.parent(newPartInfo);
 
+      sel.elt.options[0].title = sliderManager.titleText.generalSelDefault;
+      sel.elt.options[1].title = sliderManager.titleText.generalSelLines;
+      sel.elt.options[2].title = sliderManager.titleText.generalSelPoints;
+      sel.elt.options[3].title = sliderManager.titleText.generalSelTriangles;
+      sel.elt.options[4].title = sliderManager.titleText.generalSelTriangleStrip;
+      sel.elt.options[5].title = sliderManager.titleText.generalSelTriangleFan;
+      sel.elt.options[6].title = sliderManager.titleText.generalSelQuad;
+      sel.elt.options[7].title = sliderManager.titleText.generalSelTess;
+      
+      sel.elt.title =   sliderManager.titleText.generalSelIntro+ "\n"+
+                        sliderManager.titleText.generalSelLines+ "\n"+
+                        sliderManager.titleText.generalSelPoints+ "\n"+
+                        sliderManager.titleText.generalSelTriangles+ "\n"+
+                        sliderManager.titleText.generalSelTriangleStrip+ "\n"+
+                        sliderManager.titleText.generalSelTriangleFan+ "\n"+
+                        sliderManager.titleText.generalSelQuad+ "\n"+
+                        sliderManager.titleText.generalSelTess+ "\n"+
+                        sliderManager.titleText.generalSelOutro;
+                        
       let buttonText;
 
       if (drawManager.defaultPart.endShape) {
@@ -930,6 +1007,7 @@ function SlideTemplates() {
       // button.style("top", "100px");
       button.style("display", "inline");
       button.mousePressed(endShapeInput);
+      button.elt.title = sliderManager.titleText.generalEndShape;
 
       button.parent(newPartInfo);
 
@@ -998,7 +1076,7 @@ function SlideTemplates() {
         this.elt.parentElement.parentElement.parentElement.identity;
       partIndex = this.elt.parentElement.parentElement.identity;
 
-      console.log(this.elt.value);
+      // console.log(this.elt.value);
       // console.log(this.elt.parentElement.parentElement.identity)
       // console.log(figureIndex,drawingIndex,partIndex)
 
@@ -1040,7 +1118,7 @@ function SlideTemplates() {
       figureIndex = this.elt.parentElement.parentElement.parentElement.identity;
       drawingIndex = this.elt.parentElement.parentElement.identity;
 
-      console.log("displayDrawInput Indicies:", figureIndex, drawingIndex);
+      // console.log("displayDrawInput Indicies:", figureIndex, drawingIndex);
       let drawing = drawManager.getFigure(figureIndex).drawings[drawingIndex];
       let partsLength = drawing.parts.length;
       drawing.showDetails = !drawing.showDetails;
@@ -1053,16 +1131,16 @@ function SlideTemplates() {
       if (drawing.showDetails) {
         elem.forEach((orderSlide) => {
           // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color = "black";
-          console.log(orderSlide.children[HTMLIndexDrawing].children[8]);
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[8]);
           orderSlide.children[HTMLIndexDrawing].children[8].style.color =
             "black";
 
           for (let i = 0; i < partsLength; i++) {
-            console.log(
-              orderSlide.children[HTMLIndexDrawing].children[
-                HTMLIndexPart + i * 2
-              ]
-            );
+            // console.log(
+            //   orderSlide.children[HTMLIndexDrawing].children[
+            //     HTMLIndexPart + i * 2
+            //   ]
+            // );
             orderSlide.children[HTMLIndexDrawing].children[
               HTMLIndexPart + i * 2
             ].style.display = "block";
@@ -1072,15 +1150,15 @@ function SlideTemplates() {
       } else {
         elem.forEach((orderSlide) => {
           // orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[10].style.color = "red";
-          console.log(orderSlide.children[HTMLIndexDrawing].children[8]);
+          // console.log(orderSlide.children[HTMLIndexDrawing].children[8]);
           orderSlide.children[HTMLIndexDrawing].children[8].style.color = "red";
 
           for (let i = 0; i < partsLength; i++) {
-            console.log(
-              orderSlide.children[HTMLIndexDrawing].children[
-                HTMLIndexPart + i * 2
-              ]
-            );
+            // console.log(
+            //   orderSlide.children[HTMLIndexDrawing].children[
+            //     HTMLIndexPart + i * 2
+            //   ]
+            // );
             orderSlide.children[HTMLIndexDrawing].children[
               HTMLIndexPart + i * 2
             ].style.display = "none";
@@ -1388,7 +1466,7 @@ function SlideTemplates() {
     function inputDrawDrawing() {
       figureIndex = this.elt.parentElement.parentElement.identity;
       drawingIndex = this.elt.parentElement.identity;
-      console.log("inputDrawDrawing", figureIndex, drawingIndex);
+      // console.log("inputDrawDrawing", figureIndex, drawingIndex);
 
       // let indicies = drawManager.getCurrentIndicies();
       // console.log(this.elt.children[0].checked);
@@ -1534,7 +1612,7 @@ function SlideTemplates() {
     function moveUpDrawing() {
       let figureIndex = this.elt.parentElement.parentElement.identity;
       let drawingIndex = this.elt.parentElement.identity;
-      console.log("runnign", drawingIndex, figureIndex);
+      // console.log("runnign", drawingIndex, figureIndex);
 
       if (drawingIndex <= 0) {
         return;
@@ -1838,19 +1916,19 @@ function SlideTemplates() {
       helpers.updateNumberOfDrawingsText(figureIndex, drawingIndex);
     }
 
-    function createNewPart(figureIndex, drawingIndex, partIndex) {
+    function createNewPart(PointerEvent,figureIndex, drawingIndex, partIndex) {
       // figureI++; drawingI++,partI++
-      console.log(this)
-      // console.log("createNewPart Indicies:", figureIndex ,drawingIndex, partIndex)
+      // console.log(this)
+      console.log("createNewPart Indicies:", figureIndex ,drawingIndex, partIndex)
       if (figureIndex === undefined) {
         figureIndex =
-          this.elt.parentElement.parentElement.parentElement.identity;
+          this.parentElement.parentElement.parentElement.identity;
       }
       if (drawingIndex === undefined) {
-        drawingIndex = this.elt.parentElement.parentElement.identity;
+        drawingIndex = this.parentElement.parentElement.identity;
       }
       if (partIndex === undefined) {
-        partIndex = this.elt.parentElement.identity + 1;
+        partIndex = this.parentElement.identity + 1;
       }
       // console.log("createNewPart Indicies, after:", figureIndex ,drawingIndex, partIndex)
       // console.log(figureIndex, drawingIndex, partIndex)
@@ -1977,7 +2055,7 @@ function SlideTemplates() {
         // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[1].value);
         // console.log("order elemement", element);
 
-        console.log(orderSlide.children[HTMLIndexDrawing].children[1]);
+        // console.log(orderSlide.children[HTMLIndexDrawing].children[1]);
         orderSlide.children[HTMLIndexDrawing].children[1].value =
           this.elt.value;
       });
@@ -1997,7 +2075,7 @@ function SlideTemplates() {
         // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[1].value);
         // console.log("order elemement", element);
 
-        console.log(orderSlide.children[1]);
+        // console.log(orderSlide.children[1]);
         orderSlide.children[1].value = this.elt.value;
       });
     }
@@ -2013,7 +2091,7 @@ function SlideTemplates() {
       let HTMLIndexPart = sliderManager.HTMLIndecies.firstPart + 2 * partIndex;
 
       let indicies = drawManager.getCurrentIndicies();
-      console.log(indicies);
+      // console.log(indicies);
       let HTMLIndexDrawingOriginal =
         sliderManager.HTMLIndecies.firstDrawing + indicies[1];
       let HTMLIndexPartOriginal =
@@ -2061,7 +2139,7 @@ function SlideTemplates() {
     mainTextElem.style("position", "absolute");
     mainTextElem.style("left", "0px");
     mainTextElem.style("top", "-12px");
-
+      mainTextElem.elt.title = sliderManager.titleText.default;
     // console.log("mainTextElem", mainTextElem)
 
     let fillText = createP("Fill:");
@@ -2070,7 +2148,7 @@ function SlideTemplates() {
     fillText.style("left", "0px");
     fillText.style("top", "5px");
     fillText.parent(newSlide);
-
+    fillText.elt.title = sliderManager.titleText.defaultFill;
     let inpColorFill = createColorPicker(drawManager.defaultPart.fill);
     // console.log();
     inpColorFill.style("left", "70px");
@@ -2078,6 +2156,7 @@ function SlideTemplates() {
     inpColorFill.style("position", "absolute");
     inpColorFill.style("height", "20px");
     inpColorFill.parent(newSlide);
+    inpColorFill.elt.title = sliderManager.titleText.defaultFill;
     inpColorFill.input(() => {
       // console.log(inpColorFill.elt.value);
       // console.log(inpColorFill.elt.value);
@@ -2089,7 +2168,7 @@ function SlideTemplates() {
           elem[i].children[2].value = inpColorFill.elt.value;
         }
       }
-      console.log(elem[0].children[2].value, inpColorFill.elt.value);
+      // console.log(elem[0].children[2].value, inpColorFill.elt.value);
       drawManager.defaultPart.fill = color(inpColorFill.elt.value);
     });
     // console.log(inpColorFill.elt.value);
@@ -2106,6 +2185,7 @@ function SlideTemplates() {
     noFillBox.style("left", "120px");
     noFillBox.style("top", "22px");
     noFillBox.parent(newSlide);
+    noFillBox.elt.title =  sliderManager.titleText.defaultNoFill;
     noFillBox.changed(() => {
       // console.log(noFillBox.checked())
 
@@ -2128,6 +2208,7 @@ function SlideTemplates() {
     strokeText.style("top", "30px");
     strokeText.style("position", "absolute");
     strokeText.parent(newSlide);
+    strokeText.elt.title = sliderManager.titleText.defaultStroke;
 
     let inpColorStroke = createColorPicker(drawManager.defaultPart.stroke);
     inpColorStroke.style("position", "absolute");
@@ -2135,9 +2216,10 @@ function SlideTemplates() {
     inpColorStroke.style("top", "50px");
     inpColorStroke.style("height", "20px");
     inpColorStroke.parent(newSlide);
+    inpColorStroke.elt.title = sliderManager.titleText.defaultStroke;
     inpColorStroke.input(() => {
-      console.log(inpColorStroke.elt.value);
-      console.log(color(inpColorStroke.elt.value).levels);
+      // console.log(inpColorStroke.elt.value);
+      // console.log(color(inpColorStroke.elt.value).levels);
 
       let elem = document.getElementsByClassName("defaultSlide");
       let length = elem.length;
@@ -2147,7 +2229,7 @@ function SlideTemplates() {
           elem[i].children[5].value = inpColorStroke.elt.value;
         }
       }
-      console.log(elem[0].children[5], inpColorStroke.elt.value);
+      // console.log(elem[0].children[5], inpColorStroke.elt.value);
 
       drawManager.defaultPart.stroke = color(inpColorStroke.elt.value);
     });
@@ -2166,8 +2248,9 @@ function SlideTemplates() {
     noStrokeBox.style("left", "120px");
     noStrokeBox.style("top", "45px");
     noStrokeBox.parent(newSlide);
+    noStrokeBox.elt.title = sliderManager.titleText.defaultNoStroke;
     noStrokeBox.changed(() => {
-      console.log(noStrokeBox.checked());
+      // console.log(noStrokeBox.checked());
 
       let elem = document.getElementsByClassName("defaultSlide");
       let length = elem.length;
@@ -2188,6 +2271,7 @@ function SlideTemplates() {
     xText.style("top", "-15px");
     xText.style("cursor", "pointer");
     xText.style("color", "#993030");
+    xText.elt.title = sliderManager.titleText.generalX;
     xText.elt.onmouseover = function () {
       $(this).css({ color: "orange" });
     };
@@ -2199,34 +2283,39 @@ function SlideTemplates() {
     });
     xText.parent(newSlide);
 
-    let button = createButton("&#x2191;");
+    let buttonUp = createButton("&#x2191;");
 
-    button.style("position", "absolute");
-    button.style("right", "30px");
-    button.style("top", "0px");
+    buttonUp.style("position", "absolute");
+    buttonUp.style("right", "30px");
+    buttonUp.style("top", "0px");
 
-    button.style("width", "auto");
+    buttonUp.style("width", "auto");
+    buttonUp.elt.title = sliderManager.titleText.generalUp;
     // button.style("display", "inline");
     // button.style("top", "123px")
-    button.parent(newSlide);
-    button.mousePressed(() => {
-      console.log(button, this);
+    buttonUp.parent(newSlide);
+    buttonUp.mousePressed(moveSlideUp);
 
-      helpers.setVertexArrayToStart();
-    });
+    // function moveSlideUp (){
+    //   console.log("button and this",buttonUp,this);
+    //   parent = buttonUp.elt.parentElement.parentElement;
+    //   lenght = parent.children.length;
+    //   console.log(parent, length)
+    // }
 
-    button = createButton("&#x2193;");
+    let button = createButton("&#x2193;");
 
     button.style("position", "absolute");
     button.style("right", "52px");
     button.style("top", "0px");
 
     button.style("width", "auto");
+    button.elt.title = sliderManager.titleText.generalDown;
     // button.style("display", "inline");
     // button.style("top", "123px")
     button.parent(newSlide);
     button.mousePressed(() => {
-      console.log(button, this);
+      // console.log(button, this);
 
       helpers.decreaseVertexArray();
     });
@@ -2315,7 +2404,7 @@ function SlideTemplates() {
     button.style("top", "100px");
     button.parent(newSlide);
     button.mousePressed(() => {
-      console.log(button);
+      // console.log(button);
       drawManager.defaultPart.endShape = !drawManager.defaultPart.endShape;
 
       let elem = document.getElementsByClassName("defaultSlide");
@@ -2352,13 +2441,31 @@ function SlideTemplates() {
       let length = elem.length;
       if (length > 1) {
         for (let i = 0; i < length; i++) {
-          console.log(elem[i].children[12].value);
+          // console.log(elem[i].children[12].value);
           elem[i].children[12].value = sel.value();
         }
       }
       drawManager.defaultPart.vertexMode = sel.value();
     });
-    // console.log(drawManager.defaultPart.vertexMode);
+    
+    sel.elt.options[0].title = sliderManager.titleText.generalSelDefault;
+      sel.elt.options[1].title = sliderManager.titleText.generalSelLines;
+      sel.elt.options[2].title = sliderManager.titleText.generalSelPoints;
+      sel.elt.options[3].title = sliderManager.titleText.generalSelTriangles;
+      sel.elt.options[4].title = sliderManager.titleText.generalSelTriangleStrip;
+      sel.elt.options[5].title = sliderManager.titleText.generalSelTriangleFan;
+      sel.elt.options[6].title = sliderManager.titleText.generalSelQuad;
+      sel.elt.options[7].title = sliderManager.titleText.generalSelTess;
+      
+      sel.elt.title =   sliderManager.titleText.generalSelIntro+ "\n"+
+                        sliderManager.titleText.generalSelLines+ "\n"+
+                        sliderManager.titleText.generalSelPoints+ "\n"+
+                        sliderManager.titleText.generalSelTriangles+ "\n"+
+                        sliderManager.titleText.generalSelTriangleStrip+ "\n"+
+                        sliderManager.titleText.generalSelTriangleFan+ "\n"+
+                        sliderManager.titleText.generalSelQuad+ "\n"+
+                        sliderManager.titleText.generalSelTess+ "\n"+
+                        sliderManager.titleText.generalSelOutro;
     sel.parent(newSlide);
 
     // xText.style("float", "top")
@@ -2394,6 +2501,7 @@ function SlideTemplates() {
     mainTextElem.style("top", "0px");
     mainTextElem.style("width", "270px");
     mainTextElem.style("overflow-x", "hidden");
+    mainTextElem.elt.title = sliderManager.titleText.current;
     // mainTextElem.style("overflow-y", "auto");
     // mainTextElem.style("display", "inline");
     // mainTextElem.style("height", "22px");
@@ -2408,6 +2516,7 @@ function SlideTemplates() {
     fillText.style("left", "0px");
     fillText.style("top", "5px");
     fillText.parent(newSlide);
+    fillText.elt.title = sliderManager.titleText.currentFill;
 
     let inpColorFill = createColorPicker(part.fill);
 
@@ -2415,6 +2524,7 @@ function SlideTemplates() {
     inpColorFill.style("top", "25px");
     inpColorFill.style("position", "absolute");
     inpColorFill.style("height", "20px");
+    inpColorFill.elt.title = sliderManager.titleText.currentFill;
     inpColorFill.input(() => {
       // console.log(inpColorFill.elt.value);
       // console.log(inpColorFill.elt.value);
@@ -2426,7 +2536,7 @@ function SlideTemplates() {
           elem[i].children[2].value = inpColorFill.elt.value;
         }
       }
-      console.log(elem[0].children[2].value, inpColorFill.elt.value);
+      // console.log(elem[0].children[2].value, inpColorFill.elt.value);
       drawManager.getPart().fill = color(inpColorFill.elt.value);
       
       toolbox.selectedTool.drawn = false;
@@ -2444,6 +2554,7 @@ function SlideTemplates() {
     noFillBox.style("position", "absolute");
     noFillBox.style("left", "120px");
     noFillBox.style("top", "22px");
+    noFillBox.elt.title = sliderManager.titleText.currentNoFill;
     noFillBox.changed(() => {
       // console.log(noFillBox.checked())
 
@@ -2467,6 +2578,7 @@ function SlideTemplates() {
     strokeText.style("left", "0px");
     strokeText.style("top", "30px");
     strokeText.style("position", "absolute");
+    strokeText.elt.title = sliderManager.titleText.currentStroke;
     strokeText.parent(newSlide);
 
     let inpColorStroke = createColorPicker(part.stroke);
@@ -2474,6 +2586,7 @@ function SlideTemplates() {
     inpColorStroke.style("left", "70px");
     inpColorStroke.style("top", "50px");
     inpColorStroke.style("height", "20px");
+    inpColorStroke.elt.title = sliderManager.titleText.currentStroke;
     inpColorStroke.input(() => {
       // console.log(inpColorStroke.elt.value);
       // console.log(color(inpColorStroke.elt.value).levels);
@@ -2486,7 +2599,7 @@ function SlideTemplates() {
           elem[i].children[5].value = inpColorStroke.elt.value;
         }
       }
-      console.log(elem[0].children[5], inpColorStroke.elt.value);
+      // console.log(elem[0].children[5], inpColorStroke.elt.value);
 
       drawManager.getPart().stroke = color(inpColorStroke.elt.value);
       
@@ -2504,8 +2617,9 @@ function SlideTemplates() {
     noStrokeBox.style("position", "absolute");
     noStrokeBox.style("left", "120px");
     noStrokeBox.style("top", "45px");
+    noStrokeBox.elt.title = sliderManager.titleText.currentNoStroke;
     noStrokeBox.changed(() => {
-      console.log(noStrokeBox.checked());
+      // console.log(noStrokeBox.checked());
 
       let elem = document.getElementsByClassName("currentSlide");
       let length = elem.length;
@@ -2528,6 +2642,7 @@ function SlideTemplates() {
     xText.style("top", "-15px");
     xText.style("cursor", "pointer");
     xText.style("color", "#993030");
+    xText.elt.title = sliderManager.titleText.generalX;
     xText.elt.onmouseover = function () {
       $(this).css({ color: "orange" });
     };
@@ -2553,6 +2668,7 @@ function SlideTemplates() {
     sWText.style("font-size", "15px");
     sWText.style("left", "0px");
     sWText.style("top", "60px");
+    sWText.elt.title =  sliderManager.titleText.currentStrokeWeight;
     sWText.parent(newSlide);
 
     let button = createButton("&#x2191;");
@@ -2562,14 +2678,11 @@ function SlideTemplates() {
     button.style("top", "0px");
 
     button.style("width", "auto");
+    button.elt.title = sliderManager.titleText.generalUp;
     // button.style("display", "inline");
     // button.style("top", "123px")
     button.parent(newSlide);
-    button.mousePressed(() => {
-      console.log(button, this);
-
-      helpers.setVertexArrayToStart();
-    });
+    button.mousePressed(moveSlideUp);
 
     button = createButton("&#x2193;");
 
@@ -2581,11 +2694,10 @@ function SlideTemplates() {
     // button.style("display", "inline");
     // button.style("top", "123px")
     button.parent(newSlide);
-    button.mousePressed(() => {
-      console.log(button, this);
+    button.elt.title = sliderManager.titleText.generalDown;
+    button.mousePressed(moveSlideDown);
 
-      helpers.decreaseVertexArray();
-    });
+
     let sWslider = createSlider(
       drawManager.settings.minStrokeWeight,
       drawManager.settings.maxStrokeWeight,
@@ -2594,6 +2706,7 @@ function SlideTemplates() {
     sWslider.style("position", "absolute");
     sWslider.style("left", "80px");
     sWslider.style("top", "75px");
+    sWslider.elt.title = sliderManager.titleText.currentStrokeWeight;
     sWslider.elt.onchange = () => {
       // console.log(sWslider)
       // console.log(sWslider.value());
@@ -2622,7 +2735,7 @@ function SlideTemplates() {
       drawManager.getPart().strokeWeight = parseInt(sWslider.elt.value);
       
       toolbox.selectedTool.drawn = false;
-      console.log("sWslider.elt.value", sWslider.elt.value);
+      // console.log("sWslider.elt.value", sWslider.elt.value);
       // sWInput.elt.value = drawManager.defaultPart.strokeWeight;
       // console.log(drawManager.defaultPart.strokeWeight);
     };
@@ -2633,6 +2746,7 @@ function SlideTemplates() {
     sWInput.style("right", "20px");
     sWInput.style("width", "60px");
     sWInput.style("top", "75px");
+    sWInput.elt.title = sliderManager.titleText.currentStrokeWeight;
     sWInput.elt.onchange = () => {
       // console.log(sWslider.value());
       // console.log(sWInput.elt.value);
@@ -2653,7 +2767,7 @@ function SlideTemplates() {
       }
 
       drawManager.getPart().strokeWeight = parseInt(sWInput.elt.value);
-      console.log("sWInput.elt.value", sWInput.elt.value);
+      // console.log("sWInput.elt.value", sWInput.elt.value);
       
 
       toolbox.selectedTool.drawn = false;
@@ -2674,6 +2788,7 @@ function SlideTemplates() {
     button.style("right", "20px");
     button.style("width", "175px");
     button.style("top", "100px");
+    button.elt.title = sliderManager.titleText.generalEndShape;
     button.mousePressed(() => {
       // console.log(button)
       drawManager.getPart().endShape = !drawManager.getPart().endShape;
@@ -2682,13 +2797,13 @@ function SlideTemplates() {
       let length = elem.length;
       if (length > 0) {
         if (part.endShape) {
-          console.log("endShape true");
-          console.log("elem[0].children[11].innerText", elem[0].children);
+          // console.log("endShape true");
+          // console.log("elem[0].children[11].innerText", elem[0].children);
           for (let i = 0; i < length; i++) {
             elem[i].children[11].innerText = "endShape(CLOSE)";
           }
         } else {
-          console.log("endShape false");
+          // console.log("endShape false");
           for (let i = 0; i < length; i++) {
             elem[i].children[11].innerText = "endShape()";
           }
@@ -2719,19 +2834,39 @@ function SlideTemplates() {
       let length = elem.length;
       if (length > 1) {
         for (let i = 0; i < length; i++) {
-          console.log(elem[i].children[12].value);
+          // console.log(elem[i].children[12].value);
           elem[i].children[12].value = sel.value();
         }
       }
       drawManager.getPart().vertexMode = sel.value();
       toolbox.selectedTool.drawn = false;
     });
-    sel.parent(newSlide);
+    sel.elt.options[0].title = sliderManager.titleText.generalSelDefault;
+      sel.elt.options[1].title = sliderManager.titleText.generalSelLines;
+      sel.elt.options[2].title = sliderManager.titleText.generalSelPoints;
+      sel.elt.options[3].title = sliderManager.titleText.generalSelTriangles;
+      sel.elt.options[4].title = sliderManager.titleText.generalSelTriangleStrip;
+      sel.elt.options[5].title = sliderManager.titleText.generalSelTriangleFan;
+      sel.elt.options[6].title = sliderManager.titleText.generalSelQuad;
+      sel.elt.options[7].title = sliderManager.titleText.generalSelTess;
+      
+      sel.elt.title =   sliderManager.titleText.generalSelIntro+ "\n"+
+                        sliderManager.titleText.generalSelLines+ "\n"+
+                        sliderManager.titleText.generalSelPoints+ "\n"+
+                        sliderManager.titleText.generalSelTriangles+ "\n"+
+                        sliderManager.titleText.generalSelTriangleStrip+ "\n"+
+                        sliderManager.titleText.generalSelTriangleFan+ "\n"+
+                        sliderManager.titleText.generalSelQuad+ "\n"+
+                        sliderManager.titleText.generalSelTess+ "\n"+
+                        sliderManager.titleText.generalSelOutro;
 
-    let vText = createP("Vertecies:");
+    sel.parent(newSlide);
+    
+    let vText = createP("Verticies:");
     vText.style("position", "absolute");
     vText.style("left", "0px");
     vText.style("top", "110px");
+
     vText.parent(newSlide);
 
     // console.log("part", part)
@@ -2750,7 +2885,7 @@ function SlideTemplates() {
     button.style("line-height", "16px");
     button.parent(newSlide);
     button.mousePressed(() => {
-      console.log(button, this);
+      // console.log(button, this);
 
       helpers.setVertexArrayToStart();
     });
@@ -2764,18 +2899,25 @@ function SlideTemplates() {
     button.style("line-height", "16px");
     button.parent(newSlide);
     button.mousePressed(() => {
-      console.log(button, this);
+      // console.log(button, this);
 
       helpers.decreaseVertexArray();
     });
     button = createButton("D");
-
+    button.elt.onmouseover = function () {
+      $(this).css({ color: "orange" });
+    };
+    button.elt.onmouseout = function () {
+      $(this).css({ color: "#993030" });
+    };
+    button.style("color", "#993030");
     button.style("position", "absolute");
     button.style("left", "174px");
     button.style("width", "auto");
     button.style("top", "123px");
     button.style("line-height", "16px");
     button.parent(newSlide);
+    button.elt.title = sliderManager.titleText.currentDeleteVertex;
     button.mousePressed(() => {
       // console.log(button, this);
 
@@ -2803,14 +2945,74 @@ function SlideTemplates() {
     button.style("line-height", "16px");
     button.parent(newSlide);
     button.mousePressed(() => {
-      console.log(button, this);
+      // console.log(button, this);
 
       helpers.setVertexArrayToEnd();
     });
   };
 
+  function moveSlideUp (){
+    // console.log("button and this",this);
+    let parent = this.elt.parentElement.parentElement;
+    let currentElement = this.elt.parentElement
+    let length = parent.children.length;
+    if (length <= 2)
+    {
+      return;
+    }
+    let element = null
+    let index = 0
+    let found = false;
+    for (let i = 0; i < length; i++)
+    {
+      if (found)
+      {
+        element = parent.removeChild(parent.children[index]);
+        parent.append(element);
+      } else if (currentElement === parent.children[i])
+      {
+        if (i === 0)
+        {return}
+        index = i
+        element = parent.removeChild(parent.children[i-1]);
+        parent.append(element);
+        found = true;
+         
+      }
+    }
   
+  }
+  function moveSlideDown (){
+    // console.log("button and this",this);
+    let parent = this.elt.parentElement.parentElement;
+    let currentElement = this.elt.parentElement
+    let length = parent.children.length;
+    if (length <= 2)
+    {
+      return;
+    }
+    let lastSlide = length-1;
+    let element = null
+    let index = 0
+    let found = false;
+    for (let i = 0; i < length; i++)
+    {
+      if (found)
+      {
+        element = parent.removeChild(parent.children[index]);
+        parent.append(element);
+      } else if (currentElement === parent.children[i])
+      {
+        if (i === lastSlide)
+        {return}
+        index = i+1
+        element = parent.removeChild(parent.children[i]);
+        parent.append(element);
+        found = true;
+         
+      }
+    }
+  
+  }
 
-  function switchSliderUp() {}
-  function switchSliderDown() {}
 }

@@ -1,7 +1,17 @@
 function FreehandTool() {
   //set an icon and a name for the object
-  this.icon = "assets/freehand.jpg";
+  this.icon = "assets/img/PointdrawerAlpha.png";
   this.name = "PointDrawing";
+  this.title = `PointDraw has three functionalities:
+Click and open spot on the screen to add a point.
+One point is shown as a point, two as a line, and three and beyond
+creates a fill inside the shape.
+
+DragNDraw: Drag along the screen to draw multiple points. 
+Can be set or turned of in the drawMode Slide.
+
+Dragging: Click on an existing point to drag it to the position you would like. 
+Dragging setting can be set or turned of in the drawMode slide `
 
   this.drawn = false;
 
@@ -12,10 +22,10 @@ function FreehandTool() {
   this.dragDistanceBase = drawManager.drawModeSettings.dragDistanceBase;
   this.dragNDrawDistanceBase = drawManager.drawModeSettings.dragNDrawDistanceBase;
 
-  console.log("does this update aswell?",this.dragNDrawDistance);
+  // console.log("does this update aswell?",this.dragNDrawDistance);
   
   this.dragNDrawDistance = this.dragNDrawDistanceBase + drawManager.getPart().strokeWeight/2
-  console.log("drawManger.getPart().storkeWeight in setup of freehand tool",drawManager.getPart().strokeWeight);
+  // console.log("drawManger.getPart().storkeWeight in setup of freehand tool",drawManager.getPart().strokeWeight);
   this.dragDistance =
     this.dragDistanceBase + drawManager.getPart().strokeWeight / 2;
   this.dragNDraw = false;
@@ -32,11 +42,11 @@ function FreehandTool() {
     // console.log("should run every frame")
     // console.log("this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart]", this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart])
     if (this.updateSettings) {
-      console.log("before",this.dragNDrawDistance, "this.dragNDrawDistanceBase",this.dragNDrawDistanceBase, "drawManager.getPart().strokeWeight",drawManager.getPart().strokeWeight/2)
+      // console.log("before",this.dragNDrawDistance, "this.dragNDrawDistanceBase",this.dragNDrawDistanceBase, "drawManager.getPart().strokeWeight",drawManager.getPart().strokeWeight/2)
       this.dragNDrawDistance = this.dragNDrawDistanceBase +  drawManager.getPart().strokeWeight/2
       this.dragDistance =     this.dragDistanceBase +  drawManager.getPart().strokeWeight / 2;
-      console.log("strokeWeight in updateSettings",drawManager.getPart().strokeWeight)
-      console.log("after",this.dragNDrawDistance,"this.dragNDrawDistanceBase",this.dragNDrawDistanceBase)
+      // console.log("strokeWeight in updateSettings",drawManager.getPart().strokeWeight)
+      // console.log("after",this.dragNDrawDistance,"this.dragNDrawDistanceBase",this.dragNDrawDistanceBase)
       this.updateSettings = false;
       // console.log("dragDistance",  this.dragDistance);
     }
@@ -64,21 +74,38 @@ function FreehandTool() {
       mouseX >= 0 &&
       mouseX <= width &&
       mouseY >= 0 &&
-      mouseY <= height &&
-      !this.itemInDistance &&
-      !this.itemHeld
+      mouseY <= height //&&
+      // !this.itemInDistance 
+      // &&
+      
     ) {
       let vertexArray = drawManager.getVertexArray();
-      // if (!self.itemInDistance) 
+      if (!self.itemInDistance )
       {
-        // console.log("part.currentVertex", part.currentVertex)
         vertexArray.splice(part.currentVertex, 0, [mouseX, mouseY]);
-
-        drawManager.reDrawWithPoint();
+        if (drawManager.settings.drawWithAlpha)
+        {
+          drawManager.reDrawWithAlpha();
+        } else {
+          drawManager.reDrawWithPoint();
+        }
+        
         vertexArray.splice(part.currentVertex, 1);
-        // console.log(vertexArray.slice(part.currentVertex,part.currentVertex +1));
+      } else{
+        if (drawManager.settings.drawWithAlpha)
+        {
+          drawManager.reDrawWithAlpha();
+        } else {
+          drawManager.reDrawWithPoint();
+        }
       }
-    } else {
+      
+        // console.log("part.currentVertex", part.currentVertex)
+        
+        // console.log(vertexArray.slice(part.currentVertex,part.currentVertex +1));
+      
+    } else 
+      {
       updatePixels();
     }
   };
@@ -91,7 +118,7 @@ function FreehandTool() {
       if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
         let part = drawManager.getPart();
         let vertexArray = part.vertexArray;
-        console.log(drawManager.drawModeSettings.enableDragging)
+        // console.log(drawManager.drawModeSettings.enableDragging)
         if (self.itemInDistance && drawManager.drawModeSettings.enableDragging) {
           // currentVertex.push([mouseX, mouseY]);
           vertexArray[self.closeVertex] = [mouseX, mouseY];

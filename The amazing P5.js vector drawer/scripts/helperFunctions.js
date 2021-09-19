@@ -29,7 +29,7 @@ function HelperFunctions() {
     }
     this.selectBox = function(value)
     {
-        console.log("selectBox: value",value);
+        // console.log("selectBox: value",value);
         if (value)
         {
             //display all the checkboxes
@@ -331,8 +331,12 @@ function HelperFunctions() {
     this.moveHTMLUp = (parentHTML, index, HTMLIndex, diff, length)=>{
         
         // console.log("HTMLIndex-diff",HTMLIndex,HTMLIndex-diff)
-        parentHTML.children[HTMLIndex].identity--;
-        parentHTML.children[HTMLIndex-diff].identity++;
+        if (parentHTML.children[HTMLIndex].identity !== undefined)
+        {
+            parentHTML.children[HTMLIndex].identity--;
+            parentHTML.children[HTMLIndex-diff].identity++;
+        }
+        
 
         for (let j = 0; j < diff; j++)
                     {
@@ -366,14 +370,15 @@ function HelperFunctions() {
     }
 
     this.createNewPart =  () =>{
-        let elem = document.getElementsByClassName("order")
+        let elem = document.getElementsByClassName("order");
+        let indicies =  drawManager.getCurrentIndicies();
         if (elem.length > 0)
         {
-            let indicies =  drawManager.getCurrentIndicies();
+           
             let button = elem[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3]
-            console.log(button)
+            // console.log(button)
             
-            console.log("button. mouserdown",{button}, button.parentElement)
+            // console.log("button. mouserdown",{button}, button.parentElement)
             
             // button.dispatchEvent("mousedownEvent"))
             // console.log($(elem)[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3]);
@@ -381,9 +386,11 @@ function HelperFunctions() {
             // console.log( elem[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3]
             // )
             
-            elem[0].children[sliderManager.HTMLIndecies.firstDrawing+indicies[1]].children[sliderManager.HTMLIndecies.firstPart+indicies[2]*2].children[3].click()
+            button.click()
         } else {
             drawManager.addPart(indicies[0], indicies[1], indicies[2]+1);
+            drawManager.setCurrentPartR(indicies[2]+1);
+            this.updateSettingsCurSlide()
         }
 
 
@@ -440,14 +447,14 @@ function HelperFunctions() {
 
     this.saveSettingsFromStorage = (storage) =>
     {
-        console.log("storage to be saved in helpers.saveSettingsFromStorage()", storage)
+        // console.log("storage to be saved in helpers.saveSettingsFromStorage()", storage)
         window.localStorage.getItem("stored", JSON.stringify(storage))
     }
 
 
     
     let updateAllSetings = (settings) => {
-        console.log("settings in updateAllSetings", settings)
+        // console.log("settings in updateAllSetings", settings)
     }
 
     let screenshotIteration = 0;
@@ -549,7 +556,7 @@ function keyPressed()
                 {
                     if (keyCode === keyCodes.spacebar)
                     {
-                        console.log("spacebar")
+                        // console.log("spacebar")
                         self.createNewPart();
 
                        
@@ -564,7 +571,7 @@ function keyPressed()
         {
             // drawManager.saveFiguresToStorage();
             let indicies = drawManager.getCurrentIndicies()
-            console.log(indicies)            // let elem = document.getElementsByClassName("order")
+            // console.log(indicies)            // let elem = document.getElementsByClassName("order")
             
             // console.log("identities of first part")
             
@@ -578,11 +585,11 @@ function keyPressed()
             let length = elem[0].children.length;
             for (let i = 12; i < length; i ++)
             {
-                console.log("drawing identities",elem[0].children[i].identity);
+                // console.log("drawing identities",elem[0].children[i].identity);
                 let lengthH = elem[0].children[i].children.length
                 for (let j = 11; j < lengthH; j +=2)
                 {
-                    console.log("part identities",elem[0].children[i].children[j].identity);
+                    // console.log("part identities",elem[0].children[i].children[j].identity);
                     // console.log(elem[0].children[i].identity);
                 }
             }

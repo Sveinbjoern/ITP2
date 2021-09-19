@@ -7,7 +7,15 @@ function ShapesTool() {
 	//set an icon and a name for the object
 	this.icon = "assets/freehand.jpg";
 	this.name = "shapes";
-  
+	this.title = `Shapes creates the choosen shape of the choosen size, and color.
+
+Chooose the shape in the draw mode slide.
+
+DragNDraw: Drag along the screen to draw multiple shapes. 
+DragNDraw settings can be set or turned of in the drawMode Slide.
+
+Dragging: Click on an existing shape to drag it to the position you would like. 
+Dragging setting can be set or turned of in the drawMode slide `
 	this.drawn = false;
   
 	//to smoothly draw we'll draw a line from the previous mouse location
@@ -17,10 +25,10 @@ function ShapesTool() {
 	this.dragDistanceBase = drawManager.drawModeSettings.dragDistanceBase;
 	this.dragNDrawDistanceBase = drawManager.drawModeSettings.dragNDrawDistanceBase;
   
-	console.log("does this update aswell?",this.dragNDrawDistance);
+	// console.log("does this update aswell?",this.dragNDrawDistance);
 	
 	this.dragNDrawDistance = this.dragNDrawDistanceBase + drawManager.getPart().strokeWeight/2
-	console.log("drawManger.getPart().storkeWeight in setup of freehand tool",drawManager.getPart().strokeWeight);
+	// console.log("drawManger.getPart().storkeWeight in setup of freehand tool",drawManager.getPart().strokeWeight);
 	this.dragDistance =
 	  this.dragDistanceBase + drawManager.getPart().strokeWeight / 2;
 	this.dragNDraw = false;
@@ -37,11 +45,11 @@ function ShapesTool() {
 	  // console.log("should run every frame")
 	  // console.log("this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart]", this.figure.drawings[this.figure.currentDrawing].parts[this.figure.drawings[this.figure.currentDrawing].currentPart])
 	  if (this.updateSettings) {
-		console.log("before",this.dragNDrawDistance, "this.dragNDrawDistanceBase",this.dragNDrawDistanceBase, "drawManager.getPart().strokeWeight",drawManager.getPart().strokeWeight/2)
+		// console.log("before",this.dragNDrawDistance, "this.dragNDrawDistanceBase",this.dragNDrawDistanceBase, "drawManager.getPart().strokeWeight",drawManager.getPart().strokeWeight/2)
 		this.dragNDrawDistance = this.dragNDrawDistanceBase +  drawManager.getPart().strokeWeight/2
 		this.dragDistance =     this.dragDistanceBase +  drawManager.getPart().strokeWeight / 2;
-		console.log("strokeWeight in updateSettings",drawManager.getPart().strokeWeight)
-		console.log("after",this.dragNDrawDistance,"this.dragNDrawDistanceBase",this.dragNDrawDistanceBase)
+		// console.log("strokeWeight in updateSettings",drawManager.getPart().strokeWeight)
+		// console.log("after",this.dragNDrawDistance,"this.dragNDrawDistanceBase",this.dragNDrawDistanceBase)
 		this.updateSettings = false;
 		// console.log("dragDistance",  this.dragDistance);
 	  }
@@ -96,7 +104,7 @@ function ShapesTool() {
 		if (mouseX >= 0 && mouseX <= width && mouseY >= 0 && mouseY <= height) {
 		  let part = drawManager.getPart();
 		  let vertexArray = part.vertexArray;
-		  console.log(drawManager.drawModeSettings.enableDragging)
+		//   console.log(drawManager.drawModeSettings.enableDragging)
 		  if (self.itemInDistance && drawManager.drawModeSettings.enableDragging) {
 			// currentVertex.push([mouseX, mouseY]);
 			vertexArray[self.closeVertex] = [mouseX, mouseY];
