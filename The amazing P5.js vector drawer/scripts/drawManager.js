@@ -224,7 +224,7 @@ function DrawManager() {
 
   this.setCurrentPartR = (partIndex, drawingIndex, figureIndex) => {
     
-
+    this.removeCurrentPartMarking();
     // console.log("setCurrentPart()",partIndex,drawingIndex, figureIndex)
     // console.log("HTMLIndexDrawingOriginal",HTMLIndexDrawingOriginal)
     if (figureIndex === undefined) {

@@ -22,10 +22,11 @@ function SliderManager() {
     bottom: true,
   }
   this.col = {
-    currentColorPart: "rgb(100, 26, 26)",
-    partDefault: "rgb(119, 80, 192)",
+    currentColorPart: "rgb(100, 26, 26)",//rgb(100, 26, 26)
+    partDefault: "rgb(119, 80, 192)",//rgb(182, 67, 102)
     drawing: "rgb(19, 180, 192)",
     figure: "rgb(50, 50, 200)",
+    defaultSlide: "rgb(26,100,26)"
   };
   this.HTMLIndecies = {
     firstFigure: 12,
@@ -313,6 +314,46 @@ function SliderManager() {
 
   
 
+  this.resetSelectDiv = () =>{
+    
+    let figure = drawManager.getFigure();
+    let elems =  document.getElementsByClassName("selectDiv")
+    let length = elems.children.length
+    if (length <= 0)
+    {
+      return;
+    }
+    drawingsLength = figure.drawings.length;
+
+    for (let i = 0;i < length;i++)
+      while (elems[i].firstChild !== elems[i].lastChild)
+      {
+          elems[i].removeChild(elems[i].lastChild);
+          
+          
+      }
+
+      for (let j = 0;j < drawingsLength; j++)
+      {
+        let drawing = figure.drawings[i];
+
+        let box = createCheckbox(drawing.name, drawing.isSelected)
+        box.parent(elems[i])
+        box.elt.onchange = setSelcted(i,j)
+        box.style("margin-left", "5px")
+
+        let parts = figure.drawing[i].parts
+        
+      }  
+      
+      
+          
+  }
+  this.setDrawModeSlideMirror = () =>{
+    
+
+  }
+
   this.exchangeSliders = (slideType,topPosition) => {
         
         let elem = document.getElementsByClassName(slideType);
@@ -364,9 +405,9 @@ by clicking and holding and dragging any old point.
 The distance from the point where dragging starts
 to work is adjusted by the slider. You can turn off
 dragging with the check box.`,
-    drawMode: ``,
-    drawMode: ``,
-    drawMode: ``,
+    drawMode1: ``,
+    drawMode2: ``,
+    drawMode3: ``,
 
     //Order related text
     orderNewDrawing: `Create a new collection
@@ -428,7 +469,7 @@ With this you can hide the whole figure`,
 You can only draw one part
 at the time! Use this button to
 set this part as your current part!`,  
-    order: ``,  
+    order123: ``,  
     //Current related text
     currentDeleteVertex: `Removes one vertex from
 your current part.
@@ -446,20 +487,23 @@ connecting your shape for
 the part you are currently drawing.`,
     currentNoStroke: `Removes the lines connecting 
 the shape you are currently drawing on.`,
-    currentStrokeWeight: ``,
+    currentStrokeWeight: `Adjust the thickness of the lines 
+connecting your current part.
+NB! Does nothing when noStroke is on`,
     currentVertex: `The current vertex decides where you 
-put the next point in this figure.
+put the next point in te current par you
+are drawing on.
 To change current Vertex you can use hotkeys:
 To start: up arrow
 To end: down arrow
-Increse: right arrow
-Decrese: left arrrow`,
+Increase: right arrow
+Decrease: left arrrow`,
     currentToStart: `Set the current vertex to 0.
-Allows you to draw from the the first vertex.
+Allows you to draw from the first vertex.
 
 Hotkey: up arrow`,
     currentToEnd: `Set the current vertex to the last vertex.
-Allows you to draw from the the last vertex.
+Allows you to draw from the last vertex.
 
 Hotkey: down arrow`,
     currentIncrease: `Increase the current vertex by one.
@@ -470,23 +514,23 @@ Hotkey: right arrow`,
 Allows you to insert a vertex where you want.
 
 Hotkey: left arrow`,
-    current: ``,
+    current123: ``,
     //Settings related text
-    default7: ``,
+    settings12312: ``,
     //Default related text
     defaultFill: `Set the color of the inside
 of any new part you make`,
     defaultNoFill: `Removes the fill or color
 in the center of any 
-new part you make. Leaving 
-the edges still visible`,
+new part you make.`,
     defaultStroke: `Set the color of the lines
 connecting your shape for any 
 new part you make`,
     defaultNoStroke: `Removes the lines connecting
-you shapes for any new part you make. 
-Leaving the color inside still visible`,
-    default13: ``,
+you shapes for any new part you make.`,
+    defaultStrokeWeight: `Adjust the thickness of the lines 
+for any new part you make.
+NB! Does nothing when noStroke is on`,
     default14: ``,
     default15: ``,
     default16: ``,

@@ -13,6 +13,7 @@
     <script src="scripts/freehandTool.js"></script>
     <script src="scripts/shapesTool.js"></script>
     <script src="scripts/mirrorDrawTool.js"></script>
+    <script src="scripts/mirrorTool.js"></script>
     <script src="scripts/sprayCanTool.js"></script>
     <script src="scripts/slideTemplates.js"></script>
     <script src="scripts/sliderManager.js"></script>
@@ -25,21 +26,24 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
   </head>
   <body onresize="fitToScreen()">
-    <div id="hiddenElements">
-      <input type="radio" id="drawMode" name="mode" value="drawMode" checked />
-       
-      <input
-        type="radio"
-        id="animationMode"
-        name="mode"
-        value="animationMode"
-      />
-        <input type="radio" id="canvasMode" name="mode" value="canvasMode" />
-    </div>
+    
+      
+    
 
     
 
     <div class="wrapper"> 
+      <input type="radio" id="PointMode" name="mode" class="modeHidden" checked />
+       
+      <input
+        type="radio"
+        id="MirrorMode"
+        name="mode"
+        class="modeHidden"
+      />
+        <input type="radio" id="canvasMode" name="mode" class="modeHidden"/>
+
+
           <div id = "header">
           <div #DrawModeButton>D</div>
          

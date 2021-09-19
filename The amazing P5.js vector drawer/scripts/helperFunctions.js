@@ -296,6 +296,13 @@ function HelperFunctions() {
         } 
     }
 
+    this.removeAllChildren = (HTMLElem) =>{
+        while (HTMLElem.firstChild)
+        {
+            HTMLElem.removeChild(HTMLElem.lastChild); 
+        }
+    }
+
     this.insertHTMLElement = ( parentHTML, index, HTMLIndex, diff ,length) => {
         // console.log("sortHTMLElements", parentHTML.children[7], partIndex, HTMLIndex,  diff)
         let chosenElemnent;
@@ -595,7 +602,7 @@ function keyPressed()
             }
             
             
-            // removeElements();
+           
 
             // currentPartIndex = keepIndexConsistent(currentPartIndex,  ,"remove");
             // console.log("keypressed R");

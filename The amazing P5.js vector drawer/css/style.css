@@ -11,11 +11,27 @@ body {
   overflow: hidden;
 }
 
-/* Hidden elements css */
-#hiddenElements {
-  display: none;
-  /* margin: ; */
+/* control drawMode with hidden radiobuttons */
+.modeHidden{
+	display: none;
 }
+
+#PointMode:checked ~ .pointMode {
+	display: inline;
+}
+#PointMode:not(:checked) ~ .pointMode {
+	display: none;
+}
+#MirrorMode:checked ~ .mirrorMode {
+	display: block;
+}
+#MirrorMode:not(:checked) ~ .mirrorMode {
+	display: none;
+}
+
+
+
+
 
 /* Header */
 /* header {

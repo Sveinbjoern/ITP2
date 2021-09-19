@@ -17,7 +17,7 @@ function SlideTemplates() {
             min-width: 300px;
             max-width:300px;
             height: content;
-            overflow-y: hidden;
+            overflow-x: hidden;
             margin:  0px;
             padding: 0px;
             text-align: left;
@@ -25,245 +25,398 @@ function SlideTemplates() {
             `
     ); // display: flex;// // ;flex-wrap: wrap;justify-content: flex-start;// background-color: rgb(50, 50, 200);
 
-    let mainTextElem = createP("Draw Mode: ");
-    mainTextElem.parent(newSlide);
-    // mainTextElem.style("position", "absolute");
-    // mainTextElem.style("left", "0px")
-    // mainTextElem.style("top", "-12px")
-    mainTextElem.style("margin", "0px");
-    mainTextElem.style("width", "61px");
-    mainTextElem.style("text-align", "left");
-    mainTextElem.style("display", "inline");
-    mainTextElem.elt.title = sliderManager.titleText.drawMode;
+    let hiddenButton = createButton("")
+    hiddenButton.style("display", "none")
+    hiddenButton.id("selectDrawModePoint");
+    hiddenButton.elt.onclick = setDrawModePoint
 
-   
+    hiddenButton.elt.click();
 
-    if (toolbox.selectedTool.name == "PointDrawing") {
-      let modeTextElem = createP(toolbox.selectedTool.name);
-      modeTextElem.parent(newSlide);
-      // modeTextElem.style("position", "absolute");
-      // modeTextElem.style("left", "0px")
-      // modeTextElem.style("top", "-12px")
-      modeTextElem.style("margin", "0px");
-      modeTextElem.style("max-width", "200px");
-      modeTextElem.style("text-align", "left");
-      modeTextElem.style("display", "inline");
-      modeTextElem.elt.title = sliderManager.titleText.drawMode;
+    hiddenButton = createButton("")
+    hiddenButton.style("display", "none")
+    hiddenButton.id("selectDrawModeMirror");
+    hiddenButton.elt.onclick = setDrawModeMirror;
+    hiddenButton.elt.click();
 
- 
-      button = createButton("&#x2191;");
 
-      // button.style("position", "absolute");
-      button.style("float", "right");
-      button.style("margin-right", "30px");
-      // button.style("width", "auto");
-      button.style("display", "inline");
-      // button.style("text-align", "right")
-      button.parent(newSlide);
-      // button.style("visibility", "hidden");
-      button.mousePressed(moveSlideUp);
-      button.elt.title = sliderManager.titleText.generalUp;
 
-      button = createButton("&#x2193;");
-      // button.style("text-align", "right")
-      // button.style("position", "absolute");
-      // button.style("margin-right", "31px")
-      button.style("float", "right");
-      // button.style("width", "auto");
-      button.style("display", "inline");
-      // button.style("visibility", "hidden");
-      // button.style("top", "123px")
-      button.mousePressed(moveSlideDown);
-      button.elt.title = sliderManager.titleText.generalDown;
-      button.parent(newSlide);
+      function setDrawModeMirror (){
+        let elems = document.getElementsByClassName("drawMode"); 
+    
+        for (let i = 0; i < elems.length; i++)
+        {
+          // remove all elements
+          helpers.removeAllChildren(elems[i])
 
-      let xText = createP("X");
-      // button.style("text-align", "right")
-      xText.style("position", "absolute");
-      xText.style("right", "17px");
-      // xText.style("top", "-15px");
-      // xText.style("top", "-12px")
-      button.style("float", "right");
-      xText.style("margin", "0px");
-      xText.style("display", "inline");
-      xText.style("cursor", "pointer");
-      xText.style("color", "#993030");
-      xText.elt.title = sliderManager.titleText.generalX;
-      xText.elt.onmouseover = function () {
-        $(this).css({ color: "orange" });
-      };
-      xText.elt.onmouseout = function () {
-        $(this).css({ color: "#993030" });
-      };
-      xText.mousePressed(function () {
-        newSlide.remove();
-      });
-      xText.parent(newSlide);
+          //add the PointDrawing elements
+          let mainTextElem = createP("Draw Mode: ");
+          mainTextElem.parent(elems[i]);
+          // mainTextElem.style("position", "absolute");
+          // mainTextElem.style("left", "0px")
+          // mainTextElem.style("top", "-12px")
+          mainTextElem.style("margin", "0px");
+          mainTextElem.style("width", "61px");
+          mainTextElem.style("text-align", "left");
+          mainTextElem.style("display", "inline");
+          mainTextElem.elt.title = sliderManager.titleText.drawMode;
+        
+          let modeTextElem = createP("Mirror Drawing");
+          modeTextElem.parent(elems[i]);
+          // modeTextElem.style("position", "absolute");
+          // modeTextElem.style("left", "0px")
+          // modeTextElem.style("top", "-12px")
+          modeTextElem.style("margin", "0px");
+          modeTextElem.style("max-width", "200px");
+          modeTextElem.style("text-align", "left");
+          modeTextElem.style("display", "inline");
+         
+          modeTextElem.elt.title = sliderManager.titleText.drawMode;
 
-    let linebreak = document.createElement("br");
-    if (newSlide.elt) {
-      newSlide.elt.appendChild(linebreak);
-    } else {
-      newSlide.appendChild(linebreak);
-    }
-     
 
-      let sWText = createP("DragNdraw distance: ");
-      // sWText.style("position", "absolute");
-      sWText.style("font-size", "15px");
-      // sWText.style("left", "0px");
-      // sWText.style("top", "60px");
-      sWText.style("display", "inline");
-      sWText.parent(newSlide);
-      sWText.elt.title = sliderManager.titleText.drawModeDragNDraw;
+          button = createButton("&#x2191;");
 
-      sWText = createP(toolbox.selectedTool.dragNDrawDistanceBase);
-      // sWText.style("position", "absolute");
-      sWText.style("font-size", "15px");
-      sWText.style("max-width", "100px");
-      sWText.style("overflow", "hidden");
-      sWText.addClass("dragNDrawDistanceText");
-      sWText.elt.title = sliderManager.titleText.drawModeDragNDraw;
-      // sWText.style("top", "60px");
-      sWText.style("display", "inline");
-      sWText.parent(newSlide);
+        // button.style("position", "absolute");
+        button.style("float", "right");
+        button.style("margin-right", "30px");
+        // button.style("width", "auto");
+        button.style("display", "inline");
+        // button.style("text-align", "right")
+        button.parent(elems[i]);
+        // button.style("visibility", "hidden");
+        button.mousePressed(moveSlideUp);
+        button.elt.title = sliderManager.titleText.generalUp;
 
-      // console.log(drawManager.drawModeSettings)
-      let selBox = createCheckbox("Enable dragNdraw", drawManager.drawModeSettings.enableDragNDraw);
-      // noFillBox.style("position", "absolute"); 
-      selBox.style("float", "right"); // noFillBox.style("left", "120px");
-      selBox.style("margin-right", "30px"); // noFillBox.style("left", "120px");
-      selBox.style("display", "inline");
-      // selBox.style("visibility", "hidden");
-      selBox.changed(dragNDrawCheckBoxEvent)
-      selBox.parent(newSlide);
-      selBox.elt.title = sliderManager.titleText.drawModeDragNDraw;
+        button = createButton("&#x2193;");
+        // button.style("text-align", "right")
+        // button.style("position", "absolute");
+        // button.style("margin-right", "31px")
+        button.style("float", "right");
+        // button.style("width", "auto");
+        button.style("display", "inline");
+        // button.style("visibility", "hidden");
+        // button.style("top", "123px")
+        button.mousePressed(moveSlideDown);
+        button.elt.title = sliderManager.titleText.generalDown;
+        button.parent(elems[i]);
+
+        let xText = createP("X");
+        // button.style("text-align", "right")
+        xText.style("position", "absolute");
+        xText.style("right", "17px");
+        // xText.style("top", "-15px");
+        // xText.style("top", "-12px")
+        // button.style("float", "right");
+        xText.style("margin", "0px");
+        xText.style("display", "inline");
+        xText.style("cursor", "pointer");
+        xText.style("color", "#993030");
+        xText.elt.title = sliderManager.titleText.generalX;
+        xText.elt.onmouseover = function () {
+          $(this).css({ color: "orange" });
+        };
+        xText.elt.onmouseout = function () {
+          $(this).css({ color: "#993030" });
+        };
+        xText.mousePressed(function () {
+          elems[i].remove();
+        });
+        xText.parent(elems[i]);
+
+        // let linebreak = document.createElement("br");
+        // elems[i].appendChild(linebreak);
+
+
+          let flexDiv = createDiv();
+          flexDiv.parent(elems[i]);
+          flexDiv.elt.setAttribute(
+            "style",
+            `         
+                  display: flex;
+                  position: relative;
+                  heigth: content;
+                  width: 300;
+                  overflow: hidden;
+                  justify-content: space-between;
+                  margin:  0px;
+                  padding: 0px;
+                  text-align: left;
+                  
+                  `
+          );
+
+          let selectDiv = createDiv();
+          selectDiv.addClass("selectDiv");
+          selectDiv.parent(flexDiv);
+          selectText = createP("Select:");
+          selectText.parent(selectDiv);
+          selectText.style("font-size", "14px");
+          selectText.style("margin", "0px");
+
+          sliderManager.resetSelectDiv();
+          
+
+          let operationDiv = createDiv();
+          operationDiv.parent(flexDiv);
+          operationText = createP("Operation:");
+          operationText.parent(operationDiv)
+          operationText.style("font-size", "14px");
+          operationText.style("margin", "0px");
+
+          let TargetDiv = createDiv();
+          TargetDiv.parent(flexDiv);
+          TargetText = createP("Target:");
+          TargetText.parent(TargetDiv);
+          TargetText.style("font-size", "14px");
+          TargetText.style("margin", "0px");
+          
+
+
+
+
+
+        }
+      }
+
+
+      function setDrawModePoint (){
+        let elems = document.getElementsByClassName("drawMode"); 
+    
+    for (let i = 0; i < elems.length; i++)
+    {
+      // remove all elements
+      helpers.removeAllChildren(elems[i])
+
+      //add the PointDrawing elements
+      let mainTextElem = createP("Draw Mode: ");
+      mainTextElem.parent(elems[i]);
+      // mainTextElem.style("position", "absolute");
+      // mainTextElem.style("left", "0px")
+      // mainTextElem.style("top", "-12px")
+      mainTextElem.style("margin", "0px");
+      mainTextElem.style("width", "61px");
+      mainTextElem.style("text-align", "left");
+      mainTextElem.style("display", "inline");
+      mainTextElem.elt.title = sliderManager.titleText.drawMode;
+  
+      
+        let modeTextElem = createP("Point Drawing");
+        modeTextElem.parent(elems[i]);
+        // modeTextElem.style("position", "absolute");
+        // modeTextElem.style("left", "0px")
+        // modeTextElem.style("top", "-12px")
+        modeTextElem.style("margin", "0px");
+        modeTextElem.style("max-width", "200px");
+        modeTextElem.style("text-align", "left");
+        modeTextElem.style("display", "inline");
+        modeTextElem.addClass("pointMode");
+        modeTextElem.elt.title = sliderManager.titleText.drawMode;
+
+  
+        button = createButton("&#x2191;");
+
+        // button.style("position", "absolute");
+        button.style("float", "right");
+        button.style("margin-right", "30px");
+        // button.style("width", "auto");
+        button.style("display", "inline");
+        // button.style("text-align", "right")
+        button.parent(elems[i]);
+        // button.style("visibility", "hidden");
+        button.mousePressed(moveSlideUp);
+        button.elt.title = sliderManager.titleText.generalUp;
+
+        button = createButton("&#x2193;");
+        // button.style("text-align", "right")
+        // button.style("position", "absolute");
+        // button.style("margin-right", "31px")
+        button.style("float", "right");
+        // button.style("width", "auto");
+        button.style("display", "inline");
+        // button.style("visibility", "hidden");
+        // button.style("top", "123px")
+        button.mousePressed(moveSlideDown);
+        button.elt.title = sliderManager.titleText.generalDown;
+        button.parent(elems[i]);
+
+        let xText = createP("X");
+        // button.style("text-align", "right")
+        xText.style("position", "absolute");
+        xText.style("right", "17px");
+        // xText.style("top", "-15px");
+        // xText.style("top", "-12px")
+        button.style("float", "right");
+        xText.style("margin", "0px");
+        xText.style("display", "inline");
+        xText.style("cursor", "pointer");
+        xText.style("color", "#993030");
+        xText.elt.title = sliderManager.titleText.generalX;
+        xText.elt.onmouseover = function () {
+          $(this).css({ color: "orange" });
+        };
+        xText.elt.onmouseout = function () {
+          $(this).css({ color: "#993030" });
+        };
+        xText.mousePressed(function () {
+          elems[i].remove();
+        });
+        xText.parent(elems[i]);
+
+      let linebreak = document.createElement("br");
+      elems[i].appendChild(linebreak);
+      
       
 
-      linebreak = document.createElement("br");
-      if (newSlide.elt) {
-        newSlide.elt.appendChild(linebreak);
-      } else {
-        newSlide.appendChild(linebreak);
+        let sWText = createP("DragNdraw distance: ");
+        // sWText.style("position", "absolute");
+        sWText.style("font-size", "15px");
+        // sWText.style("left", "0px");
+        // sWText.style("top", "60px");
+        sWText.style("display", "inline");
+        sWText.parent(elems[i]);
+        sWText.elt.title = sliderManager.titleText.drawModeDragNDraw;
+
+        sWText = createP(toolbox.selectedTool.dragNDrawDistanceBase);
+        // sWText.style("position", "absolute");
+        sWText.style("font-size", "15px");
+        sWText.style("max-width", "100px");
+        sWText.style("overflow", "hidden");
+        sWText.addClass("dragNDrawDistanceText");
+        sWText.elt.title = sliderManager.titleText.drawModeDragNDraw;
+        // sWText.style("top", "60px");
+        sWText.style("display", "inline");
+        sWText.parent(elems[i]);
+
+        // console.log(drawManager.drawModeSettings)
+        let selBox = createCheckbox("Enable dragNdraw", drawManager.drawModeSettings.enableDragNDraw);
+        // noFillBox.style("position", "absolute"); 
+        selBox.style("float", "right"); // noFillBox.style("left", "120px");
+        selBox.style("margin-right", "30px"); // noFillBox.style("left", "120px");
+        selBox.style("display", "inline");
+        // selBox.style("visibility", "hidden");
+        selBox.changed(dragNDrawCheckBoxEvent)
+        selBox.parent(elems[i]);
+        selBox.elt.title = sliderManager.titleText.drawModeDragNDraw;
+        
+
+        linebreak = document.createElement("br");
+        elems[i].appendChild(linebreak);
+
+        //   helpers.decreaseVertexArray();
+        // });
+        let sWslider = createSlider(
+          drawManager.drawModeSettings.dragNDrawDistanceMin,
+          drawManager.drawModeSettings.dragNDrawDistanceMax,
+          drawManager.drawModeSettings.dragNDrawDistanceBase
+        );
+        // sWslider.style("position", "absolute");
+        sWslider.style("width", "90%");
+        // sWslider.style("line-hight", "23px");
+        sWslider.style("display", "inline");
+        sWslider.elt.onchange = dragNDrawDistanceUpdate;
+        sWslider.parent(elems[i]);
+        sWslider.elt.title = sliderManager.titleText.drawModeDragNDraw;
+
+        linebreak = document.createElement("br");
+        elems[i].appendChild(linebreak);
+
+        sWText = createP("Dragging distance:");
+        // sWText.style("position", "absolute");
+        sWText.style("font-size", "15px");
+        // sWText.style("left", "0px");
+        // sWText.style("top", "60px");
+        sWText.style("display", "inline");
+        sWText.elt.title = sliderManager.titleText.drawModeDragging;
+        sWText.parent(elems[i]);
+
+
+
+
+        sWText = createP(toolbox.selectedTool.dragDistanceBase);
+        // sWText.style("position", "absolute");
+        sWText.style("font-size", "15px");
+        sWText.addClass("dragDistanceText");
+        sWText.style("max-width", "30px");
+        sWText.style("overflow", "hidden");
+        sWText.elt.title = sliderManager.titleText.drawModeDragging;
+
+        // sWText.style("top", "60px");
+        sWText.style("display", "inline");
+        sWText.parent(elems[i]);
+
+
+        selBox = createCheckbox("Enable dragging", drawManager.drawModeSettings.enableDragging);
+        // noFillBox.style("position", "absolute");
+        selBox.style("float", "right"); // noFillBox.style("left", "120px");
+        selBox.style("display", "inline");
+        selBox.style("margin-right", "45px");
+        selBox.elt.title = sliderManager.titleText.drawModeDragging;
+        // selBox.style("visibility", "hidden");
+        selBox.changed(draggingCheckBoxEvent)
+        selBox.parent(elems[i]);
+        
+          
+
+        linebreak = document.createElement("br");
+        elems[i].appendChild(linebreak);
+
+        //   helpers.decreaseVertexArray();
+        // });
+        sWslider = createSlider(
+          drawManager.drawModeSettings.dragDistanceMin,
+          drawManager.drawModeSettings.dragDistanceMax,
+          drawManager.drawModeSettings.dragDistanceBase
+        );
+        // sWslider.style("position", "absolute");
+        // sWslider.style("left", "80px");
+        sWslider.style("width", "90%");
+        // sWslider.style("line-hight", "23px");
+        sWslider.style("display", "inline");
+        sWslider.elt.onchange = dragDistanceUpdate;
+        sWslider.elt.title = sliderManager.titleText.drawModeDragging;
+        sWslider.parent(elems[i]);
+
       }
 
-      //   helpers.decreaseVertexArray();
-      // });
-      let sWslider = createSlider(
-        drawManager.drawModeSettings.dragNDrawDistanceMin,
-        drawManager.drawModeSettings.dragNDrawDistanceMax,
-        drawManager.drawModeSettings.dragNDrawDistanceBase
-      );
-      // sWslider.style("position", "absolute");
-      sWslider.style("width", "90%");
-      // sWslider.style("line-hight", "23px");
-      sWslider.style("display", "inline");
-      sWslider.elt.onchange = dragNDrawDistanceUpdate;
-      sWslider.parent(newSlide);
-      sWslider.elt.title = sliderManager.titleText.drawModeDragNDraw;
 
-      linebreak = document.createElement("br");
-      if (newSlide.elt) {
-        newSlide.elt.appendChild(linebreak);
-      } else {
-        newSlide.appendChild(linebreak);
-      }
-
-      sWText = createP("Dragging distance:");
-      // sWText.style("position", "absolute");
-      sWText.style("font-size", "15px");
-      // sWText.style("left", "0px");
-      // sWText.style("top", "60px");
-      sWText.style("display", "inline");
-      sWText.elt.title = sliderManager.titleText.drawModeDragging;
-      sWText.parent(newSlide);
-
-
-
-
-      sWText = createP(toolbox.selectedTool.dragDistanceBase);
-      // sWText.style("position", "absolute");
-      sWText.style("font-size", "15px");
-      sWText.addClass("dragDistanceText");
-      sWText.style("max-width", "30px");
-      sWText.style("overflow", "hidden");
-      sWText.elt.title = sliderManager.titleText.drawModeDragging;
-
-      // sWText.style("top", "60px");
-      sWText.style("display", "inline");
-      sWText.parent(newSlide);
-
-
-      selBox = createCheckbox("Enable dragging", drawManager.drawModeSettings.enableDragging);
-      // noFillBox.style("position", "absolute");
-      selBox.style("float", "right"); // noFillBox.style("left", "120px");
-      selBox.style("display", "inline");
-      selBox.style("margin-right", "45px");
-      selBox.elt.title = sliderManager.titleText.drawModeDragging;
-      // selBox.style("visibility", "hidden");
-      selBox.changed(draggingCheckBoxEvent)
-      selBox.parent(newSlide);
       
-        
 
-      linebreak = document.createElement("br");
-      if (newSlide.elt) {
-        newSlide.elt.appendChild(linebreak);
-      } else {
-        newSlide.appendChild(linebreak);
-      }
+      
+        function dragNDrawDistanceUpdate() {
+          // console.log(this.value)
+          toolbox.selectedTool.dragNDrawDistanceBase = parseFloat(this.value);
+          
+          document.getElementsByClassName("dragNDrawDistanceText").forEach( (text) =>{
+            text.innerHTML = this.value;
+            // console.log("text",text)
+          })
+          toolbox.selectedTool.updateSettings = true;
+          // console.log(toolbox.selectedTool.dragNDrawDistance)
+        }
+        function dragDistanceUpdate() {
+                // console.log(this.value)
+                toolbox.selectedTool.dragDistanceBase = parseFloat(this.value);
+                // document.getElementById("dragDistanceText").innerHTML = this.value;
+                
+                let elem = document.getElementsByClassName("dragDistanceText")
+                elem.forEach((text)=>{
+                  text.innerHTML = this.value;
+                })
 
-      //   helpers.decreaseVertexArray();
-      // });
-      sWslider = createSlider(
-        drawManager.drawModeSettings.dragDistanceMin,
-        drawManager.drawModeSettings.dragDistanceMax,
-        drawManager.drawModeSettings.dragDistanceBase
-      );
-      // sWslider.style("position", "absolute");
-      // sWslider.style("left", "80px");
-      sWslider.style("width", "90%");
-      // sWslider.style("line-hight", "23px");
-      sWslider.style("display", "inline");
-      sWslider.elt.onchange = dragDistanceUpdate;
-      sWslider.elt.title = sliderManager.titleText.drawModeDragging;
-      sWslider.parent(newSlide);
-
-     
-      function dragNDrawDistanceUpdate() {
-        // console.log(this.value)
-        toolbox.selectedTool.dragNDrawDistanceBase = parseFloat(this.value);
-        
-        document.getElementsByClassName("dragNDrawDistanceText").forEach( (text) =>{
-          text.innerHTML = this.value;
-          // console.log("text",text)
-        })
-        toolbox.selectedTool.updateSettings = true;
-        // console.log(toolbox.selectedTool.dragNDrawDistance)
-      }
-      function dragDistanceUpdate() {
-              // console.log(this.value)
-              toolbox.selectedTool.dragDistanceBase = parseFloat(this.value);
-              // document.getElementById("dragDistanceText").innerHTML = this.value;
-              
-              let elem = document.getElementsByClassName("dragDistanceText")
-              elem.forEach((text)=>{
-                text.innerHTML = this.value;
-              })
-
-              toolbox.selectedTool.updateSettings = true;
-            }
-      function draggingCheckBoxEvent (){
-        drawManager.drawModeSettings.enableDragging = !drawManager.drawModeSettings.enableDragging;
-        // console.log(drawManager.drawModeSettings.enableDragging)
-      }
-      function dragNDrawCheckBoxEvent (){
-        drawManager.drawModeSettings.enableDragNDraw = !drawManager.drawModeSettings.enableDragNDraw;
-        // console.log(drawManager.drawModeSettings.enableDragNDraw)
+                toolbox.selectedTool.updateSettings = true;
+              }
+        function draggingCheckBoxEvent (){
+          drawManager.drawModeSettings.enableDragging = !drawManager.drawModeSettings.enableDragging;
+          // console.log(drawManager.drawModeSettings.enableDragging)
+        }
+        function dragNDrawCheckBoxEvent (){
+          drawManager.drawModeSettings.enableDragNDraw = !drawManager.drawModeSettings.enableDragNDraw;
+          // console.log(drawManager.drawModeSettings.enableDragNDraw)
+        }
       }
 
 
-    }
+
+    
   };
 
   this.createOrderSlide = function (pos) {
@@ -667,7 +820,7 @@ function SlideTemplates() {
                   position: relative;
                   width: 272px;
                   height: auto;
-                  background-color: rgb(119, 80, 192);
+                  background-color: ${sliderManager.col.partDefault};
                   margin-left:  10px;
                   
                   
@@ -711,6 +864,8 @@ function SlideTemplates() {
       // button.style("position", "absolute");
       // button.style("left", "125px")
       button.style("width", "auto");
+      button.style("background-color", sliderManager.col.currentColorPart)
+      button.style("color", "white")
       // button.style("top", "123px")
       button.style("display", "inline");
       button.parent(newPart);
@@ -722,6 +877,8 @@ function SlideTemplates() {
       // button.style("position", "absolute");
       // button.style("left", "125px")
       button.style("width", "auto");
+      button.style("background-color", sliderManager.col.defaultSlide);
+      button.style("color", "white");
       // button.style("top", "123px")
       button.style("display", "inline");
       button.parent(newPart);      
@@ -2125,7 +2282,8 @@ function SlideTemplates() {
     newSlide.addClass("defaultSlide");
     newSlide.elt.setAttribute(
       "style",
-      `
+      `         
+                background-color: ${sliderManager.col.defaultSlide};
                 position: relative;
                 min-width: 300px;
                 height: 160px;
@@ -2327,6 +2485,7 @@ function SlideTemplates() {
     sWText.style("font-size", "15px");
     sWText.style("left", "0px");
     sWText.style("top", "60px");
+    sWText.elt.title =  sliderManager.titleText.defaultStrokeWeight;
     sWText.parent(newSlide);
     // console.log(drawManager.settings.maxStrokeWeight);
     let sWslider = createSlider(
@@ -2338,6 +2497,7 @@ function SlideTemplates() {
     sWslider.style("left", "80px");
     sWslider.style("top", "75px");
     // console.log(sWslider.elt);
+    sWslider.elt.title =  sliderManager.titleText.defaultStrokeWeight;
     sWslider.elt.onchange = () => {
       // console.log(sWslider)
       // console.log(sWslider.value());
@@ -2369,6 +2529,7 @@ function SlideTemplates() {
     sWInput.style("right", "20px");
     sWInput.style("width", "60px");
     sWInput.style("top", "75px");
+    sWInput.elt.title =  sliderManager.titleText.defaultStrokeWeight;
     sWInput.parent(newSlide);
     sWInput.elt.onchange = () => {
       // console.log(sWslider.value());
@@ -2392,7 +2553,7 @@ function SlideTemplates() {
     };
     // console.log(sWInput);
 
-    button;
+    // button;
     if (drawManager.defaultPart.endShape) {
       button = createButton("endShape(CLOSE)");
     } else {
@@ -2402,6 +2563,7 @@ function SlideTemplates() {
     button.style("right", "20px");
     button.style("width", "175px");
     button.style("top", "100px");
+    button.elt.title = sliderManager.titleText.generalEndShape;
     button.parent(newSlide);
     button.mousePressed(() => {
       // console.log(button);
@@ -2484,7 +2646,7 @@ function SlideTemplates() {
             min-width: 300px;
             height: 160px;
             overflow-y: hidden;
-            
+            background-color: ${sliderManager.col.currentColorPart};
             margin:  0px;
             padding: 0px`
     ); //  box-sizing: border-box;     overflow: hidden;
@@ -2866,7 +3028,7 @@ function SlideTemplates() {
     vText.style("position", "absolute");
     vText.style("left", "0px");
     vText.style("top", "110px");
-
+    vText.elt.title =  sliderManager.titleText.currentVertex;
     vText.parent(newSlide);
 
     // console.log("part", part)
@@ -2874,6 +3036,7 @@ function SlideTemplates() {
     vNumText.style("position", "absolute");
     vNumText.style("left", "65px");
     vNumText.style("top", "110px");
+    vNumText.elt.title =  sliderManager.titleText.currentVertex;
     vNumText.parent(newSlide);
 
     button = createButton("&#x21E4;");
@@ -2883,6 +3046,7 @@ function SlideTemplates() {
     button.style("width", "auto");
     button.style("top", "123px");
     button.style("line-height", "16px");
+    button.elt.title = sliderManager.titleText.currentToStart;
     button.parent(newSlide);
     button.mousePressed(() => {
       // console.log(button, this);
@@ -2897,6 +3061,7 @@ function SlideTemplates() {
     button.style("width", "auto");
     button.style("top", "123px");
     button.style("line-height", "16px");
+    button.elt.title = sliderManager.titleText.currentDecrease;
     button.parent(newSlide);
     button.mousePressed(() => {
       // console.log(button, this);
@@ -2930,6 +3095,7 @@ function SlideTemplates() {
     button.style("width", "auto");
     button.style("top", "123px");
     button.style("line-height", "16px");
+    button.elt.title = sliderManager.titleText.currentIncrease;
     button.parent(newSlide);
     button.mousePressed(() => {
       // console.log(button, this);
@@ -2943,6 +3109,7 @@ function SlideTemplates() {
     button.style("width", "auto");
     button.style("top", "123px");
     button.style("line-height", "16px");
+    button.elt.title = sliderManager.titleText.currentToEnd;
     button.parent(newSlide);
     button.mousePressed(() => {
       // console.log(button, this);
