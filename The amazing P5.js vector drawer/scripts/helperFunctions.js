@@ -578,7 +578,7 @@ function keyPressed()
         {
             // drawManager.saveFiguresToStorage();
             let indicies = drawManager.getCurrentIndicies()
-            // console.log(indicies)            // let elem = document.getElementsByClassName("order")
+            console.log(indicies)            // let elem = document.getElementsByClassName("order")
             
             // console.log("identities of first part")
             
@@ -592,11 +592,11 @@ function keyPressed()
             let length = elem[0].children.length;
             for (let i = 12; i < length; i ++)
             {
-                // console.log("drawing identities",elem[0].children[i].identity);
+                console.log("drawing identities",elem[0].children[i].identity);
                 let lengthH = elem[0].children[i].children.length
                 for (let j = 11; j < lengthH; j +=2)
                 {
-                    // console.log("part identities",elem[0].children[i].children[j].identity);
+                    console.log("part identities",elem[0].children[i].children[j].identity);
                     // console.log(elem[0].children[i].identity);
                 }
             }

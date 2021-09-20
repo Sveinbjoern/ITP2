@@ -207,17 +207,15 @@ function DrawManager() {
     let HTMLIndexDrawingOriginal =
       indicies[1] + sliderManager.HTMLIndecies.firstDrawing;
     
+      console.log("indicies at remove currentPartMarking", indicies)
     let elem = document.getElementsByClassName("order");
     elem.forEach((orderSlide) => {
-     
      
         
       orderSlide.children[HTMLIndexDrawingOriginal].children[
         HTMLIndexPartOriginal
       ].style.backgroundColor = sliderManager.col.partDefault;
       
-
-      // );
     });
   }
 
@@ -301,7 +299,8 @@ function DrawManager() {
         this.setCurrentPartR(0);
         
         return
-      } else  {
+      } else   {
+        console.log("setCurrentP got teh values",indicies[2]-1 )
         this.setCurrentPartR(indicies[2] - 1);
         
       }
@@ -335,6 +334,7 @@ function DrawManager() {
        
         return
       } else  {
+        console.log("setCurrentP got teh values",indicies[2], indicies[1]-1 ,indicies[0] )
         this.setCurrentPartR(indicies[2], indicies[1]-1 ,indicies[0] );
         
       }
@@ -418,7 +418,7 @@ function DrawManager() {
         indicies[2] === partIndex) ||
       indicies[2] === secondPartIndex
     ) {
-        drawManager.removeCurrentPartMarking();
+        // drawManager.removeCurrentPartMarking();
       
       // console.log("indicies[2] === partIndex", indicies[2] === partIndex);
       // console.log(
@@ -469,7 +469,7 @@ function DrawManager() {
         indicies[2] === secondDrawingIndex
     ) {
       
-        drawManager.removeCurrentPartMarking();
+        // drawManager.removeCurrentPartMarking();
         
       // console.log("indicies[1] === drawingIndex", indicies[1] === drawingIndex);
       // console.log(

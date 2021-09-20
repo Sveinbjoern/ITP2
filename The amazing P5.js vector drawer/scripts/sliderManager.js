@@ -314,45 +314,75 @@ function SliderManager() {
 
   
 
-  this.resetSelectDiv = () =>{
+  this.resetSelectAndTargetDiv = () =>{
     
     let figure = drawManager.getFigure();
-    let elems =  document.getElementsByClassName("selectDiv")
-    let length = elems.children.length
-    if (length <= 0)
+    let elemsSel =  document.getElementsByClassName("selectDiv")
+    let elemsTar =  document.getElementsByClassName("targetDiv")
+    let selLength = elemsSel.length
+    if (selLength <= 0)
     {
       return;
     }
     drawingsLength = figure.drawings.length;
 
-    for (let i = 0;i < length;i++)
+    for (let i = 0;i < selLength;i++)
+    {
       while (elems[i].firstChild !== elems[i].lastChild)
       {
-          elems[i].removeChild(elems[i].lastChild);
-          
-          
+          elemsSel[i].removeChild(elemsSel[i].lastChild); 
       }
+      while (elemsTar[i].firstChild !== elemsTar[i].lastChild)
+      {
+          elemsTar[i].removeChild(elemsTar[i].lastChild); 
+      }
+
+
+      let radio = createRadio();
+      radio.options("NewDrawing");
+      radio.parent(elemsTar[i]);
+      radio.selected("NewDrawing");
+      let linebreak = document.createElement("br");
+      elemsTar[i].appendChild(linebreak);
+     
 
       for (let j = 0;j < drawingsLength; j++)
       {
         let drawing = figure.drawings[i];
 
         let box = createCheckbox(drawing.name, drawing.isSelected)
-        box.parent(elems[i])
-        box.elt.onchange = setSelcted(i,j)
-        box.style("margin-left", "5px")
+        box.parent(elemsSel[i])
+        box.identity = [j]// box.elt.onchange = setSelcted(i,j)
+        box.style("margin-left", "2px")
+        box.style('font-size', '13px');
+        box.style("color", sliderManager.col.drawing);
+        box.style("text-align", "left")
+        let parts = figure.drawings[j].parts
+        partsLength = parts.length
 
-        let parts = figure.drawing[i].parts
-        
+        radio.options(drawing.name)
+        box.style("margin-left", "2px")
+        box.style('font-size', '13px');
+        box.style("color", sliderManager.col.drawing);
+        box.style("text-align", "left")
+
+        for (let k = 0; k < partsLength; k++)
+        {
+          box = createCheckbox(parts[k].name, parts[k].isSelected)
+          box.parent(elems[i])
+          box.identity = [j,k]
+          // box.elt.onchange = setSelcted(i,j)
+          box.style("margin-left", "8px");
+          box.style('font-size', '11px');
+          box.style("text-align", "left")
+          box.style("color", sliderManager.col.partDefault);
+        }
       }  
-      
+    }  
       
           
   }
-  this.setDrawModeSlideMirror = () =>{
-    
-
-  }
+ 
 
   this.exchangeSliders = (slideType,topPosition) => {
         
