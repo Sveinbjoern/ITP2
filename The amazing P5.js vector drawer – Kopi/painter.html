@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="lib/p5.js"></script>
+    <script src="lib/p5.sound.js"></script>
+    <script src="lib/jquery-3.6.0.min.js"></script>
+
+    <!-- add extra scripts below -->
+    <script src="scripts/toolbox.js"></script>
+    <!-- <script src="scripts/colourPalette.js"></script> -->
+    <script src="scripts/helperFunctions.js"></script>
+
+    <script src="scripts/freehandTool.js"></script>
+    <script src="scripts/shapesTool.js"></script>
+    <script src="scripts/mirrorDrawTool.js"></script>
+    <script src="scripts/mirrorTool.js"></script>
+    <script src="scripts/sprayCanTool.js"></script>
+    <script src="scripts/slideTemplates.js"></script>
+    <script src="scripts/sliderManager.js"></script>
+
+    <script src="scripts/figure.js"></script>
+    <script src="scripts/drawManager.js"></script>
+
+    <script src="scripts/P5sketch.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+  </head>
+  <body onresize="fitToScreen()">
+    
+      
+    
+
+    
+
+    <div class="wrapper"> 
+      <input type="radio" id="PointMode" name="mode" class="modeHidden" checked />
+       
+      <input
+        type="radio"
+        id="MirrorMode"
+        name="mode"
+        class="modeHidden"
+      />
+        <input type="radio" id="canvasMode" name="mode" class="modeHidden"/>
+
+
+          <div id = "header">
+         
+          <a href="index.html">Index</a>
+          <a href="painter.html">Painter</a>
+          <div #headerText>The AmazingP5.js polygon drawing App</div>
+          <div #headerMenu>
+             
+            <!-- <button type="button">Click Me!</button> -->
+            <!-- <button type="button">Click Me!</button> -->
+            <button id="clearButton" title= "Clear whole program.
+Removes saved points.
+Resets to default.">Clear</button>
+            <button id="saveImageButton" title="Creates a png image of the
+drawing area. Anything outside current
+view will not be added. The white
+background is transparent.">Save Image</button>
+          </div>
+          <div #headerAboutslider title=" the Amazing p5 polygon drawing App
+For more on p5, the underlying
+drawing software, see p5js.org
+
+This project was started with
+the aspiration of making art for
+p5 games easier to make.
+
+This is a very rough first
+edition. Version 0.0.001">ABOUT!</div>
+        </div>
+
+      <div class="box" id="sidebar"></div>
+      <div id="drawField">
+        <!-- <button id="canvasButton">Boop</button> -->
+      </div>
+      
+      
+      <div class="box" id= "bottomBar">
+
+        <button id="bottomBarAddSliderButton" class="menuButton"
+        onclick=sliderManager.openAddSliderMenu(this)>+</button>
+      </div>
+      <!-- <div class="box options">options</div> -->
+      <div class="box" id = "sidebarLeft">
+       
+
+          <!-- <div id="selectSlide">
+            select mode:
+            <input  type="checkbox" id="selectBox" name="selectBox" onclick="helpers.selectBox(this.checked)">
+           
+          </div> -->
+
+          <button id="sidebarLeftAddSliderButton" class="menuButton" 
+          onclick=sliderManager.openAddSliderMenu(this)>+</button>
+
+
+      </div>
+      <div class="box" id = "sidebarRight">
+        <!-- <div class="slide" id = "mirrorOptions">Yalla</div> -->
+        
+        <button id="sidebarRightAddSliderButton" class="menuButton" 
+        onclick=sliderManager.openAddSliderMenu(this) >+</button>
+        
+      </div>
+      <button id = "sidebarLeftButton"  onclick="sliderManager.collapseOrExtendBars(this)">&#60</button>
+      <button id = "sidebarRightButton" onclick="sliderManager.collapseOrExtendBars(this)">&#62</button>
+      <button id = "bottomBarButton"    onclick="sliderManager.collapseOrExtendBars(this)">∨</button>
+    </div>
+
+    <div id="addSliderMenu" >
+      <p class="sliderMenuContent" onclick="sliderManager.createOrderSlide(this)">+ Create order slide</a>
+      <p class="sliderMenuContent" onclick="sliderManager.createDrawModeSlide(this)">+ Create Draw Mode slide</a>
+      <p class="sliderMenuContent" onclick="sliderManager.createCurrentSlide(this)">+ Create current slide</a>
+      <p class="sliderMenuContent" onclick="sliderManager.createDefaultSlide(this)">+ Create default slide</a>
+      <p class="sliderMenuContent" onclick="sliderManager.createSettingsSlide(this)">+ Create settings slide</a>
+    </div>
+    
+  </body>
+
+
+
+</html>

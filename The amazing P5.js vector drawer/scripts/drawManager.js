@@ -5,6 +5,8 @@
 function DrawManager() {
   let myStorage = {
     figures: [],
+    zeroPoint: [0,0],
+    displayZeroP: false,
     currentFigure: -1,
   };
 

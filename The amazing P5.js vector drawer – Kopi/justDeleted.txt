@@ -1,0 +1,746 @@
+2.9.2021
+
+      let elem = document.getElementsByClassName("order");
+      console.log("order elem", elem);
+      elem.forEach((element) => {
+        console.log("order elemement", element);
+      });
+      elem = document.getElementsByClassName("currentSlide");
+      console.log("currentSlider elem", elem);
+      elem.forEach((element) => {
+        console.log("current element", element.children[0].innerHTML);
+        element.children[0].innerHTML = "CURRENT: " + this.elt.value;
+      });
+
+
+
+() => {
+        // console.log(sWslider.value());
+        // console.log(sWInput.elt.value);
+
+        if (sWInput.elt.value > drawManager.settings.maxStrokeWeight) {
+          sWInput.elt.value = drawManager.settings.maxStrokeWeight;
+        } else if (sWInput.elt.value < drawManager.settings.minStrokeWeight) {
+          sWInput.elt.value = drawManager.settings.minStrokeWeight;
+        }
+        // console.log(sWInput.elt.value);
+        let elem = document.getElementsByClassName("currentSlide");
+        let length = elem.length;
+        if (length > 0) {
+          for (let i = 0; i < length; i++) {
+            elem[i].children[10].value = parseInt(sWInput.elt.value);
+            elem[i].children[9].value = parseInt(sWInput.elt.value);
+          }
+        }
+
+        drawManager.getPart().strokeWeight = parseInt(sWInput.elt.value);
+        console.log("sWInput.elt.value", sWInput.elt.value);
+        drawManager.reDrawWithPoint();
+
+        toolbox.selectedTool.drawn = false;
+      };
+
+
+//   elt.onclick = (e) => {
+      //   if (part.showDetails) {
+      //     buttonDis.style("color", "red");
+      //     newPartInfo.elt.style.display = "none";
+      //     part.showDetails = false;
+      //   } else {
+      //     buttonDis.style("color", "black");
+      //     newPartInfo.elt.style.display = "inline-block";
+      //     part.showDetails = true;
+      //   }
+      // };
+
+      
+      // console.log("order elem", elem);
+      // elem.forEach((orderSlide) => {
+      //   // console.log(orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[9].children[0].checked);
+      //   console.log(this.elt.value);
+
+      //   orderSlide.children[HTMLIndexDrawing].children[HTMLIndexPart].children[9].children[0].checked = this.elt.children[0].checked;
+      //   // console.log("order elemement", element);
+      // });
+      // if (indicies[0] == figureIndex && indicies[1] == drawingIndex && indicies[2] == partIndex)
+      // {
+      //   helpers.updateCurSliderNameInput(this.elt.value);
+      // }
+
+
+
+ let selBox = createCheckbox("SELECT", part.isSelected);
+      // noFillBox.style("position", "absolute");
+      selBox.style("margin-left", "30px"); // noFillBox.style("left", "120px");
+      selBox.style("display", "inline");
+      selBox.changed(() => {
+        // console.log(noFillBox.checked())
+
+        let elem = document.getElementsByClassName("currentSlide");
+        let length = elem.length;
+
+        // console.log(elem[0].children[3].children[0].checked, noFillBox.checked());
+        if (length > 1) {
+          for (let i = 0; i < length; i++) {
+            elem[i].children[3].children[0].checked = noFillBox.checked();
+          }
+        }
+
+        drawManager.getPart().noFill = noFillBox.checked();
+        drawManager.reDrawWithPoint();
+      });
+      selBox.parent(newPart);
+
+1.9.2021
+ // let xText = createP("X");
+      // xText.style("position", "absolute");
+      // xText.style("right", "17px");
+      // xText.style("top", "-15px");
+      // xText.style("cursor", "pointer");
+      // xText.style("color", "#993030");
+      // xText.elt.onmouseover = function(){
+      //   $(this).css({ color: "orange"});
+      // };
+      // xText.elt.onmouseout = function(){
+      // $(this).css({ color: "#993030" });
+      // };
+      // xText.mousePressed(function () {
+      //   newSlide.remove();
+      // });
+      // xText.parent(newPartInfo);
+
+      // xText.click(
+      //   function() {
+      //     $( this ).append( $( "<span> ***</span>" ) );
+      //   }, function() {
+      //     $( this ).find( "span" ).last().remove();
+      //   }
+      // );
+      // xText.style("float", "top")
+      //     button = createButton("&#x2191;");
+
+      //     // button.style("position", "absolute");
+      //     // button.style("right", "30px");
+      //     // button.style("top", "0px");
+      // button.style("display", "inline");
+      //     button.style("width", "auto");
+      //     // button.style("display", "inline");
+      //     // button.style("top", "123px")
+      //     button.parent(newPartInfo);
+      //     button.mousePressed(() => {
+      //       console.log(button, this);
+
+      //       helpers.setVertexArrayToStart();
+      //     });
+
+      // button = createButton("&#x2193;");
+
+      // // button.style("position", "absolute");
+      // // button.style("right", "52px");
+      // // button.style("top", "0px");
+      // button.style("display", "inline");
+      // button.style("width", "auto");
+      // // button.style("display", "inline");
+      // // button.style("top", "123px")
+      // button.parent(newPartInfo);
+      // button.mousePressed(() => {
+      //   console.log(button, this);
+
+
+31.08.2021
+function makeNewHTMLPart() {
+      // let part = createDiv("part"+(i+1)+": ");
+      // part.parent(orderBar);
+      console.log(this);
+      let elem = document.getElementById("sidebarLeft");
+      let partsLength = currentDrawing.parts.length;
+      currentDrawing.parts.push(new Part("part" + (partsLength + 1)));
+
+      let part = createDiv();
+      part.parent(elem);
+
+      let checkBox = document.createElement("INPUT");
+      checkBox.setAttribute("type", "checkbox");
+
+      part.elt.appendChild(checkBox);
+      $(checkBox).addClass("selectedBox");
+      checkBox.identity = partsLength;
+      // $(checkBox).change(helpers.isSelected(this));
+      checkBox.addEventListener("change", helpers.isSelected);
+      // console.log("checkBox", checkBox)
+
+      button = createButton("part" + (partsLength + 1) + ": ");
+      button.parent(part);
+      button.identity = partsLength;
+      button.mousePressed(choosePart);
+
+      input_text = currentDrawing.parts[partsLength].name;
+      let inp = createInput(input_text);
+      inp.parent(part);
+      inp.identity = partsLength;
+      // inp.position(0, 0);
+      // inp.size(100);
+      // console.log(inp.elt.value)
+      inp.input(partInputEvent);
+      currentDrawing.currentPart = partsLength;
+    }
+
+
+30.08.2021
+  // console.log(buttonDis.elt.parentElement.identity)
+          // console.log(buttonDis.elt.parentElement.parentElement.identity)
+          // console.log(buttonDis.elt.parentElement.parentElement.parentElement.identity)
+          // let part = drawManager.getFigure(buttonDis.elt.parentElement.parentElement.parentElement.identity);
+          // part = part.drawings[buttonDis.elt.parentElement.parentElement.identity];
+          // part = part.parts[buttonDis.elt.parentElement.identity]
+          // console.log("newpart e", e);
+          // console.log("part.showDetails", part);
+          // console.log("part.showDetails", part.showDetails);
+          // console.log("newpart e", e);
+          // console.log("newpartInfo", newPartInfo);
+          // console.log(a);
+          // console.log(newPartInfo.elt.style.display)
+    
+    //Takes an array, 
+    // function removePart(index, partOf, action)
+    // {
+        
+            
+    //         return --index;
+    // }
+
+    // function 
+    //     else if (action === "move")
+    //     {
+
+    //     }
+    //     else if (action === "add")
+    //     {
+
+    //     }
+    //     else
+    //     {
+    //         console.log("not a valid action for function 'keepIndexConsistent'")
+    //     }
+
+    // }
+
+
+
+
+
+29.08.2021
+// let inpColorFill = createColorPicker(drawManager.defaultPart.fill);
+        // // console.log();
+        // inpColorFill.style("left", "70px")
+        // inpColorFill.style("top", "25px")
+        // inpColorFill.style("position", "absolute")
+        // inpColorFill.style("height", "20px")
+        // inpColorFill.parent(newSlide);
+        // inpColorFill.input( () => {
+        //   // console.log(inpColorFill.elt.value);
+        //   // console.log(inpColorFill.elt.value);
+        //   let elem = document.getElementsByClassName("defaultSlide");
+        //   let length = elem.length;
+
+        //   if (length > 1)
+        //   {
+        //     for (let i = 0; i< length; i++)
+        //     {
+        //       elem[i].children[2].value = inpColorFill.elt.value;
+        //     }
+        //   }
+        //   console.log(elem[0].children[2].value, inpColorFill.elt.value);
+        //   drawManager.defaultPart.fill = color(inpColorFill.elt.value);
+
+        // });
+
+        // slides.leftSidebar.push($('#orderBar')[0])
+
+        // let button = createButton("create new part");
+        // button.id("newPartButton");
+        // button.parent(newSlide)
+        // button.mousePressed(makeNewHTMLPart);
+
+        // let figure = drawManager.getFigure();
+        // let currentDrawing = figure.drawings[figure.currentDrawing];
+
+        // console.log(figure);
+        // console.log("figure.drawings", figure.drawings)
+        // let partsLength = currentDrawing.parts.length;
+        // console.log("partsLength", partsLength)
+        // for (let i = 0; i < partsLength; i++)
+        // {
+
+        //     // let part = createDiv();
+        //     // part.parent(pos);
+
+        //     // //checkbox for isSelected: this is done with the standard javaScipt and jQuery
+        //     // // because the p5 code creates an unecessary div container
+        //     // let checkBox = document.createElement("INPUT");
+        //     // checkBox.setAttribute("type", "checkbox");
+
+        //     // part.elt.appendChild(checkBox);
+        //     // $(checkBox).addClass( 'selectedBox');
+        //     // checkBox.identity = i
+        //     // // console.log("checkBox", checkBox)
+        //     // // $(checkBox).change(helpers.isSelected(this));
+        //     // checkBox.addEventListener('change', helpers.isSelected);
+        //     // checkBox.
+        //     // // console.log("part", part.elt)
+
+        //     // // checkBox.parent(part);
+        //     // // checkBox.addClass("selectedBox");
+        //     // // checkBox.changed(helpers.isSelected);
+
+        //     // //button for choosing currenfigure
+        //     // button = createButton("part"+(i+1)+": ");
+        //     // button.parent(part)
+        //     // button.identity = i
+        //     // // console.log("button", button)
+        //     // button.mousePressed(choosePart);
+
+        //     // // textField for naming the part
+        //     // input_text = currentDrawing.parts[i].name
+        //     // // console.log(i, input_text,currentDrawing)
+
+        //     // let inp = createInput(input_text);
+        //     // inp.parent(part)
+        //     // inp.identity = i
+        //     // // inp.position(0, 0);
+        //     // // inp.size(100);
+        //     // inp.input(partInputEvent);
+
+        //     // console.log("orderBar", orderBar);
+        //     // console.log("part",part)
+
+        // }
+
+
+
+27.08.2021
+
+ // this.fillOrderBar = function(){
+    //     // figuresLength = drawManager.figrues.length
+    //     // for (let i = 0; i < figuresLength; i++)
+
+    //     //     let figure = createDiv()
+
+
+        
+    //     // leftSidebarLenght ++;
+
+        
+    //     let newPart = createDiv();
+    //     newPart.parent("#orderBar");
+        
+        
+    //     slides.leftSidebar.push($('#orderBar')[0])
+        
+    //     let button = createButton("create new part");
+    //     button.id("newPartButton");
+    //     button.parent(newPart)
+    //     button.mousePressed(makeNewHTMLPart);
+
+        
+
+        
+    //     // inp.position(0, 0);
+    //     // inp.size(100); 
+    //     // console.log(inp.elt.value)
+    //     // inp.input(partInputEvent);
+    //     let figure = drawManager.getFigure();
+    //     let currentDrawing = figure.drawings[figure.currentDrawing];
+        
+        
+    //     // console.log(figure);
+    //     // console.log("figure.drawings", figure.drawings)
+    //     let partsLength = currentDrawing.parts.length;
+    //     // console.log("partsLength", partsLength)
+    //     for (let i = 0; i < partsLength; i++)
+    //     {
+            
+    //         let part = createDiv();
+    //         part.parent("#orderBar");
+            
+    //         //checkbox for isSelected: this is done with the standard javaScipt and jQuery
+    //         // because the p5 code creates an unecessary div container
+    //         let checkBox = document.createElement("INPUT");
+    //         checkBox.setAttribute("type", "checkbox");
+            
+    //         part.elt.appendChild(checkBox);
+    //         $(checkBox).addClass( 'selectedBox');
+    //         checkBox.identity = i
+    //         // console.log("checkBox", checkBox)
+    //         // $(checkBox).change(helpers.isSelected(this));
+    //         checkBox.addEventListener('change', helpers.isSelected);
+            
+    //         // console.log("part", part.elt)
+            
+    //         // checkBox.parent(part);
+    //         // checkBox.addClass("selectedBox");
+    //         // checkBox.changed(helpers.isSelected);
+
+    //         //button for choosing currenfigure
+    //         button = createButton("part"+(i+1)+": ");
+    //         button.parent(part)
+    //         button.identity = i
+    //         // console.log("button", button)
+    //         button.mousePressed(choosePart);
+
+    //         // textField for naming the part
+    //         input_text = currentDrawing.parts[i].name
+    //         // console.log(i, input_text,currentDrawing)
+
+    //         let inp = createInput(input_text);
+    //         inp.parent(part)
+    //         inp.identity = i
+    //         // inp.position(0, 0);
+    //         // inp.size(100); 
+    //         inp.input(partInputEvent);
+           
+            
+            
+    //         // console.log("orderBar", orderBar);
+    //         // console.log("part",part)
+            
+    //     }
+
+        
+        
+
+
+    //     function partInputEvent(){
+    //         console.log(this.elt.value)
+    //         console.log(this.identity)
+            
+    //         currentDrawing.parts[this.identity].name = this.elt.value;
+    //     }
+    //     function makeNewHTMLPart(){
+    //         // let part = createDiv("part"+(i+1)+": ");
+    //         // part.parent(orderBar);
+            
+    //         let partsLength = currentDrawing.parts.length
+    //         currentDrawing.parts.push(new Part("part"+ (partsLength+1) ));
+            
+    //         let part = createDiv();
+    //         part.parent("#orderBar");
+
+    //         let checkBox = document.createElement("INPUT");
+    //         checkBox.setAttribute("type", "checkbox");
+            
+    //         part.elt.appendChild(checkBox);
+    //         $(checkBox).addClass( 'selectedBox');
+    //         checkBox.identity = partsLength
+    //         // $(checkBox).change(helpers.isSelected(this));
+    //         checkBox.addEventListener('change', helpers.isSelected);
+    //         console.log("checkBox", checkBox)
+
+    //         button = createButton("part"+(partsLength+1)+": ");
+    //         button.parent(part)
+    //         button.identity = partsLength
+    //         button.mousePressed(choosePart);
+
+           
+           
+    //         input_text = currentDrawing.parts[partsLength].name
+    //         let inp = createInput(input_text);
+    //         inp.parent(part)
+    //         inp.identity = partsLength
+    //         // inp.position(0, 0);
+    //         // inp.size(100); 
+    //         // console.log(inp.elt.value)
+    //         inp.input(partInputEvent);
+    //         currentDrawing.currentPart = partsLength;
+
+            
+            
+    //     }
+    //     function removeHTMLPart(part, index){
+    //         // TODO
+            
+    //     }
+
+    //     function choosePart(){
+    //         // console.log(this.identity);
+    //         // console.log(self);
+            
+    //         // console.log(self.currentDrawing);
+    //         currentDrawing.currentPart = this.identity;
+    //         drawManager.reset();
+    //         console.log(currentDrawing)
+    //         helpers.updateSettingsCurrentS(currentDrawing.parts[currentDrawing.currentPart]);
+            
+    //     } 
+
+
+21.08.2021
+
+ let element = document.getElementById("strokeWeightInput");
+        element.value = currentPart.strokeWeight;
+        element = document.getElementById("noFillInput");
+        element.checked = currentPart.noFill;
+        element = document.getElementById("noStrokeInput");
+        element.checked = currentPart.noStroke;
+         
+        element = document.getElementById("endShapeInput");
+        console.log(element)
+        if (currentPart.endShape === true)
+        {
+            element.value ="EndShape()"
+        } else 
+        {
+            element.value = "EndShape(CLOSE)"
+        }
+
+<div class="box colourPalette">Stroke</div>
+      <div class="box colorFill">Fill
+        
+        <form class ="inputs"> 
+          <label for="noStroke"> noStroke:</label>
+          <input  type="checkbox" id="noStrokeInput" name="noStroke" onclick="helpers.noStrokeButton(this.checked)">
+          <label for="noFill"> noFill:</label>
+          <input type="checkbox" id="noFillInput" name="noFill" onclick="helpers.noFillButton(this.checked)">
+          <!-- <label for="noFill"> noFill</label> -->
+          <input type="button" id="endShapeInput" name="EndshapeInput", value="EndShape()"onclick="helpers.endShapeButton(this)">
+          
+          <label for="strokeWeightInput">strokeWeight:</label>
+          <input type= "range" id="strokeWeightInput" name="strokeWeightInput" min="1" max="50" value="3" oninput="helpers.strokeWeightSlider(this.value)"> 
+          <!--"{currentPart.strokeWeight = value; drawManager.reset();}"> -->
+        </form>
+        
+      </div>
+
+
+21.07.2021
+   // this.fillColorSlide = function(pos){
+    //     let newSlide = createDiv();
+    //     newSlide.parent("#"+ pos);
+    //     rightSidebarLenght++;  
+    //     newSlide.addClass("colorSlide");
+    //     newSlide.elt.setAttribute("style" , 
+    //         `
+    //         position: relative;
+    //         width: 300px;
+    //         height: 160px;
+            
+    //         margin:  0px;
+    //         padding: 0px`);//  box-sizing: border-box;     overflow: hidden;
+    //     // console.log(newSlide.elt.style);
+    //     // newSlide.style("display", "flex")
+    //     // newSlide.style("margin", "0px")
+    //     // newSlide.style("padding", "0px")
+    //     // newSlide.style("flex-direction", "row")
+
+    //     slides.rightSidebar.push(newSlide);
+
+    //     let mainTextElem = createP("COLORS");
+    //     mainTextElem.parent(newSlide);
+    //     mainTextElem.style("position", "absolute");
+    //     mainTextElem.style("left", "0px")
+    //     mainTextElem.style("top", "-25px")
+    //     console.log("mainTextElem", mainTextElem)
+
+    //     let fillText = createP("Fill:");
+    //     fillText.style("font-size", "20px")
+    //     fillText.style("position", "absolute")
+    //     fillText.style("left", "0px")
+    //     fillText.style("top", "5px")
+    //     fillText.parent(newSlide);
+
+    //     let inpColorFill = createColorPicker("Fill:");
+        
+    //     inpColorFill.style("left", "70px")
+    //     inpColorFill.style("top", "25px")
+    //     inpColorFill.style("position", "absolute")
+    //     inpColorFill.style("height", "20px")
+    //     inpColorFill.parent(newSlide);
+    //     // console.log("inpColorFill", inpColorFill)
+    //     let noFillText = createP("noFill:");
+    //     noFillText.style("font-size", "20px")
+    //     noFillText.style("position", "absolute")
+    //     noFillText.style("left", "120px")
+    //     noFillText.style("top", "5px")
+    //     noFillText.parent(newSlide);
+    //     let noFillBox = createCheckbox();
+    //     noFillBox.style("position", "absolute");
+    //     noFillBox.style("left", "195px")
+    //     noFillBox.style("top", "22px")
+    //     noFillBox.parent(newSlide);
+
+
+    //     let strokeText = createP("Stroke:");
+    //     strokeText.style("font-size", "20px")
+    //     strokeText.style("left", "0px")
+    //     strokeText.style("top", "30px")
+    //     strokeText.style("position", "absolute")
+    //     strokeText.parent(newSlide);
+
+    //     let inpColorStroke = createColorPicker("Stroke:");
+    //     inpColorStroke.style("position", "absolute");
+    //     inpColorStroke.style("left", "70px")
+    //     inpColorStroke.style("top", "50px")
+    //     inpColorStroke.style("height", "20px")
+    //     inpColorStroke.parent(newSlide);
+
+    //     let noStrokeText = createP("noStroke:");
+    //     noStrokeText.style("font-size", "20px");
+    //     noStrokeText.style("position", "absolute")
+    //     noStrokeText.style("left", "120px")
+    //     noStrokeText.style("top", "30px")
+    //     noStrokeText.parent(newSlide);
+    //     let noStrokeBox = createCheckbox();
+    //     noStrokeBox.style("position", "absolute");
+    //     noStrokeBox.style("left", "195px")
+    //     noStrokeBox.style("top", "45px")
+    //     noStrokeBox.parent(newSlide);
+            
+    //     let xText = createP("X");
+    //     xText.style("position", "absolute")
+    //     xText.style("right", "17px")
+    //     xText.style("top", "-25px")
+    //     xText.parent(newSlide);
+    //     // xText.style("float", "top")
+        
+        
+    //     let sWText = createP("strokeWeight");
+    //     sWText.style("position", "absolute");
+    //     sWText.style("font-size", "15px");
+    //     sWText.style("left", "0px")
+    //     sWText.style("top", "60px")
+    //     sWText.parent(newSlide);
+
+    //     let sWslider = createSlider(1, 100, 2);
+    //     sWslider.style("position", "absolute");
+    //     sWslider.style("left", "80px")
+    //     sWslider.style("top", "75px")
+    //     sWslider.parent(newSlide);
+
+
+    //     let sWInput = createInput();
+    //     sWInput.style("position", "absolute");
+    //     sWInput.style("right", "20px")
+    //     sWInput.style("width", "60px")
+    //     sWInput.style("top", "75px")
+    //     sWInput.parent(newSlide);
+    //     // let numberInput = 
+
+    //     let button = createButton("endShape()");
+    //     button.style("position", "absolute");
+    //     button.style("right", "20px")
+    //     button.style("width", "175px")
+    //     button.style("top", "100px")
+    //     button.parent(newSlide);
+        
+       
+        
+       
+
+    // }
+
+16.07.2021
+// switch (type) {
+    //     case "colorSlide":
+
+    //       colorSlide(location,position);
+    //       break;
+    //     case "Confussion":
+    //       // code block
+    //       break;
+    //     default:
+    //       console.log("invalid type in Slide constructor")// code block
+    //   }
+    // // slide should be in the bar location
+
+    // // slide should be the position element of that location
+
+    // // slide should be of the type type
+
+    // let colorSlide = function (loc,pos){
+    //     // let colorfield = 
+    //     let newSlide = createDiv("colorSlide");
+    //     newSlide.identity = pos;
+    //     newSlide.parent("#"+loc);
+        
+    //     if (loc === "leftSidebar")
+    //     {
+
+    //     }
+    //     else if (loc === "rightSidebar")
+    //     {
+    //         sliderManager.slides.rightSidebar.push(newSlide)
+    //     }
+    //     else if (loc === "bottom")
+    //     {
+
+    //     }
+    //     else {console.log("invalid location to colorslide in slide.js")}
+        
+    //     console.log("slides",slides);
+    //     let button = createButton("create new part");
+    //     button.parent(newPart)
+    //     button.mousePressed(makeNewHTMLPart);
+
+        
+
+        
+    //     // inp.position(0, 0);
+    //     // inp.size(100); 
+    //     // console.log(inp.elt.value)
+    //     // inp.input(partInputEvent);
+
+    //     // let partsLength = currentDrawing.parts.length;
+    //     // // console.log("partsLength", partsLength)
+    //     // for (let i = 0; i < partsLength; i++)
+    //     // {
+            
+    //     //     let part = createDiv();
+    //     //     part.parent("#orderBar");
+            
+    //     //     //checkbox for isSelected: this is done with the standard javaScipt and jQuery
+    //     //     // because the p5 code creates an unecessary div container
+    //     //     let checkBox = document.createElement("INPUT");
+    //     //     checkBox.setAttribute("type", "checkbox");
+            
+    //     //     part.elt.appendChild(checkBox);
+    //     //     $(checkBox).addClass( 'selectedBox');
+    //     //     checkBox.identity = i
+    //     //     // console.log("checkBox", checkBox)
+    //     //     // $(checkBox).change(helpers.isSelected(this));
+    //     //     part.elt.addEventListener('change', helpers.isSelected(checkBox));
+            
+    //     //     // console.log("part", part.elt)
+            
+    //     //     // checkBox.parent(part);
+    //     //     // checkBox.addClass("selectedBox");
+    //     //     // checkBox.changed(helpers.isSelected);
+
+    //     //     //button for choosing currenfigure
+    //     //     button = createButton("part"+(i+1)+": ");
+    //     //     button.parent(part)
+    //     //     button.identity = i
+    //     //     // console.log("button", button)
+    //     //     button.mousePressed(choosePart);
+
+    //     //     // textField for naming the part
+    //     //     input_text = currentDrawing.parts[i].name
+    //     //     // console.log(i, input_text,currentDrawing)
+
+    //     //     let inp = createInput(input_text);
+    //     //     inp.parent(part)
+    //     //     inp.identity = i
+    //     //     // inp.position(0, 0);
+    //     //     // inp.size(100); 
+    //     //     inp.input(partInputEvent);
+           
+            
+            
+    //     //     // console.log("orderBar", orderBar);
+    //     //     // console.log("part",part)
+            
+    //     // }
+        
+
+
+
+    // }

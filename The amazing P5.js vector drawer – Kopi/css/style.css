@@ -1,0 +1,341 @@
+/* Page wide css */
+*{
+	box-sizing: border-box;
+  text-align: center;
+}
+html,
+body {
+  margin: 0px;
+  height: 100% ;
+  padding: 0px;
+  overflow: hidden;
+}
+
+/* control drawMode with hidden radiobuttons */
+.modeHidden{
+	display: none;
+}
+
+#PointMode:checked ~ .pointMode {
+	display: inline;
+}
+#PointMode:not(:checked) ~ .pointMode {
+	display: none;
+}
+#MirrorMode:checked ~ .mirrorMode {
+	display: block;
+}
+#MirrorMode:not(:checked) ~ .mirrorMode {
+	display: none;
+}
+
+
+
+
+
+/* Header */
+/* header {
+  
+} */
+#header{
+	grid-area: header;
+	display: flex;
+	/* margin: 0px 5px; */
+	justify-content: space-evenly;
+	
+}
+
+/* .header {
+	grid-area: header;
+	font-family: Helvetica, sans-serif
+}
+.header {
+  background-color: #999;
+} */ 
+
+/* sidebar */
+#sidebar {
+  grid-area: sidebar;
+  overflow-y: hidden;
+  background-color: rgb(139, 139, 139);
+
+}
+#bottomBar {
+	grid-area: bottomBar;
+
+	display: flex;
+	overflow-y: hidden;
+	overflow-x: auto;
+
+
+	/* flex-direction: grid;
+	flex-flow: wrap; */
+	
+	/* text-align: left; */
+}
+#sidebarLeft{
+	grid-area: sidebarLeft;
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	text-align: left;
+	/* align-self: stretch; */
+}
+
+#sidebarRight{
+	grid-area: sidebarRight;
+	height: 100%;
+	overflow-y: auto;
+	overflow-x: hidden;
+	padding: 0px;
+	/* align-items: stretch; */
+}
+#sidebarRight > .slide {
+    width: 300px;
+    height: 200px;
+    background: green;
+	overflow: auto;
+	
+}
+.sideBarItem {
+  height: 51px;
+  width: 51px;
+  margin: 5px;
+  padding: 0px;
+}
+#sidebarLeft > #orderBar {
+    width: 300px;
+    height: 100%;
+    background: rgb(71, 10, 10);
+	overflow: auto;
+
+  /* margin: 15px; */
+  /* text-align: left; */
+
+}
+
+#sidebarLeft > .box {
+    width: 300px;
+    height: auto;
+    background: rgb(71, 10, 10);
+	overflow: auto;
+	
+  /* margin: 15px; */
+  /* text-align: left; */
+
+}
+
+
+.sideBarItem img {
+  height: 50px;
+  width: 50px;
+  /* margin: 1px; */
+  /* padding: 1px; */
+  
+}
+.box {
+  background-color: #444;
+  color: #fff;
+  font-size: 100%;
+}
+
+
+/* drawfield css */
+#drawField {
+  grid-area: drawField;
+  /* z-index: 20; */
+}
+
+#canvasButton{
+	position: absolute;
+	top: 400;
+	left: 400;	
+}
+
+/* Drop down menus */
+.dropDownMenus
+{
+	position: relative;
+}
+
+#addSliderMenu{
+	display: none;
+	border: rgb(0, 0, 0);
+	border-style: solid;
+	border-radius: 3%;
+	background-color: rgb(255, 255, 255);
+	position: absolute;
+	width: auto;
+	height: auto;
+	text-align: left;
+	z-index: 1;
+	margin: 0%;
+	padding: 5px;
+	cursor: pointer;
+	left: 0px;
+	top: 0px;
+
+}
+
+#addSliderMenu p{
+	/* position: abso; */
+	font-size: large;
+	text-align: left;
+	margin: 2px;
+	padding: 0%;
+	
+	/* z-index: 1; */
+}
+
+#addSliderMenu p:hover {
+	background-color: rgb(73, 0, 0);
+}
+
+/* slides */
+.slide{
+	width: 300;
+	/* width: 300; */
+	/* height: 200; */
+	/* display: block; */
+	/* overflow: none; */
+	
+	/* background-color: aquamarine; */
+	/* align-self: start; */
+	/* overflow-x: hidden; */
+
+
+}
+
+
+
+
+/* footer */
+
+/* .footer {
+  grid-area: footer;
+} */
+
+
+/* Color and optons CSS */
+.colourPalette {
+  grid-area: colourP;
+  display: flex;
+  flex-direction: grid;
+  flex-flow: wrap;
+}
+
+
+.inputs {
+  
+  padding: 0px 15px;
+  text-align: left;
+	font-size: 75%;
+}
+#endShapeInput{
+	width: 130px;
+}
+
+/* .menuButton{
+	padding: 0px
+}
+.menuButton span {
+     font-size: 11px;
+    padding: 200px;
+} */
+
+/* Add slider buttons */
+#sidebarLeftAddSliderButton,
+#sidebarRightAddSliderButton {
+	/* display: block; */
+	width: 300px;
+	height: 11px;
+	line-height: 0%;
+	/* text-align: center; */
+	/* margin: auto; */
+}
+
+#bottomBarAddSliderButton{
+	/* display: block; */
+	width: 11px;
+	height: 160px;
+	padding: 0%;
+	/* color: black; */
+	/* text-align: center; */
+	/* margin: auto; */
+}
+
+/* #addSliderButtonLeft,
+#addSliderButtonRight,
+#addSliderButtonBottom button{
+	
+} */
+#sidebarRightButton {
+	height: 100%;
+	width: 11px;
+	grid-area: rightSideButton;
+	/* margin: 0px; */
+	padding: 0px;
+	line-height: 0%;
+	/* overflow: hidden; */
+}
+#sidebarLeftButton{
+	height: 100%;
+	width: 11px;
+	grid-area: leftSideButton;
+	/* margin: 0px; */
+	padding: 0px;
+	/* line-height: 0%; */
+	/* overflow: hidden; */
+}
+#bottomBarButton{
+	height: 11px;
+	width: 100%;
+	line-height: 0%;
+	grid-area: bottomBarButton;
+	/* overflow: hidden; */
+}
+
+
+
+.colourSwatches {
+  width: 40px;
+  height: 40px;
+  max-height: 40px;
+  max-width: 40px;
+  margin: 5px;
+
+}
+.colorFillField {
+	width: 40px;
+	height: 40px;
+	max-height: 40px;
+	max-width: 40px;
+	margin: 5px;
+  }
+
+
+
+
+	/* Grid */
+
+	.wrapper {
+	display: grid;
+	height: 100%;
+	grid-template: none;
+	grid-template-columns:300px 11px 65px minmax(200px, 1fr) 11px 300px;
+	grid-template-rows: auto minmax(200px, 1fr) 11px 160px ;
+	grid-template-areas:
+		"header header header header header header"
+		"sidebarLeft leftSideButton sidebar drawField rightSideButton sidebarRight"
+		"sidebarLeft bottomBarButton bottomBarButton bottomBarButton bottomBarButton sidebarRight"
+		"sidebarLeft bottomBar bottomBar bottomBar bottomBar sidebarRight";
+	/* background-color: #fff;
+	color: #444; */
+	/* align-items: stretch; */
+	}
+
+	/* .wrapper > div {
+		
+		text-align: center;
+		
+	  } */

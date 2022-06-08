@@ -5,6 +5,7 @@ let colourP = null;
 let helpers = null;
 let drawManager = null;
 let sliderManager = null;
+let pointcontrol;
 
 // let currentFigureIndex = 0;
 // let currentDrawingIndex = 0;
@@ -65,7 +66,7 @@ function setup() {
 	
 	//add the tools to the toolbox.
 	toolbox.addTool(new FreehandTool());
-	toolbox.addTool(new MirrorTool());
+
 	// toolbox.addTool(new LineToTool());
 	// toolbox.addTool(new SprayCanTool());
 	// toolbox.addTool(new MirrorDrawTool());
@@ -83,7 +84,11 @@ function setup() {
 	// // console.log($("#sidebarRight").children());
 	// $("#sidebarRight").children()[0] = temporary;
 	
-	
+	pointcontrol = {
+		x: width /2,
+		Y: height /2,
+		
+	}
 
 	fitToScreen();
 

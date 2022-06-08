@@ -1,0 +1,71 @@
+update 23.08.2021
+TO DO: Send out the project to people!
+make orderSlide: With hierarchy
+make draggable? make selectable!! make movable!!
+
+fixed:
+
+
+
+update 21.08.2021
+
+fixed updateSlide When choosing part!!(currentPart should be changed)
+fixed Part Slide (make and implement)
+
+
+
+
+update 16.07.2021
+implementations
+Started work on creating elements
+
+updates:
+Now working only on html adding and removing elements
+Backspace removes last placed point
+
+Fixes:
+(NEEDED)make clear button remove parts html elements!!!
+Order list impoved
+rightSidebar element color(not functional)
+
+
+update 05.07.2021
+implementations
+Two drawing modes functional
+good prediction and user feedback on drawing.
+multiple parts sidebar
+Scrolling on sidebars functional.
+Settings for current part functinal
+
+updates:
+updated with latest p5.sound library
+
+Fixes:
+(NEEDED)make clear button remove parts html elements!!!
+
+
+update 29.06.2021
+Rekindled project after learning HTML and CSS.
+
+implementations
+
+updates:
+updated with latest p5.js library
+
+Fixes:
+Removed redundant p5.dom.js
+
+
+
+
+First update 16.04.2021: Version 0.000 000 001
+implementations:
+Made SprayCanTool.js and SprayCanTool constructor
+Made sprayCanTool circular
+
+Updates:
+Added comments on LineToTool
+
+Fixes:
+Fixed save button with saceCanvas function
+Fixed clear butting witha a call to background
