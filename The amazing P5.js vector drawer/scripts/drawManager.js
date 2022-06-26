@@ -117,7 +117,7 @@ function DrawManager() {
     minStrokeWeight: 1,
     maxStrokeWeight: 50,
 
-    vertexPointsFactor: -5,
+    vertexPointsFactor: 10,
     drawPoints: true,
     drawNumbers: true,
     drawWithAlpha: true,

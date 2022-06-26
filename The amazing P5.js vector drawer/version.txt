@@ -1,3 +1,11 @@
+update 8.6.2022
+TO DO: 
+- deal with HTML in a working fashion
+- fix size of numbers
+
+fixed:
+
+
 update 23.08.2021
 TO DO: Send out the project to people!
 make orderSlide: With hierarchy
